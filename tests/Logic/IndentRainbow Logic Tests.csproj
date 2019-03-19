@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Classification\IndentValidatorTests.cs" />
     <Compile Include="Classification\LineDecoratorTests.cs" />
+    <Compile Include="Colors\ColorParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Colors\RainbowBrushGetterTests.cs" />
   </ItemGroup>
@@ -71,6 +72,9 @@
     </PackageReference>
     <PackageReference Include="Unity">
       <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="WindowsBase">
+      <Version>4.6.1055</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

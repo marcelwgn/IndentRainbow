@@ -1,10 +1,11 @@
-﻿using IndentRainbow.Logic.Classification;
-using IndentRainbow.Logic.Drawing;
+﻿using IndentRainbow.Extension.Drawing;
+using IndentRainbow.Extension.Options;
+using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
+using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using System;
-using IndentRainbow.Extension.Drawing;
 
 namespace IndentRainbow.Extension
 {
@@ -59,9 +60,16 @@ namespace IndentRainbow.Extension
             this.view = view;
             this.view.LayoutChanged += this.OnLayoutChanged;
             this.drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
-            this.colorGetter = new RainbowBrushGetter();
-            this.validator = new IndentValidator();
-            this.decorator = new LineDecorator(this.drawer, this.colorGetter, this.validator);
+            this.colorGetter = new RainbowBrushGetter()
+            {
+                brushes = ColorParser.ConvertStringToBrushArray(DefaultRainbowIndentOptions.defaultColors)
+            };
+            this.validator = new IndentValidator(
+                DefaultRainbowIndentOptions.defaultIndentSize
+            );
+            this.decorator = new LineDecorator(
+                this.drawer, this.colorGetter, this.validator
+            );
         }
 
         /// <summary>

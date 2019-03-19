@@ -71,6 +71,7 @@
     <Compile Include="Drawing\BackgroundTextIndexDrawer.cs" />
     <Compile Include="Classification\IndentTextViewCreationListener.cs" />
     <Compile Include="IndentRainbowPackage.cs" />
+    <Compile Include="Options\DefaultRainbowIndentOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classification\Indent.cs" />
   </ItemGroup>

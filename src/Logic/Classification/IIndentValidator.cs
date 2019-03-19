@@ -4,12 +4,6 @@
     {
 
         /// <summary>
-        /// Sets the indent text, e.g. "    " being a 4 space indentation or "\t" being a tab indentation
-        /// </summary>
-        /// <param name="indentation">The text representing the indent</param>
-        void SetIndentLevel(string indentation);
-
-        /// <summary>
         /// Checks if a given string is a valid indentation
         /// </summary>
         /// <param name="text">The indent to prove</param>
