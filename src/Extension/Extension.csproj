@@ -72,6 +72,11 @@
     <Compile Include="Classification\IndentTextViewCreationListener.cs" />
     <Compile Include="IndentRainbowPackage.cs" />
     <Compile Include="Options\DefaultRainbowIndentOptions.cs" />
+    <Compile Include="Options\OptionsManager.cs" />
+    <Compile Include="Options\OptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Options\WritableSettingsStoreExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classification\Indent.cs" />
   </ItemGroup>

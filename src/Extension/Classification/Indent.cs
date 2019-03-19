@@ -48,24 +48,26 @@ namespace IndentRainbow.Extension
         /// Initializes a new instance of the <see cref="Indent"/> class.
         /// </summary>
         /// <param name="view">Text view to create the adornment for</param>
+        //Ignoring warning since this adornment is always on UI thread
+#pragma warning disable VSTHRD010
         public Indent(IWpfTextView view)
         {
             if (view == null)
             {
                 throw new ArgumentNullException("view");
             }
-
             this.layer = view.GetAdornmentLayer("Indent");
 
             this.view = view;
             this.view.LayoutChanged += this.OnLayoutChanged;
             this.drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
+
             this.colorGetter = new RainbowBrushGetter()
             {
-                brushes = ColorParser.ConvertStringToBrushArray(DefaultRainbowIndentOptions.defaultColors)
+                brushes = OptionsManager.GetColors()
             };
             this.validator = new IndentValidator(
-                DefaultRainbowIndentOptions.defaultIndentSize
+                OptionsManager.GetIndentSize()
             );
             this.decorator = new LineDecorator(
                 this.drawer, this.colorGetter, this.validator

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using IndentRainbow.Extension.Options;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -26,6 +27,7 @@ namespace IndentRainbow.Extension
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideOptionPage(typeof(OptionsPage), "IndentRainbow", "General", 101, 107, true)]
     public sealed class IndentRainbowPackage : Package
     {
         /// <summary>
