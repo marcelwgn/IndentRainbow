@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace IndentRainbow.Logic.Colors
 {
@@ -14,14 +16,18 @@ namespace IndentRainbow.Logic.Colors
         {
             string[] splitColors = colors.Split(',');
             int colorCount = splitColors.Length;
-            Brush[] brushes = new Brush[colorCount];
+            List<Brush> brushes = new List<Brush>();
 
             for (int i = 0; i < colorCount; i++)
             {
-                brushes[i] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(splitColors[i]));
+                try
+                {
+                    var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(splitColors[i]));
+                    brushes.Add(brush);
+                } catch (FormatException) { }
             }
 
-            return brushes;
+            return brushes.ToArray();
         }
     }
 }

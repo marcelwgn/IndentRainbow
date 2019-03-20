@@ -23,6 +23,13 @@ namespace IndentRainbow.LogicTests.Colors
                 new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 255)),
                 new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 0)),
                 new SolidColorBrush(Color.FromArgb(0x40, 255, 170, 0))
+            },
+            new Brush[]
+            {
+                new SolidColorBrush(Color.FromArgb(0x40, 153, 51, 255)),
+                new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 255)),
+                new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 0)),
+                new SolidColorBrush(Color.FromArgb(0x40, 255, 170, 0))
             }
 
         };
@@ -30,7 +37,8 @@ namespace IndentRainbow.LogicTests.Colors
 
         [Test]
         [TestCase("#FFFFFFFF", 0)]
-        [TestCase("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00",1)]
+        [TestCase("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1)]
+        [TestCase("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 2)]
         public void ConvertStringToBrushArray_ExpectedBehaviour(string input, int solutionIndex)
         {
             Brush[] result = ColorParser.ConvertStringToBrushArray(input);
