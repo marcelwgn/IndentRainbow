@@ -1,10 +1,11 @@
-﻿using IndentRainbow.Logic.Classification;
-using IndentRainbow.Logic.Drawing;
+﻿using IndentRainbow.Extension.Drawing;
+using IndentRainbow.Extension.Options;
+using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
+using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using System;
-using IndentRainbow.Extension.Drawing;
 
 namespace IndentRainbow.Extension
 {
@@ -47,21 +48,30 @@ namespace IndentRainbow.Extension
         /// Initializes a new instance of the <see cref="Indent"/> class.
         /// </summary>
         /// <param name="view">Text view to create the adornment for</param>
+        //Ignoring warning since this adornment is always on UI thread
+#pragma warning disable VSTHRD010
         public Indent(IWpfTextView view)
         {
             if (view == null)
             {
                 throw new ArgumentNullException("view");
             }
-
             this.layer = view.GetAdornmentLayer("Indent");
 
             this.view = view;
             this.view.LayoutChanged += this.OnLayoutChanged;
             this.drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
-            this.colorGetter = new RainbowBrushGetter();
-            this.validator = new IndentValidator();
-            this.decorator = new LineDecorator(this.drawer, this.colorGetter, this.validator);
+
+            this.colorGetter = new RainbowBrushGetter()
+            {
+                brushes = OptionsManager.GetColors()
+            };
+            this.validator = new IndentValidator(
+                OptionsManager.GetIndentSize()
+            );
+            this.decorator = new LineDecorator(
+                this.drawer, this.colorGetter, this.validator
+            );
         }
 
         /// <summary>

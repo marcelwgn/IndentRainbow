@@ -20,7 +20,7 @@ namespace IndentRainbow.LogicTests.Classification
 
         private AutoMoqer mocker;
         private LineDecorator decorator;
-        private readonly IndentValidator validator = new IndentValidator();
+        private readonly IndentValidator validator = new IndentValidator(4);
         private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
 
 
@@ -29,7 +29,6 @@ namespace IndentRainbow.LogicTests.Classification
         {
             this.mocker = new AutoMoqer();
 
-            this.validator.SetIndentLevel(FSI);
             this.mocker.SetInstance<IIndentValidator>(this.validator);
 
             this.mocker.SetInstance<IRainbowBrushGetter>(this.rainbowgetter);

@@ -3,7 +3,17 @@
     public class IndentValidator : IIndentValidator
     {
 
-        private string indentation = "    ";
+        public string indentation = "    ";
+
+        public IndentValidator(int indentSize)
+        {
+            string accumulator = "";
+            for (int i = 0; i < indentSize; i++)
+            {
+                accumulator += " ";
+            }
+            this.indentation = accumulator;
+        }
 
         public int GetIndentBlockLength()
         {
@@ -26,11 +36,6 @@
                 return true;
             }
             return false;
-        }
-
-        public void SetIndentLevel(string indentation)
-        {
-            this.indentation = indentation;
         }
     }
 }

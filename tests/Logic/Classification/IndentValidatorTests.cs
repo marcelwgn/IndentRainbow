@@ -16,7 +16,19 @@ namespace IndentRainbow.LogicTests.Classification
         [SetUp]
         public void Setup()
         {
-            this.validator = this.mocker.Create<IndentValidator>();
+            this.validator = new IndentValidator(0);
+        }
+
+        [Test]
+        [TestCase(4, FOUR_SPACE_INDENT)]
+        [TestCase(2, "  ")]
+        [TestCase(8, FOUR_SPACE_INDENT + FOUR_SPACE_INDENT)]
+        [TestCase(0, "")]
+        public void IndentValidatorConstructor_ExpectedBehaviours(int indentSize, string correctIndentString)
+        {
+            this.validator = new IndentValidator(indentSize);
+
+            Assert.AreEqual(correctIndentString, this.validator.indentation);
         }
 
         [Test]
@@ -27,7 +39,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("\t", 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
-            this.validator.SetIndentLevel(text);
+            this.validator.indentation = text;
 
             var result = this.validator.GetIndentBlockLength();
 
@@ -41,7 +53,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("   d", true)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
-            this.validator.SetIndentLevel(FOUR_SPACE_INDENT);
+            this.validator.indentation = FOUR_SPACE_INDENT;
 
             var result = this.validator.IsIncompleteIndent(text);
 
@@ -55,24 +67,11 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("   d", false)]
         public void IsValidIndentTests_ExpectedBehaviours(string text, bool isValidIndent)
         {
-            this.validator.SetIndentLevel(FOUR_SPACE_INDENT);
+            this.validator.indentation = FOUR_SPACE_INDENT;
 
             var result = this.validator.IsValidIndent(text);
 
             Assert.AreEqual(isValidIndent, result);
-        }
-
-        [Test]
-        [TestCase(FOUR_SPACE_INDENT, 4)]
-        [TestCase("  ", 2)]
-        [TestCase(FOUR_SPACE_INDENT + FOUR_SPACE_INDENT, 8)]
-        [TestCase("\t", 1)]
-        public void SetIndentLevelTests_ExpectedBehaviors(string indentation, int indentLength)
-        {
-            this.validator.SetIndentLevel(indentation);
-
-            var result = this.validator.GetIndentBlockLength();
-            Assert.AreEqual(indentLength, result);
         }
     }
 }

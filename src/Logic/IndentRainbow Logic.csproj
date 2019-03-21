@@ -35,19 +35,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'dsa|AnyCPU'">
     <OutputPath>bin\dsa\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classification\IIndentValidator.cs" />
     <Compile Include="Classification\ILineDecorator.cs" />
     <Compile Include="Classification\IndentValidator.cs" />
     <Compile Include="Classification\LineDecorator.cs" />
+    <Compile Include="Colors\ColorParser.cs" />
     <Compile Include="Drawing\IBackgroundTextIndexDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Colors\IRainbowBrushGetter.cs" />
     <Compile Include="Colors\RainbowBrushGetter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Key.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
