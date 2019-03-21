@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="IndentRainbow.f05146ed-8025-4668-b7b1-8a74bd22b241" Version="0.2.1" Language="en-US" Publisher="Marcel Wagner" />
         <DisplayName>IndentRainbow</DisplayName>
-        <Description xml:space="preserve">Extensions for showing rainbow colors to make it easier to differantiate indent levels.</Description>
+        <Description xml:space="preserve">Extensions for showing rainbow colors to make it easier to differentiate indent levels.</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0, 20.0)" />
