@@ -23,7 +23,7 @@ namespace IndentRainbow.Extension.Options
         [Category("Colors")]
         [DisplayName("Colors list")]
         [Description("The colors used for indentation levels. " +
-            "Colors must be provided in ARGB hexadecimal and must be seperated by a comma.")]
+            "Colors must be provided in ARGB hexadecimal and must be separated by a comma.")]
         public string Colors { get; set; }
 
         /// <summary>

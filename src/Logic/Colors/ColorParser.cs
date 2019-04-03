@@ -8,7 +8,7 @@ namespace IndentRainbow.Logic.Colors
     {
         /// <summary>
         /// Converts a given string to a brush array.
-        /// Colors must be seperated using "," and colors must be in ARGB Hexadecimal format
+        /// Colors must be separated using "," and colors must be in ARGB Hexadecimal format
         /// </summary>
         /// <param name="colors"></param>
         /// <returns></returns>
