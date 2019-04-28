@@ -4,7 +4,7 @@
     {
 
         public string indentation = "    ";
-
+        public string tab = "\t";
         public IndentValidator(int indentSize)
         {
             string accumulator = "";
@@ -31,7 +31,8 @@
 
         public bool IsValidIndent(string text)
         {
-            if (text.Equals(this.indentation))
+            if (text.Equals(this.indentation)
+                || text.Equals(this.tab))
             {
                 return true;
             }

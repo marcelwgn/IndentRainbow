@@ -48,9 +48,15 @@ namespace IndentRainbow.Logic.Classification
             for (int charIndex = start; charIndex < end - tabSize + 1; charIndex += tabSize)
             {
                 var cutout = text.Substring(charIndex, tabSize);
+                var tabCutOut = text.Substring(charIndex, 1);
                 if (this.validator.IsValidIndent(cutout))
                 {
                     this.drawer.DrawBackground(charIndex, tabSize, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    rainbowIndex++;
+                } else if (this.validator.IsValidIndent(tabCutOut))
+                {
+                    this.drawer.DrawBackground(charIndex, 1, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    charIndex -= (tabSize - 1);
                     rainbowIndex++;
                 } else
                 {

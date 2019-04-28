@@ -17,6 +17,7 @@ namespace IndentRainbow.LogicTests.Classification
         /// This name was chosen for easy creation of tests
         /// </summary>
         private const string FSI = "    ";
+        private const string TABI = "\t";
 
         private AutoMoqer mocker;
         private LineDecorator decorator;
@@ -37,8 +38,8 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FSI + FSI + FSI, 0, 12, new int[] { 0, 4, 8 })]
-        [TestCase(FSI + " 123456789", 0, 14, new int[] { 0 })]
+        [TestCase(FSI + FSI + TABI + FSI, 0, 12, new int[] { 0, 4, 8, 9 })]
+        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 4 })]
         [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
         [TestCase("", 0, 0, new int[] { })]
         [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 14 })]
@@ -50,7 +51,7 @@ namespace IndentRainbow.LogicTests.Classification
             {
                 this.mocker.Verify<IBackgroundTextIndexDrawer>(
                     p => p.DrawBackground(
-                        spans[i], FSI.Length,
+                        spans[i], It.IsIn(new int[] { FSI.Length, TABI.Length }),
                         It.IsAny<Brush>()),
                     Times.Once()
                 );
@@ -84,6 +85,8 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(FSI + FSI + FSI + FSI + FSI + FSI + FSI)]
         [TestCase(FSI + "dsadsadsa")]
         [TestCase(FSI + "  dsadsa")]
+        [TestCase(TABI + FSI + "  dsadsa")]
+        [TestCase(FSI + TABI + "  dsadsa")]
         public void DecorateLineTests_ColorTesting_ExpectedBehaviour(string text)
         {
             int itCount = text.Length / FSI.Length;
