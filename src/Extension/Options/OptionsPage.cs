@@ -26,6 +26,10 @@ namespace IndentRainbow.Extension.Options
             "Colors must be provided in ARGB hexadecimal and must be separated by a comma.")]
         public string Colors { get; set; }
 
+        [Category("Colors")]
+        [DisplayName("General opacity")]
+        [Description("The opacity that will be applied to all colors. If the color has an opacity of 0.5 and this value is 0.5, the color will be drawn with an opacity of 0.25")]
+        public double OpacityMultiplier { get; set; }
         /// <summary>
         /// Loads the settings for this form from storage and sets the values.
         /// </summary>
@@ -35,6 +39,7 @@ namespace IndentRainbow.Extension.Options
             OptionsManager.LoadSettings();
             this.IndentSize = OptionsManager.GetIndentSize();
             this.Colors = OptionsManager.GetColorsString();
+            this.OpacityMultiplier = OptionsManager.GetOpacityMultiplier();
         }
 
         /// <summary>
@@ -43,7 +48,7 @@ namespace IndentRainbow.Extension.Options
         public override void SaveSettingsToStorage()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            OptionsManager.SaveSettings(this.IndentSize, this.Colors);
+            OptionsManager.SaveSettings(this.IndentSize, this.Colors, this.OpacityMultiplier);
         }
     }
 }

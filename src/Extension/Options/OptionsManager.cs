@@ -17,16 +17,21 @@ namespace IndentRainbow.Extension.Options
         /// Saved value of the indent size. The value is saved as static field for better performance
         /// </summary>
         private static int indentSize = DefaultRainbowIndentOptions.defaultIndentSize;
-        
+
         /// <summary>
         /// Saved value of the colors string. The value is saved as static field for better performance
         /// </summary>
         private static string colors = DefaultRainbowIndentOptions.defaultColors;
-        
+
         /// <summary>
         /// Saved value of the brushes array. The value is saved as static field for better performance
         /// </summary>
-        private static Brush[] brushes = ColorParser.ConvertStringToBrushArray(colors);
+        private static Brush[] brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
+
+        /// <summary>
+        /// The opacity multiplier which is applied to all colors
+        /// </summary>
+        private static double opacityMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
 
         /// <summary>
         /// Gets an instance of the WritableSettingsStore class, 
@@ -53,7 +58,8 @@ namespace IndentRainbow.Extension.Options
                 var settingsStore = GetWritableSettingsStore();
                 indentSize = settingsStore.LoadIndentSize();
                 colors = settingsStore.LoadColors();
-                brushes = ColorParser.ConvertStringToBrushArray(colors);
+                opacityMultiplier = settingsStore.LoadOpacityMultiplier();
+                brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
                 loadedFromStorage = true;
             }
         }
@@ -63,15 +69,17 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="indentSize">The indent size specifiyng the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
-        public static void SaveSettings(int indentSize, string colors)
+        public static void SaveSettings(int indentSize, string colors, double opacityMultiplier)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var settingsStore = GetWritableSettingsStore();
             settingsStore.SaveIndentSize(indentSize);
             settingsStore.SaveColors(colors);
+            settingsStore.SaveOpacityMultiplier(opacityMultiplier);
             OptionsManager.indentSize = indentSize;
             OptionsManager.colors = colors;
-            brushes = ColorParser.ConvertStringToBrushArray(colors);
+            brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
+            OptionsManager.opacityMultiplier = opacityMultiplier;
         }
 
         /// <summary>
@@ -121,6 +129,16 @@ namespace IndentRainbow.Extension.Options
                 LoadSettings();
             }
             return brushes;
+        }
+
+        public static double GetOpacityMultiplier()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (!loadedFromStorage)
+            {
+                LoadSettings();
+            }
+            return opacityMultiplier;
         }
     }
 }

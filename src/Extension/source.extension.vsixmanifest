@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="IndentRainbow.f05146ed-8025-4668-b7b1-8a74bd22b241" Version="0.2.4" Language="en-US" Publisher="Marcel Wagner" />
+        <Identity Id="IndentRainbow.f05146ed-8025-4668-b7b1-8a74bd22b241" Version="0.2.5" Language="en-US" Publisher="Marcel Wagner" />
         <DisplayName>IndentRainbow</DisplayName>
         <Description xml:space="preserve">Extensions for showing rainbow colors to make it easier to differentiate indent levels.</Description>
     </Metadata>

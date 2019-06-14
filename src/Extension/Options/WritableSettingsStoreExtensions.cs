@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Settings;
+﻿using System;
+using Microsoft.VisualStudio.Settings;
 
 namespace IndentRainbow.Extension.Options
 {
@@ -8,6 +9,7 @@ namespace IndentRainbow.Extension.Options
         public const string collectionName = "IndentRainbow";
         public const string indentSizePropertyName = "IndentSize";
         public const string colorsPropertyName = "Colors";
+        public const string opacityMultiplierPropertyName = "OpacityMultiplier";
 
         /// <summary>
         /// Saves the given indentsize to the settings store using a specific collection and property name
@@ -27,6 +29,11 @@ namespace IndentRainbow.Extension.Options
         public static void SaveColors(this WritableSettingsStore store, string colors)
         {
             store.SetString(collectionName, colorsPropertyName, colors);
+        }
+
+        public static void SaveOpacityMultiplier(this WritableSettingsStore store, double opacityMultiplier)
+        {
+            store.SetString(collectionName, opacityMultiplierPropertyName, opacityMultiplier.ToString());
         }
 
         /// <summary>
@@ -61,6 +68,25 @@ namespace IndentRainbow.Extension.Options
             {
                 return store.GetString(collectionName, colorsPropertyName);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="store"></param>
+        /// <returns></returns>
+        public static double LoadOpacityMultiplier(this WritableSettingsStore store)
+        {
+            var opacMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
+            if (!store.PropertyExists(collectionName, opacityMultiplierPropertyName))
+            {
+                store.SaveOpacityMultiplier(opacMultiplier);
+            } else
+            {
+                Double.TryParse(store.GetString(collectionName, opacityMultiplierPropertyName), out opacMultiplier);
+            }
+            return opacMultiplier;
+
         }
 
         /// <summary>
