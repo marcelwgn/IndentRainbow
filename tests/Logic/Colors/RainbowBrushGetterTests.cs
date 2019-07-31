@@ -51,5 +51,11 @@ namespace IndentRainbow.LogicTests.Colors
                     this.brushGetter.GetColorByIndex(index);
                 });
         }
+
+        [Test]
+        public void GetErrorBrush_ExpectedBehaviour()
+        {
+            Assert.NotNull(new RainbowBrushGetter().GetErrorBrush());
+        }
     }
 }
