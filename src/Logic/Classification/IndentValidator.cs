@@ -22,7 +22,19 @@
 
         public bool IsIncompleteIndent(string text)
         {
-            if (text[0] == ' ')
+            string cleaned = text.Replace("\t", "");
+            //String only consists of tabs, is valid thus return false;
+            if (cleaned.Length == 0)
+            {
+                return false;
+            }
+            //String only consists tabs and spaces, is valid thus return false
+            if (cleaned.Replace(" ", "").Length == 0)
+            {
+                return false;
+            }
+            // Checking if first character is 
+            if (cleaned[0] == ' ')
             {
                 return !this.IsValidIndent(text);
             }

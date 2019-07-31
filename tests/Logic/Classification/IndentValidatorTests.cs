@@ -10,8 +10,8 @@ namespace IndentRainbow.LogicTests.Classification
 
         private readonly AutoMoqer mocker = new AutoMoqer();
         private IndentValidator validator;
-        private const string FOUR_SPACE_INDENT = "    ";
-
+        private const string FSI = "    ";
+        private const string TABI = "\t";
 
         [SetUp]
         public void Setup()
@@ -20,9 +20,9 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(4, FOUR_SPACE_INDENT)]
+        [TestCase(4, FSI)]
         [TestCase(2, "  ")]
-        [TestCase(8, FOUR_SPACE_INDENT + FOUR_SPACE_INDENT)]
+        [TestCase(8, FSI + FSI)]
         [TestCase(0, "")]
         public void IndentValidatorConstructor_ExpectedBehaviours(int indentSize, string correctIndentString)
         {
@@ -36,7 +36,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("bb", 2)]
         [TestCase("ccc", 3)]
         [TestCase("", 0)]
-        [TestCase("\t", 1)]
+        [TestCase(TABI, 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
             this.validator.indentation = text;
@@ -47,13 +47,17 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FOUR_SPACE_INDENT, false)]
+        [TestCase(FSI, false)]
         [TestCase(" d", true)]
         [TestCase("d", false)]
         [TestCase("   d", true)]
+        [TestCase("   ", false)]
+        [TestCase(TABI + TABI + "t", false)]
+        [TestCase(TABI + TABI + " t", true)]
+        [TestCase("te  ", false)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
-            this.validator.indentation = FOUR_SPACE_INDENT;
+            this.validator.indentation = FSI;
 
             var result = this.validator.IsIncompleteIndent(text);
 
@@ -61,13 +65,13 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FOUR_SPACE_INDENT, true)]
-        [TestCase(FOUR_SPACE_INDENT + " ", false)]
-        [TestCase(FOUR_SPACE_INDENT + "d", false)]
+        [TestCase(FSI, true)]
+        [TestCase(FSI + " ", false)]
+        [TestCase(FSI + "d", false)]
         [TestCase("   d", false)]
         public void IsValidIndentTests_ExpectedBehaviours(string text, bool isValidIndent)
         {
-            this.validator.indentation = FOUR_SPACE_INDENT;
+            this.validator.indentation = FSI;
 
             var result = this.validator.IsValidIndent(text);
 
