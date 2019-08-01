@@ -10,14 +10,13 @@ namespace IndentRainbow.Logic.Classification
         private readonly IBackgroundTextIndexDrawer drawer;
         private readonly IRainbowBrushGetter colorGetter;
         private readonly IIndentValidator validator;
-        private bool detectErrors;
+        public bool detectErrors = true;
 
-        public LineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator, bool detectErrors)
+        public LineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
         {
             this.drawer = drawer;
             this.colorGetter = colorGetter;
             this.validator = validator;
-            this.detectErrors = detectErrors;
         }
 
         /// <summary>

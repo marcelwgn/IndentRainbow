@@ -54,7 +54,7 @@ namespace IndentRainbow.Extension
         {
             if (view == null)
             {
-                    throw new ArgumentNullException("view");
+                throw new ArgumentNullException("view");
             }
             this.layer = view.GetAdornmentLayer("Indent");
 
@@ -71,8 +71,10 @@ namespace IndentRainbow.Extension
                 OptionsManager.indentSize.Get()
             );
             this.decorator = new LineDecorator(
-                this.drawer, this.colorGetter, this.validator,detectErrors: OptionsManager.detectErrors.Get()
-            );
+                this.drawer, this.colorGetter, this.validator)
+            {
+                detectErrors = OptionsManager.detectErrors.Get()
+            };
         }
 
         /// <summary>
