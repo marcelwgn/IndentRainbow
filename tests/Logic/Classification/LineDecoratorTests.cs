@@ -38,8 +38,8 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FSI + FSI + TABI + FSI, 0, 12, new int[] { 0, 4, 8, 9 })]
-        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 4 })]
+        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9 })]
+        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 4 })]
         [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
         [TestCase("", 0, 0, new int[] { })]
         [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 14 })]
@@ -117,5 +117,30 @@ namespace IndentRainbow.LogicTests.Classification
             }
         }
 
+
+        [Test]
+        [TestCase(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 14 })]
+        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
+        [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
+        [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
+        public void DecorateLineTests_IndexTesting_ErrorBehaviours(string text, int start, int end, int[] spans)
+        {
+            this.decorator.DecorateLine(text, start, end);
+
+            this.mocker.Verify<IBackgroundTextIndexDrawer>(
+                p => p.DrawBackground(
+                    spans[0], spans[1],
+                    It.IsAny<Brush>()),
+                Times.Once()
+            );
+            this.mocker.Verify<IBackgroundTextIndexDrawer>(
+                p => p.DrawBackground(
+                        It.IsNotIn(spans),
+                        It.IsNotIn(4),
+                        It.IsAny<Brush>()
+                    ),
+                Times.Never()
+            );
+        }
     }
 }

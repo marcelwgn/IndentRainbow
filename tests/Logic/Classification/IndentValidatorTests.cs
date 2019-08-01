@@ -24,7 +24,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(2, "  ")]
         [TestCase(8, FSI + FSI)]
         [TestCase(0, "")]
-        public void IndentValidatorConstructor_ExpectedBehaviours(int indentSize, string correctIndentString)
+        public void Constructor_ExpectedBehaviours(int indentSize, string correctIndentString)
         {
             this.validator = new IndentValidator(indentSize);
 
@@ -43,7 +43,7 @@ namespace IndentRainbow.LogicTests.Classification
 
             var result = this.validator.GetIndentBlockLength();
 
-            Assert.AreEqual(length, text.Length);
+            Assert.AreEqual(length, result);
         }
 
         [Test]
