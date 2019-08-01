@@ -33,5 +33,22 @@ namespace IndentRainbow.Logic.Colors
 
             return brushes.ToArray();
         }
+
+        public static Brush ConvertStringToBrush(string color, double opacityMultiplier)
+        {
+            try
+            {
+
+                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                double alphaOfBrush = (brush.Color.A);
+                var brushColor = brush.Color;
+                brushColor.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
+                brush.Color = brushColor;
+                return brush;
+            } catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
     }
 }

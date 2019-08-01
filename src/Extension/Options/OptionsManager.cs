@@ -6,32 +6,13 @@ using System.Windows.Media;
 
 namespace IndentRainbow.Extension.Options
 {
-    internal static class OptionsManager
+    internal static partial class OptionsManager
     {
+
         /// <summary>
         /// Flag used for checking if data has been loaded.
         /// </summary>
         private static bool loadedFromStorage = false;
-
-        /// <summary>
-        /// Saved value of the indent size. The value is saved as static field for better performance
-        /// </summary>
-        private static int indentSize = DefaultRainbowIndentOptions.defaultIndentSize;
-
-        /// <summary>
-        /// Saved value of the colors string. The value is saved as static field for better performance
-        /// </summary>
-        private static string colors = DefaultRainbowIndentOptions.defaultColors;
-
-        /// <summary>
-        /// Saved value of the brushes array. The value is saved as static field for better performance
-        /// </summary>
-        private static Brush[] brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
-
-        /// <summary>
-        /// The opacity multiplier which is applied to all colors
-        /// </summary>
-        private static double opacityMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
 
         /// <summary>
         /// Gets an instance of the WritableSettingsStore class, 
@@ -47,6 +28,42 @@ namespace IndentRainbow.Extension.Options
             return settingsStore;
         }
 
+                /// <summary>
+        /// Saved value of the indent size. The value is saved as static field for better performance
+        /// </summary>
+        public static OptionsField<int> indentSize = new OptionsField<int>(DefaultRainbowIndentOptions.defaultIndentSize);
+
+        /// <summary>
+        /// Saved value of the colors string. The value is saved as static field for better performance
+        /// </summary>
+        public static OptionsField<string> colors = new OptionsField<string>(DefaultRainbowIndentOptions.defaultColors);
+
+        /// <summary>
+        /// Saved value of the brushes array. The value is saved as static field for better performance
+        /// </summary>
+        public static OptionsField<Brush[]> brushes = new OptionsField<Brush[]>(
+            ColorParser.ConvertStringToBrushArray(DefaultRainbowIndentOptions.defaultColors, DefaultRainbowIndentOptions.defaultOpacityMultiplier));
+
+        /// <summary>
+        /// The opacity multiplier which is applied to all colors
+        /// </summary>
+        public static OptionsField<double> opacityMultiplier = new OptionsField<double>(DefaultRainbowIndentOptions.defaultOpacityMultiplier);
+
+        /// <summary>
+        /// The detect error flag which determines wether errors will be highlighted
+        /// </summary>
+        public static OptionsField<bool> detectErrors = new OptionsField<bool>(DefaultRainbowIndentOptions.defaultDetectErrorsFlag);
+
+        /// <summary>
+        /// The error color used for highlighting of wrong colors
+        /// </summary>
+        public static OptionsField<string> errorColor = new OptionsField<string>(DefaultRainbowIndentOptions.defaultErrorColor);
+
+        /// <summary>
+        /// Saved value of the error brush
+        /// </summary>
+        public static OptionsField<Brush> errorBrush = new OptionsField<Brush>(
+            ColorParser.ConvertStringToBrush(DefaultRainbowIndentOptions.defaultErrorColor, DefaultRainbowIndentOptions.defaultOpacityMultiplier));
         /// <summary>
         /// Loads the settings from the settings store
         /// </summary>
@@ -56,11 +73,15 @@ namespace IndentRainbow.Extension.Options
             if (!loadedFromStorage)
             {
                 var settingsStore = GetWritableSettingsStore();
-                indentSize = settingsStore.LoadIndentSize();
-                colors = settingsStore.LoadColors();
-                opacityMultiplier = settingsStore.LoadOpacityMultiplier();
-                brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
+                indentSize.Set(settingsStore.LoadIndentSize());
+                colors.Set(settingsStore.LoadColors());
+                opacityMultiplier.Set(settingsStore.LoadOpacityMultiplier());
+                errorColor.Set(settingsStore.LoadErrorColor());
+                detectErrors.Set(settingsStore.LoadDetectErrorsFlag());
+                //This fields have to be initialized after the other fields since they depend on them
                 loadedFromStorage = true;
+                brushes.Set(ColorParser.ConvertStringToBrushArray(colors.Get(), opacityMultiplier.Get()));
+                errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor.Get(), opacityMultiplier.Get()));
             }
         }
 
@@ -69,76 +90,20 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="indentSize">The indent size specifiyng the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
-        public static void SaveSettings(int indentSize, string colors, double opacityMultiplier)
+        public static void SaveSettings(int indentSize, string colors, double opacityMultiplier, string errorColor, bool detectError)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var settingsStore = GetWritableSettingsStore();
             settingsStore.SaveIndentSize(indentSize);
             settingsStore.SaveColors(colors);
             settingsStore.SaveOpacityMultiplier(opacityMultiplier);
-            OptionsManager.indentSize = indentSize;
-            OptionsManager.colors = colors;
-            brushes = ColorParser.ConvertStringToBrushArray(colors,opacityMultiplier);
-            OptionsManager.opacityMultiplier = opacityMultiplier;
-        }
-
-        /// <summary>
-        /// Retrieves the indent size. 
-        /// If the setting has not been loaded from the 
-        /// settings store / storage, the value will be loaded and the loaded value will be returned.
-        /// </summary>
-        /// <returns>The indent size</returns>
-        public static int GetIndentSize()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (!loadedFromStorage)
-            {
-                LoadSettings();
-            }
-            return indentSize;
-        }
-
-        /// <summary>
-        /// Retrieves the colors string.
-        /// If the setting has not been loaded from the 
-        /// settings store / storage, the value will be loaded and the loaded value will be returned.
-        /// </summary>
-        /// <returns>The colors string</returns>
-        public static string GetColorsString()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (!loadedFromStorage)
-            {
-                LoadSettings();
-            }
-            return colors;
-        }
-
-        /// <summary>
-        /// Retrieves the brushes used for drawing.
-        /// If the colors string has not been loaded from the settings store / storage,
-        /// the value will be loaded, the loaded value will be parsed 
-        /// and the parsed brushes will be returned.
-        /// </summary>
-        /// <returns>The brushes that result from converting the colors string</returns>
-        public static Brush[] GetColors()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (!loadedFromStorage)
-            {
-                LoadSettings();
-            }
-            return brushes;
-        }
-
-        public static double GetOpacityMultiplier()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (!loadedFromStorage)
-            {
-                LoadSettings();
-            }
-            return opacityMultiplier;
+            OptionsManager.indentSize.Set(indentSize);
+            OptionsManager.colors.Set(colors);
+            OptionsManager.brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier));
+            OptionsManager.opacityMultiplier.Set(opacityMultiplier);
+            OptionsManager.errorColor.Set(errorColor);
+            OptionsManager.detectErrors.Set(detectError);
+            OptionsManager.errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor, opacityMultiplier));
         }
     }
 }

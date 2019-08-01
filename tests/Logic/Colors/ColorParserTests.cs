@@ -58,5 +58,19 @@ namespace IndentRainbow.LogicTests.Colors
                 Assert.AreEqual(solution[i].ToString(), result[i].ToString());
             }
         }
+
+        [Test]
+        [TestCase("#FFFFFFFF", 1.0, 0)]
+        [TestCase("#40FFFF00", 1.0, 1)]
+        [TestCase("#409933FF", 1.0, 2)]
+        [TestCase("#40FFFF00", 0.5, 3)]
+        [TestCase("#60FFFF00", 1.0 / 3.0, 3)]
+        public void ConvertStringToBrush_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
+        {
+            Brush result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
+            Brush solution = solutions[solutionIndex][0];
+
+                Assert.AreEqual(solution.ToString(), result.ToString());
+        }
     }
 }

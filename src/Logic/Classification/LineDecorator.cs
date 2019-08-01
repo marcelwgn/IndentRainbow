@@ -10,12 +10,14 @@ namespace IndentRainbow.Logic.Classification
         private readonly IBackgroundTextIndexDrawer drawer;
         private readonly IRainbowBrushGetter colorGetter;
         private readonly IIndentValidator validator;
+        private bool detectErrors;
 
-        public LineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
+        public LineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator, bool detectErrors)
         {
             this.drawer = drawer;
             this.colorGetter = colorGetter;
             this.validator = validator;
+            this.detectErrors = detectErrors;
         }
 
         /// <summary>
@@ -28,7 +30,6 @@ namespace IndentRainbow.Logic.Classification
         public void DecorateLine(string text, int start, int end)
         {
             int tabSize = this.validator.GetIndentBlockLength();
-
             if (start < 0 || start > text.Length)
             {
                 throw new ArgumentOutOfRangeException("start");
@@ -46,10 +47,14 @@ namespace IndentRainbow.Logic.Classification
             int rainbowIndex = 0;
             int validTabLength = GetIndentLengthIfValid(text, start, end);
 
-            if (validTabLength < 0)
+                     if (validTabLength < 0 & detectErrors)
             {
                 this.drawer.DrawBackground(start, -validTabLength, this.colorGetter.GetErrorBrush());
                 return;
+            }
+            if (!detectErrors && validTabLength < 0)
+            {
+                validTabLength = -validTabLength;
             }
 
             for (int charIndex = start; charIndex < start + validTabLength; charIndex += tabSize)
