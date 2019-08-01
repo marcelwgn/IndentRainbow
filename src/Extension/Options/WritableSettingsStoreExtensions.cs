@@ -10,6 +10,8 @@ namespace IndentRainbow.Extension.Options
         public const string indentSizePropertyName = "IndentSize";
         public const string colorsPropertyName = "Colors";
         public const string opacityMultiplierPropertyName = "OpacityMultiplier";
+        public const string detectErrorsPropertyName = "DetectErrors";
+        public const string errorColorPropertyName = "ErrorColor";
 
         /// <summary>
         /// Saves the given indentsize to the settings store using a specific collection and property name
@@ -31,9 +33,34 @@ namespace IndentRainbow.Extension.Options
             store.SetString(collectionName, colorsPropertyName, colors);
         }
 
+        /// <summary>
+        /// Saves the opacity multiplier
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="opacityMultiplier">The opacity multiplier to save</param>
         public static void SaveOpacityMultiplier(this WritableSettingsStore store, double opacityMultiplier)
         {
             store.SetString(collectionName, opacityMultiplierPropertyName, opacityMultiplier.ToString());
+        }
+
+        /// <summary>
+        /// Saves the detect errors flag
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="detectErrors">The detect error flag to save</param>
+        public static void SaveDetectErrorsFlag(this WritableSettingsStore store, bool detectErrors)
+        {
+            store.SetBoolean(collectionName, detectErrorsPropertyName, detectErrors);
+        }
+
+        /// <summary>
+        /// Saves the error color
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="errorColor">The erro color to save</param>
+        public static void SaveErrorColor(this WritableSettingsStore store, string errorColor)
+        {
+            store.SetString(collectionName, errorColorPropertyName, errorColor);
         }
 
         /// <summary>
@@ -71,10 +98,10 @@ namespace IndentRainbow.Extension.Options
         }
 
         /// <summary>
-        /// 
+        /// Loads the opacity multiplier
         /// </summary>
-        /// <param name="store"></param>
-        /// <returns></returns>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The opacity multiplier or if not found, the default opacity multiplier</returns>
         public static double LoadOpacityMultiplier(this WritableSettingsStore store)
         {
             var opacMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
@@ -87,6 +114,42 @@ namespace IndentRainbow.Extension.Options
             }
             return opacMultiplier;
 
+        }
+
+        /// <summary>
+        /// Loads the detect errors flag
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The detect error flag or if not found, the default detect error flag</returns>
+        public static bool LoadDetectErrorsFlag(this WritableSettingsStore store)
+        {
+            var detectErrorFlag = DefaultRainbowIndentOptions.defaultDetectErrorsFlag;
+            if (!store.PropertyExists(collectionName, detectErrorsPropertyName))
+            {
+                store.SaveDetectErrorsFlag(detectErrorFlag);
+            } else
+            {
+                detectErrorFlag = store.GetBoolean(collectionName, detectErrorsPropertyName);
+            }
+            return detectErrorFlag;
+        }
+
+        /// <summary>
+        /// Loads the error color
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The error color or if not found, the default error color</returns>
+        public static string LoadErrorColor(this WritableSettingsStore store)
+        {
+            var errorColor = DefaultRainbowIndentOptions.defaultErrorColor;
+            if (!store.PropertyExists(collectionName, errorColor))
+            {
+                store.SaveErrorColor(errorColor);
+            } else
+            {
+                errorColor = store.GetString(collectionName, errorColorPropertyName);
+            }
+            return errorColor;
         }
 
         /// <summary>

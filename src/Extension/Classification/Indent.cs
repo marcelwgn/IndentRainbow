@@ -10,7 +10,7 @@ using System;
 namespace IndentRainbow.Extension
 {
     /// <summary>
-    /// Indent places red boxes behind all the "a"s in the editor window
+    /// Decorates the text using all necessary components
     /// </summary>
     public sealed class Indent
     {
@@ -54,7 +54,7 @@ namespace IndentRainbow.Extension
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                    throw new ArgumentNullException("view");
             }
             this.layer = view.GetAdornmentLayer("Indent");
 
@@ -64,13 +64,14 @@ namespace IndentRainbow.Extension
 
             this.colorGetter = new RainbowBrushGetter()
             {
-                brushes = OptionsManager.GetColors()
+                brushes = OptionsManager.brushes.Get(),
+                errorColor = OptionsManager.errorBrush.Get()
             };
             this.validator = new IndentValidator(
-                OptionsManager.GetIndentSize()
+                OptionsManager.indentSize.Get()
             );
             this.decorator = new LineDecorator(
-                this.drawer, this.colorGetter, this.validator
+                this.drawer, this.colorGetter, this.validator,detectErrors: OptionsManager.detectErrors.Get()
             );
         }
 
@@ -97,8 +98,6 @@ namespace IndentRainbow.Extension
         /// <param name="line">Line to add the adornments</param>
         private void CreateVisuals(ITextViewLine line)
         {
-            IWpfTextViewLineCollection textViewLines = this.view.TextViewLines;
-
             int start = line.Start;
             int end = line.End;
 
