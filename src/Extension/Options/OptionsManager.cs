@@ -97,6 +97,8 @@ namespace IndentRainbow.Extension.Options
             settingsStore.SaveIndentSize(indentSize);
             settingsStore.SaveColors(colors);
             settingsStore.SaveOpacityMultiplier(opacityMultiplier);
+            settingsStore.SaveDetectErrorsFlag(detectError);
+            settingsStore.SaveErrorColor(errorColor);
             OptionsManager.indentSize.Set(indentSize);
             OptionsManager.colors.Set(colors);
             OptionsManager.brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier));
