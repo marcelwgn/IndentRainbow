@@ -46,7 +46,7 @@ namespace IndentRainbow.Logic.Classification
             int rainbowIndex = 0;
             int validTabLength = GetIndentLengthIfValid(text, start, end);
 
-                     if (validTabLength < 0 & detectErrors)
+            if (validTabLength < 0 && detectErrors)
             {
                 this.drawer.DrawBackground(start, -validTabLength, this.colorGetter.GetErrorBrush());
                 return;
@@ -56,8 +56,12 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (int charIndex = start; charIndex < start + validTabLength; charIndex += tabSize)
+            for (int charIndex = start; charIndex < start + validTabLength - 1; charIndex += tabSize)
             {
+                if(charIndex + tabSize >= text.Length)
+                {
+                    break;
+                }
                 var cutout = text.Substring(charIndex, tabSize);
                 var tabCutOut = text.Substring(charIndex, 1);
                 if (this.validator.IsValidIndent(cutout))

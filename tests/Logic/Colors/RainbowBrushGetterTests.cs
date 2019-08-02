@@ -53,6 +53,13 @@ namespace IndentRainbow.LogicTests.Colors
         }
 
         [Test]
+        public void GetColorByIndex_EmptyCollectionHandling()
+        {
+            this.brushGetter.brushes = new Brush[0];
+            Assert.IsNull(this.brushGetter.GetColorByIndex(1));
+        }
+
+        [Test]
         public void GetErrorBrush_ExpectedBehaviour()
         {
             Assert.NotNull(new RainbowBrushGetter().GetErrorBrush());

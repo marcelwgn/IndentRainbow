@@ -16,6 +16,10 @@ namespace IndentRainbow.Logic.Parser
         public static Dictionary<string, int> CreateDictionaryFromString(string input)
         {
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            if(input is null)
+            {
+                return dictionary;
+            }
             string[] entries = input.Split(';');
             foreach (string s in entries)
             {

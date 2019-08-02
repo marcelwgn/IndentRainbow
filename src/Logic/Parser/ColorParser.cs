@@ -14,6 +14,10 @@ namespace IndentRainbow.Logic.Parser
         /// <returns></returns>
         public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier)
         {
+            if(colors is null || colors.Equals(""))
+            {
+                return new Brush[] { };
+            }
             string[] splitColors = colors.Split(',');
             int colorCount = splitColors.Length;
             List<Brush> brushes = new List<Brush>();
@@ -36,9 +40,12 @@ namespace IndentRainbow.Logic.Parser
 
         public static Brush ConvertStringToBrush(string color, double opacityMultiplier)
         {
+            if(color is null || color.Equals(""))
+            {
+                return null;
+            }
             try
             {
-
                 var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 double alphaOfBrush = (brush.Color.A);
                 var brushColor = brush.Color;

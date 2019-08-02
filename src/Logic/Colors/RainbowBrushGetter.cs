@@ -24,6 +24,10 @@ namespace IndentRainbow.Logic.Colors
             {
                 throw new ArgumentOutOfRangeException("rainbowIndex");
             }
+            if(this.brushes.Length == 0)
+            {
+                return null;
+            }
             int index = rainbowIndex % this.brushes.Length;
             return this.brushes[index];
         }

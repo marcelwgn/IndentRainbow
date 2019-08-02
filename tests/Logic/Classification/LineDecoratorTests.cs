@@ -142,5 +142,23 @@ namespace IndentRainbow.LogicTests.Classification
                 Times.Never()
             );
         }
+
+        [Test]
+        [TestCase(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 4 })]
+        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 1 })]
+        [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 4 })]
+        [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 4 })]
+        public void DecorateLineTests_NoErrorDetection_ErrorBehaviours(string text, int start, int end, int[] spans)
+        {
+            this.decorator.detectErrors = false;
+            this.decorator.DecorateLine(text, start, end);
+
+            this.mocker.Verify<IBackgroundTextIndexDrawer>(
+                p => p.DrawBackground(
+                    spans[0], spans[1],
+                    It.IsAny<Brush>()),
+                Times.Once()
+            );
+        }
     }
 }

@@ -69,6 +69,18 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         public override void SaveSettingsToStorage()
         {
+            if(this.FileSpecificIndentSizes is null)
+            {
+                this.FileSpecificIndentSizes = "";
+            }
+            if(this.Colors is null)
+            {
+                this.Colors = "";
+            }
+            if(this.ErrorColor is null)
+            {
+                this.ErrorColor = "";
+            }
             ThreadHelper.ThrowIfNotOnUIThread();
             OptionsManager.SaveSettings(this.IndentSize,this.FileSpecificIndentSizes, this.Colors, this.OpacityMultiplier, this.ErrorColor, this.HighglightErrors);
         }

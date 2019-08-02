@@ -36,8 +36,9 @@ namespace IndentRainbow.LogicTests.Colors
                 new SolidColorBrush(Color.FromArgb(0x20,255,255,0)),
                 new SolidColorBrush(Color.FromArgb(0x20,0,255,255)),
                 new SolidColorBrush(Color.FromArgb(0x20,255,0,255)),
-            }
-
+            },
+            new Brush[]{ },
+            new Brush[]{null}
         };
 
 
@@ -47,6 +48,8 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 2)]
         [TestCase("#40FFFF00,#4000FFFF,#40FF00FF", 0.5, 3)]
         [TestCase("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
+        [TestCase(null, 0, 4)]
+        [TestCase("", 0, 4)]
         public void ConvertStringToBrushArray_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush[] result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier);
@@ -65,12 +68,17 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#409933FF", 1.0, 2)]
         [TestCase("#40FFFF00", 0.5, 3)]
         [TestCase("#60FFFF00", 1.0 / 3.0, 3)]
+        [TestCase(null, 0, 5)]
+        [TestCase("", 0, 5)]
         public void ConvertStringToBrush_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
             Brush solution = solutions[solutionIndex][0];
-
-                Assert.AreEqual(solution.ToString(), result.ToString());
+            if(result is null && solution is null)
+            {
+                return;
+            }
+            Assert.AreEqual(solution.ToString(), result.ToString());
         }
     }
 }
