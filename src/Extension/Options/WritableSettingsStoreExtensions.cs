@@ -8,6 +8,7 @@ namespace IndentRainbow.Extension.Options
 
         public const string collectionName = "IndentRainbow";
         public const string indentSizePropertyName = "IndentSize";
+        public const string fileExtensionSizesPropertyName = "FileExtensionSizes";
         public const string colorsPropertyName = "Colors";
         public const string opacityMultiplierPropertyName = "OpacityMultiplier";
         public const string detectErrorsPropertyName = "DetectErrors";
@@ -21,6 +22,16 @@ namespace IndentRainbow.Extension.Options
         public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
         {
             store.SetInt32(collectionName, indentSizePropertyName, indentSize);
+        }
+
+        /// <summary>
+        /// Saves the file extensions string to the store
+        /// </summary>
+        /// <param name="store">The store to use</param>
+        /// <param name="fileExtensions">The file extensions string</param>
+        public static void SaveFileExtensionsIndentSizes(this WritableSettingsStore store, string fileExtensions)
+        {
+            store.SetString(collectionName, fileExtensionSizesPropertyName, fileExtensions);
         }
 
         /// <summary>
@@ -77,6 +88,23 @@ namespace IndentRainbow.Extension.Options
             } else
             {
                 return store.GetInt32(collectionName, indentSizePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// Loads the file extensions string from store
+        /// </summary>
+        /// <param name="store">The store to use</param>
+        /// <returns>The file extensions string stored or if not found, the default indent size</returns>
+        public static string LoadFileExtensionsIndentSizes(this WritableSettingsStore store)
+        {
+            if (!store.PropertyExists(collectionName, fileExtensionSizesPropertyName))
+            {
+                store.SaveFileExtensionsIndentSizes(DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes);
+                return DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes;
+            } else
+            {
+                return store.GetString(collectionName, fileExtensionSizesPropertyName);
             }
         }
 

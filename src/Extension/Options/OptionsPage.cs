@@ -19,6 +19,14 @@ namespace IndentRainbow.Extension.Options
         [Description("The amount of spaces used for indentation")]
         public int IndentSize { get; set; }
 
+        [Category("Indentation")]
+        [DisplayName("File specific indent sizes")]
+        [Description("The amount of spaces used based on the file extensions. " +
+            "File extensions should be specified in the format " +
+            "'file-extensions':'indent-size';'next-file-extension':'next-indent-size';" +
+            "For example: 'cs:4;js:2'")]
+        public string FileSpecificIndentSizes { get; set; }
+
 
         [Category("Colors")]
         [DisplayName("Colors list")]
@@ -62,7 +70,7 @@ namespace IndentRainbow.Extension.Options
         public override void SaveSettingsToStorage()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            OptionsManager.SaveSettings(this.IndentSize, this.Colors, this.OpacityMultiplier, this.ErrorColor, this.HighglightErrors);
+            OptionsManager.SaveSettings(this.IndentSize,this.FileSpecificIndentSizes, this.Colors, this.OpacityMultiplier, this.ErrorColor, this.HighglightErrors);
         }
     }
 }

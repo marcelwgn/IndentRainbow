@@ -1,4 +1,4 @@
-using IndentRainbow.Logic.Colors;
+using IndentRainbow.Logic.Parser;
 using NUnit.Framework;
 using System.Windows.Media;
 

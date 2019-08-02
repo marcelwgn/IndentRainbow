@@ -44,7 +44,8 @@
   <ItemGroup>
     <Compile Include="Classification\IndentValidatorTests.cs" />
     <Compile Include="Classification\LineDecoratorTests.cs" />
-    <Compile Include="Colors\ColorParserTests.cs" />
+    <Compile Include="Parser\ColorParserTests.cs" />
+    <Compile Include="Parser\LanguageParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Colors\RainbowBrushGetterTests.cs" />
   </ItemGroup>

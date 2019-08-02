@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace IndentRainbow.Logic.Colors
+namespace IndentRainbow.Logic.Parser
 {
     public static class ColorParser
     {
