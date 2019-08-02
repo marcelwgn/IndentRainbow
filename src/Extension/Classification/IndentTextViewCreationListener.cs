@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Text.Editor;
+﻿using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
@@ -27,6 +28,12 @@ namespace IndentRainbow.Extension
 
 #pragma warning restore 649, 169
 
+        /// <summary>
+        /// The text document factory that will be used to determine the file name of the text editor, the indent extension is currently processing
+        /// </summary>
+        [Import]
+        public ITextDocumentFactoryService textDocumentFactory { get; set; }
+
         #region IWpfTextViewCreationListener
 
         /// <summary>
@@ -37,7 +44,7 @@ namespace IndentRainbow.Extension
         public void TextViewCreated(IWpfTextView textView)
         {
             // The adornment will listen to any event that changes the layout (text changes, scrolling, etc)
-            new Indent(textView);
+            new Indent(textView,textDocumentFactory);
         }
 
         #endregion

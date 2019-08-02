@@ -3,6 +3,7 @@ using IndentRainbow.Extension.Options;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using System;
@@ -50,7 +51,7 @@ namespace IndentRainbow.Extension
         /// <param name="view">Text view to create the adornment for</param>
         //Ignoring warning since this adornment is always on UI thread
 #pragma warning disable VSTHRD010
-        public Indent(IWpfTextView view)
+        public Indent(IWpfTextView view, ITextDocumentFactoryService textDocumentFactory)
         {
             if (view == null)
             {
@@ -70,6 +71,21 @@ namespace IndentRainbow.Extension
             this.validator = new IndentValidator(
                 OptionsManager.indentSize.Get()
             );
+
+
+            ITextDocument textDocument;
+            var result = textDocumentFactory.TryGetTextDocument(this.view.TextBuffer, out textDocument);
+            if (result)
+            {
+                var filePath = textDocument.FilePath;
+                var filePathSplit = filePath.Split('.');
+                var extension = filePathSplit[filePathSplit.Length - 1];
+                if (OptionsManager.fileExtensionsDictionary.Get().ContainsKey(extension))
+                {
+                    this.validator = new IndentValidator(OptionsManager.fileExtensionsDictionary.Get()[extension]);
+                }
+            }
+
             this.decorator = new LineDecorator(
                 this.drawer, this.colorGetter, this.validator)
             {
