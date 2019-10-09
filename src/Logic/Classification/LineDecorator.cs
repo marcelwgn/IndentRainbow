@@ -56,7 +56,7 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (int charIndex = start; charIndex < start + validTabLength - 1; charIndex += tabSize)
+            for (int charIndex = start; charIndex < start + validTabLength ; charIndex += tabSize)
             {
                 if(charIndex + tabSize >= text.Length)
                 {
