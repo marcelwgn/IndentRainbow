@@ -24,7 +24,7 @@
         {
             string cleaned = text.Replace("\t", "");
             //String only consists of tabs, is valid thus return false;
-            if (cleaned.Length == 0)
+            if (cleaned.Length == 0 || cleaned[0] != ' ')
             {
                 return false;
             }

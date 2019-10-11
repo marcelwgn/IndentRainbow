@@ -56,22 +56,30 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (int charIndex = start; charIndex < start + validTabLength ; charIndex += tabSize)
+            for (int charIndex = start; charIndex < start + validTabLength ; )
             {
-                if(charIndex + tabSize >= text.Length)
+                if(charIndex + tabSize >= text.Length )
                 {
-                    break;
+                    if(text[charIndex] != '\t')
+                    {
+                        return;
+                    }
+                    this.drawer.DrawBackground(charIndex, 1, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    charIndex++;
+                    rainbowIndex++;
+                    continue;
                 }
                 var cutout = text.Substring(charIndex, tabSize);
                 var tabCutOut = text.Substring(charIndex, 1);
                 if (this.validator.IsValidIndent(cutout))
                 {
                     this.drawer.DrawBackground(charIndex, tabSize, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    charIndex += tabSize;
                     rainbowIndex++;
                 } else if (this.validator.IsValidIndent(tabCutOut))
                 {
                     this.drawer.DrawBackground(charIndex, 1, this.colorGetter.GetColorByIndex(rainbowIndex));
-                    charIndex -= (tabSize - 1);
+                    charIndex++;
                     rainbowIndex++;
                 } else
                 {
@@ -130,14 +138,14 @@ namespace IndentRainbow.Logic.Classification
             {
                 //Checking if the last rest of the text is a valid indent
                 var cutOut = text.Substring(charIndex, end - charIndex);
+                int index = 0;
+                while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
+                {
+                    index++;
+                    validTabLength++;
+                }
                 if (this.validator.IsIncompleteIndent(cutOut))
                 {
-                    int index = 0;
-                    while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
-                    {
-                        index++;
-                        validTabLength++;
-                    }
                     validTabLength *= -1;
                 }
             }
