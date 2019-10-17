@@ -86,11 +86,23 @@ namespace IndentRainbow.Extension
                 }
             }
 
-            this.decorator = new LineDecorator(
-                this.drawer, this.colorGetter, this.validator)
+            if(OptionsManager.highlightingMode.Get() == HighlightingMode.Alternating)
             {
-                detectErrors = OptionsManager.detectErrors.Get()
-            };
+                this.decorator = new AlternatingLineDecorator(
+                    this.drawer, this.colorGetter, this.validator)
+                {
+                    detectErrors = OptionsManager.detectErrors.Get()
+                };
+            }
+            if(OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
+            {
+                this.decorator = new MonocolorLineDecorator(
+                    this.drawer, this.colorGetter, this.validator)
+                {
+                    detectErrors = OptionsManager.detectErrors.Get()
+                };
+            }
+
         }
 
         /// <summary>

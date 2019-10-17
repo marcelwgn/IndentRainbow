@@ -10,7 +10,7 @@ using System.Windows.Media;
 namespace IndentRainbow.LogicTests.Classification
 {
     [TestFixture]
-    public class LineDecoratorTests
+    public class AlternatingLineDecoratorTests
     {
         /// <summary>
         /// Four Space Indent constant;
@@ -20,7 +20,7 @@ namespace IndentRainbow.LogicTests.Classification
         private const string TABI = "\t";
 
         private AutoMoqer mocker;
-        private LineDecorator decorator;
+        private AlternatingLineDecorator decorator;
         private readonly IndentValidator validator = new IndentValidator(4);
         private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
 
@@ -34,12 +34,12 @@ namespace IndentRainbow.LogicTests.Classification
 
             this.mocker.SetInstance<IRainbowBrushGetter>(this.rainbowgetter);
 
-            this.decorator = this.mocker.Resolve<LineDecorator>();
+            this.decorator = this.mocker.Resolve<AlternatingLineDecorator>();
         }
 
         [Test]
-        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9 })]
-        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 4 })]
+        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9,13 })]
+        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 1,5 })]
         [TestCase(TABI + "123456789", 0, 10, new int[] { 0, 1 })]
         [TestCase(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 1, 2, 3 })]
         [TestCase(TABI +  "1", 0, 2, new int[] { 0, 1 })]

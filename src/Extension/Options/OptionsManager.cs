@@ -51,6 +51,11 @@ namespace IndentRainbow.Extension.Options
         public static OptionsField<double> opacityMultiplier = new OptionsField<double>(DefaultRainbowIndentOptions.defaultOpacityMultiplier);
 
         /// <summary>
+        /// The highlighting mode that should be used for drawing
+        /// </summary>
+        public static OptionsField<HighlightingMode> highlightingMode = new OptionsField<HighlightingMode>(DefaultRainbowIndentOptions.defaultHighlightingMode);
+
+        /// <summary>
         /// The detect error flag which determines wether errors will be highlighted
         /// </summary>
         public static OptionsField<bool> detectErrors = new OptionsField<bool>(DefaultRainbowIndentOptions.defaultDetectErrorsFlag);
@@ -76,8 +81,6 @@ namespace IndentRainbow.Extension.Options
         public static OptionsField<Brush> errorBrush = new OptionsField<Brush>(
             ColorParser.ConvertStringToBrush(DefaultRainbowIndentOptions.defaultErrorColor, DefaultRainbowIndentOptions.defaultOpacityMultiplier));
 
-
-
         /// <summary>
         /// Loads the settings from the settings store
         /// </summary>
@@ -90,6 +93,7 @@ namespace IndentRainbow.Extension.Options
                 indentSize.Set(settingsStore.LoadIndentSize());
                 colors.Set(settingsStore.LoadColors());
                 opacityMultiplier.Set(settingsStore.LoadOpacityMultiplier());
+                highlightingMode.Set(settingsStore.LoadHighlightingMode());
                 errorColor.Set(settingsStore.LoadErrorColor());
                 detectErrors.Set(settingsStore.LoadDetectErrorsFlag());
                 fileExtensionsString.Set(settingsStore.LoadFileExtensionsIndentSizes());
@@ -106,7 +110,7 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="indentSize">The indent size specifiyng the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
-        public static void SaveSettings(int indentSize,string fileExtensionsString, string colors, double opacityMultiplier, string errorColor, bool detectError)
+        public static void SaveSettings(int indentSize,string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode,string errorColor, bool detectError)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var settingsStore = GetWritableSettingsStore();
@@ -114,17 +118,20 @@ namespace IndentRainbow.Extension.Options
             settingsStore.SaveFileExtensionsIndentSizes(fileExtensionsString);
             settingsStore.SaveColors(colors);
             settingsStore.SaveOpacityMultiplier(opacityMultiplier);
+            settingsStore.SaveHighlightingMode(highlightingmode);
             settingsStore.SaveDetectErrorsFlag(detectError);
             settingsStore.SaveErrorColor(errorColor);
+
             OptionsManager.indentSize.Set(indentSize);
             OptionsManager.fileExtensionsString.Set(fileExtensionsString);
-            OptionsManager.fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString));
+            fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString));
             OptionsManager.colors.Set(colors);
-            OptionsManager.brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier));
+            brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier));
             OptionsManager.opacityMultiplier.Set(opacityMultiplier);
+            OptionsManager.highlightingMode.Set(highlightingmode);
             OptionsManager.errorColor.Set(errorColor);
-            OptionsManager.detectErrors.Set(detectError);
-            OptionsManager.errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor, opacityMultiplier));
+            detectErrors.Set(detectError);
+            errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor, opacityMultiplier));
         }
     }
 }

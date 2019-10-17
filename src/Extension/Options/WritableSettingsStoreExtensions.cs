@@ -10,6 +10,7 @@ namespace IndentRainbow.Extension.Options
         public const string indentSizePropertyName = "IndentSize";
         public const string fileExtensionSizesPropertyName = "FileExtensionSizes";
         public const string colorsPropertyName = "Colors";
+        public const string highlightingModePropertyName = "HighlightingMode";
         public const string opacityMultiplierPropertyName = "OpacityMultiplier";
         public const string detectErrorsPropertyName = "DetectErrors";
         public const string errorColorPropertyName = "ErrorColor";
@@ -52,6 +53,16 @@ namespace IndentRainbow.Extension.Options
         public static void SaveOpacityMultiplier(this WritableSettingsStore store, double opacityMultiplier)
         {
             store.SetString(collectionName, opacityMultiplierPropertyName, opacityMultiplier.ToString());
+        }
+
+        /// <summary>
+        /// Saves the highlightingMode
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="highlightingMode">The highlightingmode to  save</param>
+        public static void SaveHighlightingMode(this WritableSettingsStore store, HighlightingMode highlightingMode)
+        {
+            store.SetString(collectionName, highlightingModePropertyName, highlightingMode.ToString());
         }
 
         /// <summary>
@@ -136,12 +147,33 @@ namespace IndentRainbow.Extension.Options
             if (!store.PropertyExists(collectionName, opacityMultiplierPropertyName))
             {
                 store.SaveOpacityMultiplier(opacMultiplier);
-            } else
+            }
+            else
             {
                 Double.TryParse(store.GetString(collectionName, opacityMultiplierPropertyName), out opacMultiplier);
             }
             return opacMultiplier;
 
+        }        
+        
+        /// <summary>
+        /// Loads the opacity multiplier
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The opacity multiplier or if not found, the default opacity multiplier</returns>
+        public static HighlightingMode LoadHighlightingMode(this WritableSettingsStore store)
+        {
+            var highlightingMode = DefaultRainbowIndentOptions.defaultHighlightingMode;
+            if (!store.PropertyExists(collectionName, highlightingModePropertyName))
+            {
+                store.SaveHighlightingMode(highlightingMode);
+            }
+            else
+            {
+                highlightingMode = (HighlightingMode)Enum.Parse(typeof(HighlightingMode),
+                    store.GetString(collectionName,highlightingModePropertyName));
+            }
+            return highlightingMode;
         }
 
         /// <summary>

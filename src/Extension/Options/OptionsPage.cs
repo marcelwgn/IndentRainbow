@@ -39,6 +39,11 @@ namespace IndentRainbow.Extension.Options
         [Description("The opacity that will be applied to all colors. If the color has an opacity of 0.5 and this value is 0.5, the color will be drawn with an opacity of 0.25")]
         public double OpacityMultiplier { get; set; }
 
+        [Category("Colors")]
+        [DisplayName("Highlighting mode")]
+        [Description("Determines wether to alternate between the colors in a single with every indent or use the color of the last indent level for the whole indentation block.")]
+        public HighlightingMode HighlightingMode { get; set; } 
+
         [Category("Error highlighting")]
         [DisplayName("Highlight wrong indentation")]
         [Description("Determines wether wrong/faulty indentation will be detected and highlighted or wether it should be treated as correct indentation")]
@@ -48,7 +53,6 @@ namespace IndentRainbow.Extension.Options
         [DisplayName("Wrong indententation color")]
         [Description("The color that will be used to draw, when the indentation is faulty/incomplete")]
         public string ErrorColor { get; set; }
-
 
         /// <summary>
         /// Loads the settings for this form from storage and sets the values.
@@ -62,6 +66,7 @@ namespace IndentRainbow.Extension.Options
             this.OpacityMultiplier = OptionsManager.opacityMultiplier.Get();
             this.HighglightErrors = OptionsManager.detectErrors.Get();
             this.ErrorColor = OptionsManager.errorColor.Get();
+            this.HighlightingMode = OptionsManager.highlightingMode.Get();
         }
 
         /// <summary>
@@ -82,7 +87,13 @@ namespace IndentRainbow.Extension.Options
                 this.ErrorColor = "";
             }
             ThreadHelper.ThrowIfNotOnUIThread();
-            OptionsManager.SaveSettings(this.IndentSize,this.FileSpecificIndentSizes, this.Colors, this.OpacityMultiplier, this.ErrorColor, this.HighglightErrors);
+            OptionsManager.SaveSettings(this.IndentSize, 
+                this.FileSpecificIndentSizes,
+                this.Colors,
+                this.OpacityMultiplier,
+                this.HighlightingMode,
+                this.ErrorColor,
+                this.HighglightErrors);
         }
     }
 }
