@@ -42,6 +42,7 @@
     <OutputPath>bin\dsa\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classification\MonocolorLineDecoratorTests.cs" />
     <Compile Include="Classification\IndentValidatorTests.cs" />
     <Compile Include="Classification\AlternatingLineDecoratorTests.cs" />
     <Compile Include="Parser\ColorParserTests.cs" />

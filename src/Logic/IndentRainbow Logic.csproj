@@ -51,6 +51,7 @@
     <Compile Include="Classification\IIndentValidator.cs" />
     <Compile Include="Classification\ILineDecorator.cs" />
     <Compile Include="Classification\IndentValidator.cs" />
+    <Compile Include="Classification\MonocolorLineDecorator.cs" />
     <Compile Include="Parser\LanguageParser.cs" />
     <Compile Include="Classification\AlternatingLineDecorator.cs" />
     <Compile Include="Parser\ColorParser.cs" />
