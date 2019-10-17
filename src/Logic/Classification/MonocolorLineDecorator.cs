@@ -30,7 +30,7 @@ namespace IndentRainbow.Logic.Classification
                 throw new ArgumentException("Start index must be lower than end index");
             }
 
-            int rainbowIndex = 0;
+            int rainbowIndex = -1;
             int validTabLength = GetIndentLengthIfValid(text, start, end);
 
             if (validTabLength == 0)

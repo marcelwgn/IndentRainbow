@@ -38,8 +38,8 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9 })]
-        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 4 })]
+        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9,13 })]
+        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 1,5 })]
         [TestCase(TABI + "123456789", 0, 10, new int[] { 0, 1 })]
         [TestCase(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 1, 2, 3 })]
         [TestCase(TABI +  "1", 0, 2, new int[] { 0, 1 })]

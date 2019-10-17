@@ -38,17 +38,17 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 13 })]
-        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 5 })]
-        [TestCase(TABI + "123456789", 0, 10, new int[] { 0, 1 })]
-        [TestCase(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 3 })]
-        [TestCase(TABI +  "1", 0, 2, new int[] { 0, 1 })]
-        [TestCase(TABI + TABI + TABI + "1", 0, 4, new int[] { 0, 3 })]
-        [TestCase(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 0, 8, new int[] { 0, 7 })]
-        [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
-        [TestCase("", 0, 0, new int[] { })]
-        [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 18 })]
-        public void DecorateLineTests_IndexTesting_ExpectedBehaviour(string text, int start, int end, int[] spans)
+        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 13 },4)]
+        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 5 },2)]
+        [TestCase(TABI + "123456789", 0, 10, new int[] { 0, 1 },1)]
+        [TestCase(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 3 },3)]
+        [TestCase(TABI +  "1", 0, 2, new int[] { 0, 1 },1)]
+        [TestCase(TABI + TABI + TABI + "1", 0, 4, new int[] { 0, 3 },3)]
+        [TestCase(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 0, 8, new int[] { 0, 7 },7)]
+        [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 },1)]
+        [TestCase("", 0, 0, new int[] { },-1)]
+        [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 18 },2)]
+        public void DecorateLineTests_IndexTesting_ExpectedBehaviour(string text, int start, int end, int[] spans,int colorIndex)
         {
             this.decorator.DecorateLine(text, start, end);
             
@@ -59,7 +59,7 @@ namespace IndentRainbow.LogicTests.Classification
                 this.mocker.Verify<IBackgroundTextIndexDrawer>(
                     p => p.DrawBackground(
                         spans[0], It.IsIn(correctLength),
-                        It.IsAny<Brush>()),
+                        rainbowgetter.GetColorByIndex(colorIndex)),
                     Times.Once()
                 );
             }
