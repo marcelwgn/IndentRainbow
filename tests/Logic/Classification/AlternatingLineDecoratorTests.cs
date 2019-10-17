@@ -10,7 +10,7 @@ using System.Windows.Media;
 namespace IndentRainbow.LogicTests.Classification
 {
     [TestFixture]
-    public class LineDecoratorTests
+    public class AlternatingLineDecoratorTests
     {
         /// <summary>
         /// Four Space Indent constant;
@@ -20,7 +20,7 @@ namespace IndentRainbow.LogicTests.Classification
         private const string TABI = "\t";
 
         private AutoMoqer mocker;
-        private LineDecorator decorator;
+        private AlternatingLineDecorator decorator;
         private readonly IndentValidator validator = new IndentValidator(4);
         private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
 
@@ -34,7 +34,7 @@ namespace IndentRainbow.LogicTests.Classification
 
             this.mocker.SetInstance<IRainbowBrushGetter>(this.rainbowgetter);
 
-            this.decorator = this.mocker.Resolve<LineDecorator>();
+            this.decorator = this.mocker.Resolve<AlternatingLineDecorator>();
         }
 
         [Test]
