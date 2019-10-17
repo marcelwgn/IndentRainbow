@@ -96,7 +96,11 @@ namespace IndentRainbow.Extension
             }
             if(OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
             {
-
+                this.decorator = new MonocolorLineDecorator(
+                    this.drawer, this.colorGetter, this.validator)
+                {
+                    detectErrors = OptionsManager.detectErrors.Get()
+                };
             }
 
         }
