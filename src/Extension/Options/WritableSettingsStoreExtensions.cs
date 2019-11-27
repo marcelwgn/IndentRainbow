@@ -202,7 +202,7 @@ namespace IndentRainbow.Extension.Options
         public static string LoadErrorColor(this WritableSettingsStore store)
         {
             var errorColor = DefaultRainbowIndentOptions.defaultErrorColor;
-            if (!store.PropertyExists(collectionName, errorColor))
+            if (!store.PropertyExists(collectionName, errorColorPropertyName))
             {
                 store.SaveErrorColor(errorColor);
             } else
