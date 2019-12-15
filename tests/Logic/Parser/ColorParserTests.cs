@@ -1,5 +1,6 @@
 using IndentRainbow.Logic.Parser;
 using NUnit.Framework;
+using System;
 using System.Windows.Media;
 
 namespace IndentRainbow.LogicTests.Colors
@@ -37,7 +38,7 @@ namespace IndentRainbow.LogicTests.Colors
                 new SolidColorBrush(Color.FromArgb(0x20,0,255,255)),
                 new SolidColorBrush(Color.FromArgb(0x20,255,0,255)),
             },
-            new Brush[]{ },
+            Array.Empty<Brush>(),
             new Brush[]{null}
         };
 
@@ -50,7 +51,7 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
         [TestCase(null, 0, 4)]
         [TestCase("", 0, 4)]
-        public void ConvertStringToBrushArray_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
+        public void ConvertStringToBrushArray_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush[] result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier);
             Brush[] solution = solutions[solutionIndex];
@@ -70,11 +71,11 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#60FFFF00", 1.0 / 3.0, 3)]
         [TestCase(null, 0, 5)]
         [TestCase("", 0, 5)]
-        public void ConvertStringToBrush_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
+        public void ConvertStringToBrush_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
             Brush solution = solutions[solutionIndex][0];
-            if(result is null && solution is null)
+            if (result is null && solution is null)
             {
                 return;
             }

@@ -14,7 +14,7 @@ namespace IndentRainbow.Logic.Parser
         /// <returns></returns>
         public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier)
         {
-            if(colors is null || colors.Equals(""))
+            if (string.IsNullOrEmpty(colors))
             {
                 return new Brush[] { };
             }
@@ -26,13 +26,14 @@ namespace IndentRainbow.Logic.Parser
             {
                 try
                 {
-                    var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(splitColors[i]));
+                    SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(splitColors[i]));
                     double alphaOfBrush = (brush.Color.A);
-                    var color = brush.Color;
+                    Color color = brush.Color;
                     color.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
                     brush.Color = color;
                     brushes.Add(brush);
-                } catch (FormatException) { }
+                }
+                catch (FormatException) { }
             }
 
             return brushes.ToArray();
@@ -40,19 +41,20 @@ namespace IndentRainbow.Logic.Parser
 
         public static Brush ConvertStringToBrush(string color, double opacityMultiplier)
         {
-            if(color is null || color.Equals(""))
+            if (string.IsNullOrEmpty(color))
             {
                 return null;
             }
             try
             {
-                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 double alphaOfBrush = (brush.Color.A);
-                var brushColor = brush.Color;
+                Color brushColor = brush.Color;
                 brushColor.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
                 brush.Color = brushColor;
                 return brush;
-            } catch (NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
                 return null;
             }

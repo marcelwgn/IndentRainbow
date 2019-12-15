@@ -1,0 +1,19 @@
+<Project>
+
+  <!-- Output paths -->
+  <PropertyGroup>
+    <BaseOutputPath>..\..\artifacts\$(Configuration)\</BaseOutputPath>
+
+    <OutputPath>$(BaseOutputPath)\$(MSBuildProjectName)\</OutputPath>
+    <!--<BaseIntermediateOutputPath>..\..\artifacts\intermediates\$(Configuration)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>-->
+    <IntermediateOutputPath>..\..\artifacts\intermediates\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <GeneratedFilesDir>..\..\artifacts\intermediates\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+  </PropertyGroup>
+  
+  <!-- Packages needed in every project -->
+  <ItemGroup>
+    <!-- Code analyzer -->
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+    </PackageReference>
+  </ItemGroup>
+</Project>

@@ -24,6 +24,7 @@ namespace IndentRainbow.Extension
         [Export(typeof(AdornmentLayerDefinition))]
         [Name("Indent")]
         [Order(After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Text)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Visual Studio")]
         private readonly AdornmentLayerDefinition editorAdornmentLayer;
 
 #pragma warning restore 649, 169
@@ -32,7 +33,7 @@ namespace IndentRainbow.Extension
         /// The text document factory that will be used to determine the file name of the text editor, the indent extension is currently processing
         /// </summary>
         [Import]
-        public ITextDocumentFactoryService textDocumentFactory { get; set; }
+        public ITextDocumentFactoryService TextDocumentFactory { get; set; }
 
         #region IWpfTextViewCreationListener
 
@@ -44,7 +45,10 @@ namespace IndentRainbow.Extension
         public void TextViewCreated(IWpfTextView textView)
         {
             // The adornment will listen to any event that changes the layout (text changes, scrolling, etc)
-            new Indent(textView,textDocumentFactory);
+            // When we created the adornment,we don't need a reference anymore, since everything necessary is done when the object is created
+#pragma warning disable CA1806 // Do not ignore method results
+            new Indent(textView, TextDocumentFactory);
+#pragma warning restore CA1806 // Do not ignore method results
         }
 
         #endregion

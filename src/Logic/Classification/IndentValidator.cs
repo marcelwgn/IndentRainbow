@@ -3,8 +3,8 @@
     public class IndentValidator : IIndentValidator
     {
 
-        public string indentation = "    ";
-        public string tab = "\t";
+        private readonly string Indentation = "    ";
+        public const string TabString = "\t";
         public IndentValidator(int indentSize)
         {
             string accumulator = "";
@@ -12,17 +12,17 @@
             {
                 accumulator += " ";
             }
-            this.indentation = accumulator;
+            Indentation = accumulator;
         }
 
         public int GetIndentBlockLength()
         {
-            return this.indentation.Length;
+            return Indentation.Length;
         }
 
         public bool IsIncompleteIndent(string text)
         {
-            string cleaned = text.Replace("\t", "");
+            string cleaned = text?.Replace("\t", "");
             //String only consists of tabs, is valid thus return false;
             if (cleaned.Length == 0 || cleaned[0] != ' ')
             {
@@ -36,15 +36,16 @@
             // Checking if first character is 
             if (cleaned[0] == ' ')
             {
-                return !this.IsValidIndent(text);
+                return !IsValidIndent(text);
             }
             return false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public bool IsValidIndent(string text)
         {
-            if (text.Equals(this.indentation)
-                || text.Equals(this.tab))
+            if (text.Equals(Indentation, System.StringComparison.InvariantCultureIgnoreCase)
+                || text.Equals(TabString, System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }

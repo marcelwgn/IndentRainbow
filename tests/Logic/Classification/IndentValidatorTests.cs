@@ -1,14 +1,13 @@
-using AutoMoq;
 using IndentRainbow.Logic.Classification;
 using NUnit.Framework;
 
 namespace IndentRainbow.LogicTests.Classification
 {
     [TestFixture]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
     public class IndentValidatorTests
     {
 
-        private readonly AutoMoqer mocker = new AutoMoqer();
         private IndentValidator validator;
         private const string FSI = "    ";
         private const string TABI = "\t";
@@ -16,19 +15,7 @@ namespace IndentRainbow.LogicTests.Classification
         [SetUp]
         public void Setup()
         {
-            this.validator = new IndentValidator(0);
-        }
-
-        [Test]
-        [TestCase(4, FSI)]
-        [TestCase(2, "  ")]
-        [TestCase(8, FSI + FSI)]
-        [TestCase(0, "")]
-        public void Constructor_ExpectedBehaviours(int indentSize, string correctIndentString)
-        {
-            this.validator = new IndentValidator(indentSize);
-
-            Assert.AreEqual(correctIndentString, this.validator.indentation);
+            validator = new IndentValidator(0);
         }
 
         [Test]
@@ -39,9 +26,9 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(TABI, 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
-            this.validator.indentation = text;
+            validator = new IndentValidator(text.Length);
 
-            var result = this.validator.GetIndentBlockLength();
+            int result = validator.GetIndentBlockLength();
 
             Assert.AreEqual(length, result);
         }
@@ -57,9 +44,9 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("te  ", false)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
-            this.validator.indentation = FSI;
+            validator = new IndentValidator(FSI.Length);
 
-            var result = this.validator.IsIncompleteIndent(text);
+            bool result = validator.IsIncompleteIndent(text);
 
             Assert.AreEqual(isIncompleteIndent, result);
         }
@@ -69,11 +56,11 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(FSI + " ", false)]
         [TestCase(FSI + "d", false)]
         [TestCase("   d", false)]
-        public void IsValidIndentTests_ExpectedBehaviours(string text, bool isValidIndent)
+        public void IsValidIndentTests_ExpectedBehaviors(string text, bool isValidIndent)
         {
-            this.validator.indentation = FSI;
+            validator = new IndentValidator(FSI.Length);
 
-            var result = this.validator.IsValidIndent(text);
+            bool result = validator.IsValidIndent(text);
 
             Assert.AreEqual(isValidIndent, result);
         }

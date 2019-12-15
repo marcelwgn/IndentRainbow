@@ -18,23 +18,23 @@ namespace IndentRainbow.Extension.Drawing
         {
             this.layer = layer;
             this.view = view;
-            this.brush = new SolidColorBrush(Color.FromArgb(0x20, 0x00, 0x00, 0xff));
-            this.brush.Freeze();
+            brush = new SolidColorBrush(Color.FromArgb(0x20, 0x00, 0x00, 0xff));
+            brush.Freeze();
         }
 
         public void DrawBackground(int firstIndex, int length, Brush drawBrush)
         {
-            SnapshotSpan span = new SnapshotSpan(this.view.TextSnapshot, Span.FromBounds(firstIndex, firstIndex + length));
-            Geometry geometry = this.view.TextViewLines.GetMarkerGeometry(span);
+            SnapshotSpan span = new SnapshotSpan(view.TextSnapshot, Span.FromBounds(firstIndex, firstIndex + length));
+            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span);
             if (geometry != null)
             {
-                var drawing = new GeometryDrawing(drawBrush, null, geometry);
+                GeometryDrawing drawing = new GeometryDrawing(drawBrush, null, geometry);
                 drawing.Freeze();
 
-                var drawingImage = new DrawingImage(drawing);
+                DrawingImage drawingImage = new DrawingImage(drawing);
                 drawingImage.Freeze();
 
-                var image = new Image
+                Image image = new Image
                 {
                     Source = drawingImage,
                 };
@@ -42,7 +42,7 @@ namespace IndentRainbow.Extension.Drawing
                 // Align the image with the top of the bounds of the text geometry
                 Canvas.SetLeft(image, geometry.Bounds.Left);
                 Canvas.SetTop(image, geometry.Bounds.Top);
-                this.layer.AddAdornment(AdornmentPositioningBehavior.TextRelative, span, null, image, null);
+                layer.AddAdornment(AdornmentPositioningBehavior.TextRelative, span, null, image, null);
             }
 
         }

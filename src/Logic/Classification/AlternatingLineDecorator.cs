@@ -1,10 +1,10 @@
-﻿using IndentRainbow.Logic.Drawing;
-using IndentRainbow.Logic.Colors;
+﻿using IndentRainbow.Logic.Colors;
+using IndentRainbow.Logic.Drawing;
 using System;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public class AlternatingLineDecorator : BaseLineDecorator
+    public class AlternatingLineDecorator : LineDecoratorBase
     {
         public AlternatingLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator) : base(drawer, colorGetter, validator)
         {
@@ -19,18 +19,25 @@ namespace IndentRainbow.Logic.Classification
         /// <param name="end">The ending position of the line</param>
         public override void DecorateLine(string text, int start, int end)
         {
-            int tabSize = this.validator.GetIndentBlockLength();
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+            int tabSize = validator.GetIndentBlockLength();
             if (start < 0 || start > text.Length)
             {
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             }
             if (end < 0 || end > text.Length)
             {
-                throw new ArgumentOutOfRangeException("end");
+                throw new ArgumentOutOfRangeException(nameof(end));
             }
             if (start > end)
             {
+                // English is fine for exceptions
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
                 throw new ArgumentException("Start index must be lower than end index");
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
             }
 
 
@@ -39,7 +46,7 @@ namespace IndentRainbow.Logic.Classification
 
             if (validTabLength < 0 && detectErrors)
             {
-                this.drawer.DrawBackground(start, -validTabLength, this.colorGetter.GetErrorBrush());
+                drawer.DrawBackground(start, -validTabLength, colorGetter.GetErrorBrush());
                 return;
             }
             if (!detectErrors && validTabLength < 0)
@@ -47,38 +54,40 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (int charIndex = start; charIndex < start + validTabLength ; )
+            for (int charIndex = start; charIndex < start + validTabLength;)
             {
-                if(charIndex + tabSize >= text.Length )
+                if (charIndex + tabSize >= text.Length)
                 {
-                    if(text[charIndex] != '\t')
+                    if (text[charIndex] != '\t')
                     {
                         return;
                     }
-                    this.drawer.DrawBackground(charIndex, 1, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex));
                     charIndex++;
                     rainbowIndex++;
                     continue;
                 }
-                var cutout = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
-                if (this.validator.IsValidIndent(cutout))
+                string cutout = text.Substring(charIndex, tabSize);
+                string tabCutOut = text.Substring(charIndex, 1);
+                if (validator.IsValidIndent(cutout))
                 {
-                    this.drawer.DrawBackground(charIndex, tabSize, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    drawer.DrawBackground(charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex));
                     charIndex += tabSize;
                     rainbowIndex++;
-                } else if (this.validator.IsValidIndent(tabCutOut))
+                }
+                else if (validator.IsValidIndent(tabCutOut))
                 {
-                    this.drawer.DrawBackground(charIndex, 1, this.colorGetter.GetColorByIndex(rainbowIndex));
+                    drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex));
                     charIndex++;
                     rainbowIndex++;
-                } else
+                }
+                else
                 {
                     break;
                 }
             }
         }
 
-        
+
     }
 }

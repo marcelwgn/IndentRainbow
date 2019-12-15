@@ -1,29 +1,27 @@
 ﻿using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public abstract class BaseLineDecorator : ILineDecorator
+    public abstract class LineDecoratorBase : ILineDecorator
     {
 
-        protected readonly IBackgroundTextIndexDrawer drawer;
-        protected readonly IRainbowBrushGetter colorGetter;
-        protected readonly IIndentValidator validator;
+        internal readonly IBackgroundTextIndexDrawer drawer;
+        internal readonly IRainbowBrushGetter colorGetter;
+        internal readonly IIndentValidator validator;
+        // To make testing easier, we use a setter for this.
+#pragma warning disable CA1051 // Do not declare visible instance fields
         public bool detectErrors = true;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
-        public BaseLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
+        public LineDecoratorBase(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
         {
             this.drawer = drawer;
             this.colorGetter = colorGetter;
             this.validator = validator;
         }
 
-        public abstract void DecorateLine(string text, int start, int end);
+        public abstract void DecorateLine(string text, int startIndex, int endIndex);
 
         /// <summary>
         /// Calculates the lenght of the indentation block.
@@ -42,25 +40,25 @@ namespace IndentRainbow.Logic.Classification
         /// otherwise the valid indent length times -1</returns>
         protected int GetIndentLengthIfValid(string text, int start, int end)
         {
-            int tabSize = this.validator.GetIndentBlockLength();
+            int tabSize = validator.GetIndentBlockLength();
             int validTabLength = 0;
             int charIndex = start;
             for (; charIndex < end - tabSize + 1; charIndex += tabSize)
             {
-                var cutOut = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
-                if (this.validator.IsValidIndent(cutOut))
+                string cutOut = text.Substring(charIndex, tabSize);
+                string tabCutOut = text.Substring(charIndex, 1);
+                if (validator.IsValidIndent(cutOut))
                 {
                     validTabLength += tabSize;
                 }
-                else if (this.validator.IsValidIndent(tabCutOut))
+                else if (validator.IsValidIndent(tabCutOut))
                 {
                     charIndex -= (tabSize - 1);
                     validTabLength += 1;
                 }
                 else
                 {
-                    if (this.validator.IsIncompleteIndent(cutOut))
+                    if (validator.IsIncompleteIndent(cutOut))
                     {
                         int index = 0;
                         while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
@@ -76,14 +74,14 @@ namespace IndentRainbow.Logic.Classification
             if (end - charIndex < tabSize)
             {
                 //Checking if the last rest of the text is a valid indent
-                var cutOut = text.Substring(charIndex, end - charIndex);
+                string cutOut = text.Substring(charIndex, end - charIndex);
                 int index = 0;
                 while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
                 {
                     index++;
                     validTabLength++;
                 }
-                if (this.validator.IsIncompleteIndent(cutOut))
+                if (validator.IsIncompleteIndent(cutOut))
                 {
                     validTabLength *= -1;
                 }

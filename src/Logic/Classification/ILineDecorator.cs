@@ -3,7 +3,7 @@
     public interface ILineDecorator
     {
 
-        void DecorateLine(string text, int start, int end);
+        void DecorateLine(string text, int startIndex, int endIndex);
 
     }
 }
