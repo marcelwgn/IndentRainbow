@@ -55,7 +55,11 @@ namespace IndentRainbow.Extension
         {
             if (view == null)
             {
-                throw new ArgumentNullException("view");
+                throw new ArgumentNullException(nameof(view));
+            }
+            if(textDocumentFactory == null)
+            {
+                throw new ArgumentNullException(nameof(textDocumentFactory));
             }
             this.layer = view.GetAdornmentLayer("Indent");
 

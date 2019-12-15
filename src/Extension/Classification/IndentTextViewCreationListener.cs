@@ -44,7 +44,10 @@ namespace IndentRainbow.Extension
         public void TextViewCreated(IWpfTextView textView)
         {
             // The adornment will listen to any event that changes the layout (text changes, scrolling, etc)
+            // When we created the adornment,we don't need a reference anymore, since everything necessary is done when the object is created
+#pragma warning disable CA1806 // Do not ignore method results
             new Indent(textView,textDocumentFactory);
+#pragma warning restore CA1806 // Do not ignore method results
         }
 
         #endregion

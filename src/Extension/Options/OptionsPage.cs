@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.ComponentModel;
 
@@ -12,7 +12,10 @@ namespace IndentRainbow.Extension.Options
     /// default option pages without a package to load the settingspackage (or atleast I did not find a way).
     /// If there is a better way, PRs are appreciated :)
     /// </summary>
+    // This page gets instantiated by Visual Studio so it is used!
+#pragma warning disable CA1812 // Avoid uninstantiated internal classes
     internal class OptionsPage : DialogPage
+#pragma warning restore CA1812 // Avoid uninstantiated internal classes
     {
         [Category("Indentation")]
         [DisplayName("Indent size")]
