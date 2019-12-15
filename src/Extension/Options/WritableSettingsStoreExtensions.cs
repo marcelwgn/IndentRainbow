@@ -7,13 +7,13 @@ namespace IndentRainbow.Extension.Options
     public static class WritableSettingsStoreExtensions
     {
 
-        public const string collectionName = "IndentRainbow";
-        public const string indentSizePropertyName = "IndentSize";
-        public const string fileExtensionSizesPropertyName = "FileExtensionSizes";
-        public const string colorsPropertyName = "Colors";
-        public const string highlightingModePropertyName = "HighlightingMode";
-        public const string opacityMultiplierPropertyName = "OpacityMultiplier";
-        public const string detectErrorsPropertyName = "DetectErrors";
+        public const string CollectionName = "IndentRainbow";
+        public const string IndentSizePropertyName = "IndentSize";
+        public const string FileExtensionSizesPropertyName = "FileExtensionSizes";
+        public const string FolorsPropertyName = "Colors";
+        public const string HighlightingModePropertyName = "HighlightingMode";
+        public const string OpacityMultiplierPropertyName = "OpacityMultiplier";
+        public const string DetectErrorsPropertyName = "DetectErrors";
         public const string errorColorPropertyName = "ErrorColor";
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="indentSize">The indent size to save</param>
         public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
         {
-            store?.SetInt32(collectionName, indentSizePropertyName, indentSize);
+            store?.SetInt32(CollectionName, IndentSizePropertyName, indentSize);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="fileExtensions">The file extensions string</param>
         public static void SaveFileExtensionsIndentSizes(this WritableSettingsStore store, string fileExtensions)
         {
-            store?.SetString(collectionName, fileExtensionSizesPropertyName, fileExtensions);
+            store?.SetString(CollectionName, FileExtensionSizesPropertyName, fileExtensions);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="colors">The colors to save</param>
         public static void SaveColors(this WritableSettingsStore store, string colors)
         {
-            store?.SetString(collectionName, colorsPropertyName, colors);
+            store?.SetString(CollectionName, FolorsPropertyName, colors);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="opacityMultiplier">The opacity multiplier to save</param>
         public static void SaveOpacityMultiplier(this WritableSettingsStore store, double opacityMultiplier)
         {
-            store?.SetString(collectionName, opacityMultiplierPropertyName, opacityMultiplier.ToString(CultureInfo.CurrentCulture));
+            store?.SetString(CollectionName, OpacityMultiplierPropertyName, opacityMultiplier.ToString(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="highlightingMode">The highlightingmode to  save</param>
         public static void SaveHighlightingMode(this WritableSettingsStore store, HighlightingMode highlightingMode)
         {
-            store?.SetString(collectionName, highlightingModePropertyName, highlightingMode.ToString());
+            store?.SetString(CollectionName, HighlightingModePropertyName, highlightingMode.ToString());
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="detectErrors">The detect error flag to save</param>
         public static void SaveDetectErrorsFlag(this WritableSettingsStore store, bool detectErrors)
         {
-            store?.SetBoolean(collectionName, detectErrorsPropertyName, detectErrors);
+            store?.SetBoolean(CollectionName, DetectErrorsPropertyName, detectErrors);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace IndentRainbow.Extension.Options
         /// <param name="errorColor">The erro color to save</param>
         public static void SaveErrorColor(this WritableSettingsStore store, string errorColor)
         {
-            store?.SetString(collectionName, errorColorPropertyName, errorColor);
+            store?.SetString(CollectionName, errorColorPropertyName, errorColor);
         }
 
         /// <summary>
@@ -97,13 +97,13 @@ namespace IndentRainbow.Extension.Options
             {
                 return DefaultRainbowIndentOptions.defaultIndentSize;
             }
-            if (!store.PropertyExists(collectionName, indentSizePropertyName))
+            if (!store.PropertyExists(CollectionName, IndentSizePropertyName))
             {
                 store.SaveIndentSize(DefaultRainbowIndentOptions.defaultIndentSize);
                 return DefaultRainbowIndentOptions.defaultIndentSize;
             } else
             {
-                return store.GetInt32(collectionName, indentSizePropertyName);
+                return store.GetInt32(CollectionName, IndentSizePropertyName);
             }
         }
 
@@ -118,13 +118,13 @@ namespace IndentRainbow.Extension.Options
             {
                 return "";
             }
-            if (!store.PropertyExists(collectionName, fileExtensionSizesPropertyName))
+            if (!store.PropertyExists(CollectionName, FileExtensionSizesPropertyName))
             {
                 store.SaveFileExtensionsIndentSizes(DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes);
                 return DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes;
             } else
             {
-                return store.GetString(collectionName, fileExtensionSizesPropertyName);
+                return store.GetString(CollectionName, FileExtensionSizesPropertyName);
             }
         }
 
@@ -139,13 +139,13 @@ namespace IndentRainbow.Extension.Options
             {
                 return "";
             }
-            if (!store.PropertyExists(collectionName, colorsPropertyName))
+            if (!store.PropertyExists(CollectionName, FolorsPropertyName))
             {
                 store.SaveColors(DefaultRainbowIndentOptions.defaultColors);
                 return DefaultRainbowIndentOptions.defaultColors;
             } else
             {
-                return store.GetString(collectionName, colorsPropertyName);
+                return store.GetString(CollectionName, FolorsPropertyName);
             }
         }
 
@@ -161,7 +161,7 @@ namespace IndentRainbow.Extension.Options
             {
                 return opacMultiplier;
             }
-            if (!store.PropertyExists(collectionName, opacityMultiplierPropertyName))
+            if (!store.PropertyExists(CollectionName, OpacityMultiplierPropertyName))
             {
                 store.SaveOpacityMultiplier(opacMultiplier);
             }
@@ -169,7 +169,7 @@ namespace IndentRainbow.Extension.Options
             {
                 // No matter what happens, opacMultiplier will have a valid value as this is ensured by the input form
 #pragma warning disable CA1806 // Do not ignore method results
-                double.TryParse(store.GetString(collectionName, opacityMultiplierPropertyName), out opacMultiplier);
+                double.TryParse(store.GetString(CollectionName, OpacityMultiplierPropertyName), out opacMultiplier);
 #pragma warning restore CA1806 // Do not ignore method results
             }
             return opacMultiplier;
@@ -188,14 +188,14 @@ namespace IndentRainbow.Extension.Options
             {
                 return highlightingMode;
             }
-            if (!store.PropertyExists(collectionName, highlightingModePropertyName))
+            if (!store.PropertyExists(CollectionName, HighlightingModePropertyName))
             {
                 store.SaveHighlightingMode(highlightingMode);
             }
             else
             {
                 highlightingMode = (HighlightingMode)Enum.Parse(typeof(HighlightingMode),
-                    store.GetString(collectionName,highlightingModePropertyName));
+                    store.GetString(CollectionName,HighlightingModePropertyName));
             }
             return highlightingMode;
         }
@@ -212,12 +212,12 @@ namespace IndentRainbow.Extension.Options
             {
                 return detectErrorFlag;
             }
-            if (!store.PropertyExists(collectionName, detectErrorsPropertyName))
+            if (!store.PropertyExists(CollectionName, DetectErrorsPropertyName))
             {
                 store.SaveDetectErrorsFlag(detectErrorFlag);
             } else
             {
-                detectErrorFlag = store.GetBoolean(collectionName, detectErrorsPropertyName);
+                detectErrorFlag = store.GetBoolean(CollectionName, DetectErrorsPropertyName);
             }
             return detectErrorFlag;
         }
@@ -234,12 +234,12 @@ namespace IndentRainbow.Extension.Options
             {
                 return errorColor;
             }
-            if (!store.PropertyExists(collectionName, errorColorPropertyName))
+            if (!store.PropertyExists(CollectionName, errorColorPropertyName))
             {
                 store.SaveErrorColor(errorColor);
             } else
             {
-                errorColor = store.GetString(collectionName, errorColorPropertyName);
+                errorColor = store.GetString(CollectionName, errorColorPropertyName);
             }
             return errorColor;
         }
@@ -255,9 +255,9 @@ namespace IndentRainbow.Extension.Options
             {
                 return;
             }
-            if (!store.CollectionExists(collectionName))
+            if (!store.CollectionExists(CollectionName))
             {
-                store.CreateCollection(collectionName);
+                store.CreateCollection(CollectionName);
             }
         }
     }

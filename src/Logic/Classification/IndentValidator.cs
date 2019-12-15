@@ -4,7 +4,7 @@
     {
 
         private readonly string Indentation = "    ";
-        public const string TABSTRING = "\t";
+        public const string TabString = "\t";
         public IndentValidator(int indentSize)
         {
             string accumulator = "";
@@ -45,7 +45,7 @@
         public bool IsValidIndent(string text)
         {
             if (text.Equals(this.Indentation, System.StringComparison.InvariantCultureIgnoreCase)
-                || text.Equals(TABSTRING, System.StringComparison.InvariantCultureIgnoreCase))
+                || text.Equals(TabString, System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }

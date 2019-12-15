@@ -4,7 +4,7 @@ using System;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public class AlternatingLineDecorator : BaseLineDecorator
+    public class AlternatingLineDecorator : LineDecoratorBase
     {
         public AlternatingLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator) : base(drawer, colorGetter, validator)
         {

@@ -8,7 +8,7 @@ using IndentRainbow.Logic.Drawing;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public class MonocolorLineDecorator : BaseLineDecorator
+    public class MonocolorLineDecorator : LineDecoratorBase
     {
         public MonocolorLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator) : base(drawer, colorGetter, validator)
         {

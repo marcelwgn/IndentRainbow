@@ -51,7 +51,7 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
         [TestCase(null, 0, 4)]
         [TestCase("", 0, 4)]
-        public void ConvertStringToBrushArray_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
+        public void ConvertStringToBrushArray_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush[] result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier);
             Brush[] solution = solutions[solutionIndex];
@@ -71,7 +71,7 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase("#60FFFF00", 1.0 / 3.0, 3)]
         [TestCase(null, 0, 5)]
         [TestCase("", 0, 5)]
-        public void ConvertStringToBrush_ExpectedBehaviour(string input, double opacityMultiplier, int solutionIndex)
+        public void ConvertStringToBrush_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             Brush result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
             Brush solution = solutions[solutionIndex][0];

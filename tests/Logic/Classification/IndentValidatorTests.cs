@@ -57,7 +57,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(FSI + " ", false)]
         [TestCase(FSI + "d", false)]
         [TestCase("   d", false)]
-        public void IsValidIndentTests_ExpectedBehaviours(string text, bool isValidIndent)
+        public void IsValidIndentTests_ExpectedBehaviors(string text, bool isValidIndent)
         {
             this.validator= new IndentValidator(FSI.Length);
 

@@ -20,7 +20,7 @@ namespace IndentRainbow.LogicTests.Parser
         [TestCase(",,,cs:3", "cs:3")]
         //Checking that null does not kill the method
         [TestCase(null, "")]
-        public void CreateDictionaryFromString_ExpectedBehaviour(String input, String queriesToCheck)
+        public void CreateDictionaryFromString_ExpectedBehavior(String input, String queriesToCheck)
         {
             var dictionary = LanguageParser.CreateDictionaryFromString(input);
             string[] split = queriesToCheck.Split(',');
@@ -40,7 +40,7 @@ namespace IndentRainbow.LogicTests.Parser
         [TestCase("cs:4;js:5;jsx:6;")]
         [TestCase("cs:5;")]
         [TestCase("")]
-        public void ConvertDictionaryToString_ExpectedBehaviour(String input)
+        public void ConvertDictionaryToString_ExpectedBehavior(String input)
         {
             var dictionary = LanguageParser.CreateDictionaryFromString(input);
             string result = LanguageParser.ConvertDictionaryToString(dictionary);

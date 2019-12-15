@@ -48,7 +48,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
         [TestCase("", 0, 0, new int[] { })]
         [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 14 })]
-        public void DecorateLineTests_IndexTesting_ExpectedBehaviour(string text, int start, int end, int[] spans)
+        public void DecorateLineTests_IndexTesting_ExpectedBehavior(string text, int start, int end, int[] spans)
         {
             this.decorator.DecorateLine(text, start, end);
 
@@ -92,12 +92,11 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(FSI + "  dsadsa")]
         [TestCase(TABI + FSI + "  dsadsa")]
         [TestCase(FSI + TABI + "  dsadsa")]
-        public void DecorateLineTests_ColorTesting_ExpectedBehaviour(string text)
+        public void DecorateLineTests_ColorTesting_ExpectedBehavior(string text)
         {
-            int itCount = text.Length / FSI.Length;
             var sequence = new MockSequence();
             var colorMock = this.mocker.GetMock<IBackgroundTextIndexDrawer>();
-            for (int i = 0; i < itCount; i++)
+            for (int i = 0; i < text.Length / FSI.Length; i++)
             {
                 colorMock.InSequence(sequence).Setup(
                     p => p.DrawBackground(
@@ -110,7 +109,7 @@ namespace IndentRainbow.LogicTests.Classification
 
             this.decorator.DecorateLine(text, 0, text.Length);
 
-            for (int i = 0; i < itCount; i++)
+            for (int i = 0; i < text.Length / FSI.Length; i++)
             {
                 colorMock.InSequence(sequence).Setup(
                     p => p.DrawBackground(
@@ -128,7 +127,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
         [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
         [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
-        public void DecorateLineTests_IndexTesting_ErrorBehaviours(string text, int start, int end, int[] spans)
+        public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int start, int end, int[] spans)
         {
             this.decorator.DecorateLine(text, start, end);
 
@@ -153,7 +152,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 1 })]
         [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 4 })]
         [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 4 })]
-        public void DecorateLineTests_NoErrorDetection_ErrorBehaviours(string text, int start, int end, int[] spans)
+        public void DecorateLineTests_NoErrorDetection_ErrorBehaviors(string text, int start, int end, int[] spans)
         {
             this.decorator.detectErrors = false;
             this.decorator.DecorateLine(text, start, end);

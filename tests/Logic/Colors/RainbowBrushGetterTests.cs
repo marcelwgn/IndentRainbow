@@ -57,7 +57,7 @@ namespace IndentRainbow.LogicTests.Colors
         }
 
         [Test]
-        public void GetErrorBrush_ExpectedBehaviour()
+        public void GetErrorBrush_ExpectedBehavior()
         {
             Assert.NotNull(new RainbowBrushGetter().GetErrorBrush());
         }

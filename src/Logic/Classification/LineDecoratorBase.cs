@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public abstract class BaseLineDecorator : ILineDecorator
+    public abstract class LineDecoratorBase : ILineDecorator
     {
 
         internal readonly IBackgroundTextIndexDrawer drawer;
@@ -19,7 +19,7 @@ namespace IndentRainbow.Logic.Classification
         public bool detectErrors = true;
 #pragma warning restore CA1051 // Do not declare visible instance fields
 
-        public BaseLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
+        public LineDecoratorBase(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
         {
             this.drawer = drawer;
             this.colorGetter = colorGetter;
