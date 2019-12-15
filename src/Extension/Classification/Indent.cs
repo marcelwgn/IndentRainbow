@@ -1,4 +1,4 @@
-﻿using IndentRainbow.Extension.Drawing;
+using IndentRainbow.Extension.Drawing;
 using IndentRainbow.Extension.Options;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
@@ -67,11 +67,7 @@ namespace IndentRainbow.Extension
             this.view.LayoutChanged += this.OnLayoutChanged;
             this.drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
 
-            this.colorGetter = new RainbowBrushGetter()
-            {
-                brushes = OptionsManager.brushes.Get(),
-                errorColor = OptionsManager.errorBrush.Get()
-            };
+            this.colorGetter = new RainbowBrushGetter(OptionsManager.brushes.Get(), OptionsManager.errorBrush.Get());
             this.validator = new IndentValidator(
                 OptionsManager.indentSize.Get()
             );

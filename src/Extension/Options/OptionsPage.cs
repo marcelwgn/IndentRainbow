@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System.ComponentModel;
 
 namespace IndentRainbow.Extension.Options

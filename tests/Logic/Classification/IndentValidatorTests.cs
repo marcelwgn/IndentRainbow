@@ -20,18 +20,6 @@ namespace IndentRainbow.LogicTests.Classification
         }
 
         [Test]
-        [TestCase(4, FSI)]
-        [TestCase(2, "  ")]
-        [TestCase(8, FSI + FSI)]
-        [TestCase(0, "")]
-        public void Constructor_ExpectedBehaviours(int indentSize, string correctIndentString)
-        {
-            this.validator = new IndentValidator(indentSize);
-
-            Assert.AreEqual(correctIndentString, this.validator.indentation);
-        }
-
-        [Test]
         [TestCase("a", 1)]
         [TestCase("bb", 2)]
         [TestCase("ccc", 3)]
@@ -39,7 +27,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(TABI, 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
-            this.validator.indentation = text;
+            this.validator = new IndentValidator(text.Length);
 
             var result = this.validator.GetIndentBlockLength();
 
@@ -57,7 +45,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("te  ", false)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
-            this.validator.indentation = FSI;
+            this.validator = new IndentValidator(FSI.Length);
 
             var result = this.validator.IsIncompleteIndent(text);
 
@@ -71,7 +59,7 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("   d", false)]
         public void IsValidIndentTests_ExpectedBehaviours(string text, bool isValidIndent)
         {
-            this.validator.indentation = FSI;
+            this.validator= new IndentValidator(FSI.Length);
 
             var result = this.validator.IsValidIndent(text);
 

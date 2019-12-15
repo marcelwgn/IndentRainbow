@@ -11,10 +11,13 @@ namespace IndentRainbow.Logic.Classification
     public abstract class BaseLineDecorator : ILineDecorator
     {
 
-        protected readonly IBackgroundTextIndexDrawer drawer;
-        protected readonly IRainbowBrushGetter colorGetter;
-        protected readonly IIndentValidator validator;
+        internal readonly IBackgroundTextIndexDrawer drawer;
+        internal readonly IRainbowBrushGetter colorGetter;
+        internal readonly IIndentValidator validator;
+        // To make testing easier, we use a setter for this.
+#pragma warning disable CA1051 // Do not declare visible instance fields
         public bool detectErrors = true;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
         public BaseLineDecorator(IBackgroundTextIndexDrawer drawer, IRainbowBrushGetter colorGetter, IIndentValidator validator)
         {

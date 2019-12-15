@@ -3,8 +3,8 @@
     public class IndentValidator : IIndentValidator
     {
 
-        public string indentation = "    ";
-        public string tab = "\t";
+        private readonly string Indentation = "    ";
+        public const string TABSTRING = "\t";
         public IndentValidator(int indentSize)
         {
             string accumulator = "";
@@ -12,17 +12,17 @@
             {
                 accumulator += " ";
             }
-            this.indentation = accumulator;
+            this.Indentation = accumulator;
         }
 
         public int GetIndentBlockLength()
         {
-            return this.indentation.Length;
+            return this.Indentation.Length;
         }
 
         public bool IsIncompleteIndent(string text)
         {
-            string cleaned = text.Replace("\t", "");
+            string cleaned = text?.Replace("\t", "");
             //String only consists of tabs, is valid thus return false;
             if (cleaned.Length == 0 || cleaned[0] != ' ')
             {
@@ -43,8 +43,8 @@
 
         public bool IsValidIndent(string text)
         {
-            if (text.Equals(this.indentation)
-                || text.Equals(this.tab))
+            if (text.Equals(this.Indentation)
+                || text.Equals(TABSTRING,System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }

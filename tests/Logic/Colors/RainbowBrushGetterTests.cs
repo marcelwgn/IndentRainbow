@@ -21,10 +21,7 @@ namespace IndentRainbow.LogicTests.Colors
         [SetUp]
         public void Setup()
         {
-            this.brushGetter = new RainbowBrushGetter
-            {
-                brushes = brushes
-            };
+            this.brushGetter = new RainbowBrushGetter(brushes,null);
         }
 
         [Test]
@@ -55,7 +52,7 @@ namespace IndentRainbow.LogicTests.Colors
         [Test]
         public void GetColorByIndex_EmptyCollectionHandling()
         {
-            this.brushGetter.brushes = new Brush[0];
+            this.brushGetter = new RainbowBrushGetter(Array.Empty<Brush>(),null);
             Assert.IsNull(this.brushGetter.GetColorByIndex(1));
         }
 
