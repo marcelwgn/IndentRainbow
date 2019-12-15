@@ -65,6 +65,7 @@ namespace IndentRainbow.Extension.Options
             OptionsManager.LoadSettings();
             IndentSize = OptionsManager.indentSize.Get();
             Colors = OptionsManager.colors.Get();
+            FileSpecificIndentSizes = OptionsManager.fileExtensionsString.Get();
             OpacityMultiplier = OptionsManager.opacityMultiplier.Get();
             HighglightErrors = OptionsManager.detectErrors.Get();
             ErrorColor = OptionsManager.errorColor.Get();
