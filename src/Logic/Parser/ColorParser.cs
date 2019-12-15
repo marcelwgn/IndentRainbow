@@ -14,7 +14,7 @@ namespace IndentRainbow.Logic.Parser
         /// <returns></returns>
         public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier)
         {
-            if(colors is null || colors.Equals(""))
+            if(string.IsNullOrEmpty(colors))
             {
                 return new Brush[] { };
             }
@@ -40,7 +40,7 @@ namespace IndentRainbow.Logic.Parser
 
         public static Brush ConvertStringToBrush(string color, double opacityMultiplier)
         {
-            if(color is null || color.Equals(""))
+            if(string.IsNullOrEmpty(color))
             {
                 return null;
             }

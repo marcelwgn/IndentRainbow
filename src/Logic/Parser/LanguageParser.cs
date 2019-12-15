@@ -26,17 +26,22 @@ namespace IndentRainbow.Logic.Parser
                 try
                 {
                     string[] splittedData = s.Split(':');
+                    if(splittedData.Length < 2)
+                    {
+                        continue;
+                    }
                     string[] fileExtensions = splittedData[0].Split(',');
-                    int indentationSize = Int32.Parse(splittedData[1]);
+                    int indentationSize = Int32.Parse(splittedData[1],System.Globalization.CultureInfo.InvariantCulture);
                     foreach (string fileExtension in fileExtensions)
                     {
                         try
                         {
                             dictionary.Add(fileExtension, indentationSize);
-                        } catch (Exception) { }
+                        } catch (ArgumentException) { }
                     }
 
-                } catch (Exception) { }
+                } catch (FormatException) { }
+                catch (OverflowException) { }
             }
             return dictionary;
         }
@@ -49,7 +54,7 @@ namespace IndentRainbow.Logic.Parser
         public static String ConvertDictionaryToString(Dictionary<string,int> dictionary)
         {
             string result = "";
-            foreach(string key in dictionary.Keys)
+            foreach(string key in dictionary?.Keys)
             {
                 result += key + ":" + dictionary[key] + ";";
             }

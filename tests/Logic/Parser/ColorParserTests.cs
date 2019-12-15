@@ -1,5 +1,6 @@
 using IndentRainbow.Logic.Parser;
 using NUnit.Framework;
+using System;
 using System.Windows.Media;
 
 namespace IndentRainbow.LogicTests.Colors
@@ -37,7 +38,7 @@ namespace IndentRainbow.LogicTests.Colors
                 new SolidColorBrush(Color.FromArgb(0x20,0,255,255)),
                 new SolidColorBrush(Color.FromArgb(0x20,255,0,255)),
             },
-            new Brush[]{ },
+            Array.Empty<Brush>(),
             new Brush[]{null}
         };
 

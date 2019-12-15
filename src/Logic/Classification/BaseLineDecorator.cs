@@ -26,7 +26,7 @@ namespace IndentRainbow.Logic.Classification
             this.validator = validator;
         }
 
-        public abstract void DecorateLine(string text, int start, int end);
+        public abstract void DecorateLine(string text, int startIndex, int endIndex);
 
         /// <summary>
         /// Calculates the lenght of the indentation block.

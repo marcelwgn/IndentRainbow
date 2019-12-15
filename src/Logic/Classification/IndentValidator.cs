@@ -41,10 +41,11 @@
             return false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public bool IsValidIndent(string text)
         {
-            if (text.Equals(this.Indentation)
-                || text.Equals(TABSTRING,System.StringComparison.InvariantCultureIgnoreCase))
+            if (text.Equals(this.Indentation, System.StringComparison.InvariantCultureIgnoreCase)
+                || text.Equals(TABSTRING, System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }

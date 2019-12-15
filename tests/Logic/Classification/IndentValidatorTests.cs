@@ -5,10 +5,10 @@ using NUnit.Framework;
 namespace IndentRainbow.LogicTests.Classification
 {
     [TestFixture]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
     public class IndentValidatorTests
     {
 
-        private readonly AutoMoqer mocker = new AutoMoqer();
         private IndentValidator validator;
         private const string FSI = "    ";
         private const string TABI = "\t";
