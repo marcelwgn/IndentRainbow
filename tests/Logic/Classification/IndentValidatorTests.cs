@@ -1,4 +1,3 @@
-using AutoMoq;
 using IndentRainbow.Logic.Classification;
 using NUnit.Framework;
 
@@ -16,7 +15,7 @@ namespace IndentRainbow.LogicTests.Classification
         [SetUp]
         public void Setup()
         {
-            this.validator = new IndentValidator(0);
+            validator = new IndentValidator(0);
         }
 
         [Test]
@@ -27,9 +26,9 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase(TABI, 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
-            this.validator = new IndentValidator(text.Length);
+            validator = new IndentValidator(text.Length);
 
-            var result = this.validator.GetIndentBlockLength();
+            int result = validator.GetIndentBlockLength();
 
             Assert.AreEqual(length, result);
         }
@@ -45,9 +44,9 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("te  ", false)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
-            this.validator = new IndentValidator(FSI.Length);
+            validator = new IndentValidator(FSI.Length);
 
-            var result = this.validator.IsIncompleteIndent(text);
+            bool result = validator.IsIncompleteIndent(text);
 
             Assert.AreEqual(isIncompleteIndent, result);
         }
@@ -59,9 +58,9 @@ namespace IndentRainbow.LogicTests.Classification
         [TestCase("   d", false)]
         public void IsValidIndentTests_ExpectedBehaviors(string text, bool isValidIndent)
         {
-            this.validator= new IndentValidator(FSI.Length);
+            validator = new IndentValidator(FSI.Length);
 
-            var result = this.validator.IsValidIndent(text);
+            bool result = validator.IsValidIndent(text);
 
             Assert.AreEqual(isValidIndent, result);
         }

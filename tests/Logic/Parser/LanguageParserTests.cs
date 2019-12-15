@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IndentRainbow.Logic.Parser;
+﻿using IndentRainbow.Logic.Parser;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace IndentRainbow.LogicTests.Parser
 {
@@ -20,9 +16,9 @@ namespace IndentRainbow.LogicTests.Parser
         [TestCase(",,,cs:3", "cs:3")]
         //Checking that null does not kill the method
         [TestCase(null, "")]
-        public void CreateDictionaryFromString_ExpectedBehavior(String input, String queriesToCheck)
+        public void CreateDictionaryFromString_ExpectedBehavior(string input, string queriesToCheck)
         {
-            var dictionary = LanguageParser.CreateDictionaryFromString(input);
+            Dictionary<string, int> dictionary = LanguageParser.CreateDictionaryFromString(input);
             string[] split = queriesToCheck.Split(',');
             foreach (string entry in split)
             {
@@ -31,7 +27,7 @@ namespace IndentRainbow.LogicTests.Parser
                 {
                     return;
                 }
-                int indentation = Int32.Parse(entrySplit[1]);
+                int indentation = int.Parse(entrySplit[1]);
                 Assert.AreEqual(dictionary[entrySplit[0]], indentation);
             }
         }
@@ -40,9 +36,9 @@ namespace IndentRainbow.LogicTests.Parser
         [TestCase("cs:4;js:5;jsx:6;")]
         [TestCase("cs:5;")]
         [TestCase("")]
-        public void ConvertDictionaryToString_ExpectedBehavior(String input)
+        public void ConvertDictionaryToString_ExpectedBehavior(string input)
         {
-            var dictionary = LanguageParser.CreateDictionaryFromString(input);
+            Dictionary<string, int> dictionary = LanguageParser.CreateDictionaryFromString(input);
             string result = LanguageParser.ConvertDictionaryToString(dictionary);
             Assert.AreEqual(input, result);
         }

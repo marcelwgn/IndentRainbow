@@ -89,7 +89,7 @@ namespace IndentRainbow.Extension.Options
             ThreadHelper.ThrowIfNotOnUIThread();
             if (!loadedFromStorage)
             {
-                var settingsStore = GetWritableSettingsStore();
+                WritableSettingsStore settingsStore = GetWritableSettingsStore();
                 indentSize.Set(settingsStore.LoadIndentSize());
                 colors.Set(settingsStore.LoadColors());
                 opacityMultiplier.Set(settingsStore.LoadOpacityMultiplier());
@@ -110,10 +110,10 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="indentSize">The indent size specifiyng the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
-        public static void SaveSettings(int indentSize,string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode,string errorColor, bool detectError)
+        public static void SaveSettings(int indentSize, string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode, string errorColor, bool detectError)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var settingsStore = GetWritableSettingsStore();
+            WritableSettingsStore settingsStore = GetWritableSettingsStore();
             settingsStore.SaveIndentSize(indentSize);
             settingsStore.SaveFileExtensionsIndentSizes(fileExtensionsString);
             settingsStore.SaveColors(colors);

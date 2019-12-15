@@ -57,47 +57,46 @@ namespace IndentRainbow.Extension
             {
                 throw new ArgumentNullException(nameof(view));
             }
-            if(textDocumentFactory == null)
+            if (textDocumentFactory == null)
             {
                 throw new ArgumentNullException(nameof(textDocumentFactory));
             }
-            this.layer = view.GetAdornmentLayer("Indent");
+            layer = view.GetAdornmentLayer("Indent");
 
             this.view = view;
-            this.view.LayoutChanged += this.OnLayoutChanged;
-            this.drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
+            this.view.LayoutChanged += OnLayoutChanged;
+            drawer = new BackgroundTextIndexDrawer(layer, this.view);
 
-            this.colorGetter = new RainbowBrushGetter(OptionsManager.brushes.Get(), OptionsManager.errorBrush.Get());
-            this.validator = new IndentValidator(
+            colorGetter = new RainbowBrushGetter(OptionsManager.brushes.Get(), OptionsManager.errorBrush.Get());
+            validator = new IndentValidator(
                 OptionsManager.indentSize.Get()
             );
 
 
-            ITextDocument textDocument;
-            var result = textDocumentFactory.TryGetTextDocument(this.view.TextBuffer, out textDocument);
+            bool result = textDocumentFactory.TryGetTextDocument(this.view.TextBuffer, out ITextDocument textDocument);
             if (result)
             {
-                var filePath = textDocument.FilePath;
-                var filePathSplit = filePath.Split('.');
-                var extension = filePathSplit[filePathSplit.Length - 1];
+                string filePath = textDocument.FilePath;
+                string[] filePathSplit = filePath.Split('.');
+                string extension = filePathSplit[filePathSplit.Length - 1];
                 if (OptionsManager.fileExtensionsDictionary.Get().ContainsKey(extension))
                 {
-                    this.validator = new IndentValidator(OptionsManager.fileExtensionsDictionary.Get()[extension]);
+                    validator = new IndentValidator(OptionsManager.fileExtensionsDictionary.Get()[extension]);
                 }
             }
 
-            if(OptionsManager.highlightingMode.Get() == HighlightingMode.Alternating)
+            if (OptionsManager.highlightingMode.Get() == HighlightingMode.Alternating)
             {
-                this.decorator = new AlternatingLineDecorator(
-                    this.drawer, this.colorGetter, this.validator)
+                decorator = new AlternatingLineDecorator(
+                    drawer, colorGetter, validator)
                 {
                     detectErrors = OptionsManager.detectErrors.Get()
                 };
             }
-            if(OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
+            if (OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
             {
-                this.decorator = new MonocolorLineDecorator(
-                    this.drawer, this.colorGetter, this.validator)
+                decorator = new MonocolorLineDecorator(
+                    drawer, colorGetter, validator)
                 {
                     detectErrors = OptionsManager.detectErrors.Get()
                 };
@@ -118,7 +117,7 @@ namespace IndentRainbow.Extension
         {
             foreach (ITextViewLine line in e.NewOrReformattedLines)
             {
-                this.CreateVisuals(line);
+                CreateVisuals(line);
             }
         }
 
@@ -132,7 +131,7 @@ namespace IndentRainbow.Extension
             int end = line.End;
 
             string text = line.Snapshot.GetText();
-            this.decorator.DecorateLine(text, start, end);
+            decorator.DecorateLine(text, start, end);
         }
     }
 }

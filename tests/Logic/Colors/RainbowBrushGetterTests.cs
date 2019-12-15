@@ -21,7 +21,7 @@ namespace IndentRainbow.LogicTests.Colors
         [SetUp]
         public void Setup()
         {
-            this.brushGetter = new RainbowBrushGetter(brushes,null);
+            brushGetter = new RainbowBrushGetter(brushes, null);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace IndentRainbow.LogicTests.Colors
         [TestCase(4, 1)]
         public void GetColorByIndex_ExpectedBehavior(int index, int internalTestIndex)
         {
-            var result = this.brushGetter.GetColorByIndex(index);
+            Brush result = brushGetter.GetColorByIndex(index);
 
             Assert.AreEqual(brushes[internalTestIndex], result);
         }
@@ -45,15 +45,15 @@ namespace IndentRainbow.LogicTests.Colors
             Assert.Throws<ArgumentOutOfRangeException>(
                 delegate
                 {
-                    this.brushGetter.GetColorByIndex(index);
+                    brushGetter.GetColorByIndex(index);
                 });
         }
 
         [Test]
         public void GetColorByIndex_EmptyCollectionHandling()
         {
-            this.brushGetter = new RainbowBrushGetter(Array.Empty<Brush>(),null);
-            Assert.IsNull(this.brushGetter.GetColorByIndex(1));
+            brushGetter = new RainbowBrushGetter(Array.Empty<Brush>(), null);
+            Assert.IsNull(brushGetter.GetColorByIndex(1));
         }
 
         [Test]

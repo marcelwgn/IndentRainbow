@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.Settings;
+using System;
 using System.Globalization;
-using Microsoft.VisualStudio.Settings;
 
 namespace IndentRainbow.Extension.Options
 {
@@ -101,7 +101,8 @@ namespace IndentRainbow.Extension.Options
             {
                 store.SaveIndentSize(DefaultRainbowIndentOptions.defaultIndentSize);
                 return DefaultRainbowIndentOptions.defaultIndentSize;
-            } else
+            }
+            else
             {
                 return store.GetInt32(CollectionName, IndentSizePropertyName);
             }
@@ -122,7 +123,8 @@ namespace IndentRainbow.Extension.Options
             {
                 store.SaveFileExtensionsIndentSizes(DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes);
                 return DefaultRainbowIndentOptions.defaultFileExtensionsIndentSizes;
-            } else
+            }
+            else
             {
                 return store.GetString(CollectionName, FileExtensionSizesPropertyName);
             }
@@ -135,7 +137,7 @@ namespace IndentRainbow.Extension.Options
         /// <returns>´The colors string or if not found, the default colors</returns>
         public static string LoadColors(this WritableSettingsStore store)
         {
-            if(store == null)
+            if (store == null)
             {
                 return "";
             }
@@ -143,7 +145,8 @@ namespace IndentRainbow.Extension.Options
             {
                 store.SaveColors(DefaultRainbowIndentOptions.defaultColors);
                 return DefaultRainbowIndentOptions.defaultColors;
-            } else
+            }
+            else
             {
                 return store.GetString(CollectionName, FolorsPropertyName);
             }
@@ -156,7 +159,7 @@ namespace IndentRainbow.Extension.Options
         /// <returns>The opacity multiplier or if not found, the default opacity multiplier</returns>
         public static double LoadOpacityMultiplier(this WritableSettingsStore store)
         {
-            var opacMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
+            double opacMultiplier = DefaultRainbowIndentOptions.defaultOpacityMultiplier;
             if (store == null)
             {
                 return opacMultiplier;
@@ -174,8 +177,8 @@ namespace IndentRainbow.Extension.Options
             }
             return opacMultiplier;
 
-        }        
-        
+        }
+
         /// <summary>
         /// Loads the opacity multiplier
         /// </summary>
@@ -183,7 +186,7 @@ namespace IndentRainbow.Extension.Options
         /// <returns>The opacity multiplier or if not found, the default opacity multiplier</returns>
         public static HighlightingMode LoadHighlightingMode(this WritableSettingsStore store)
         {
-            var highlightingMode = DefaultRainbowIndentOptions.defaultHighlightingMode;
+            HighlightingMode highlightingMode = DefaultRainbowIndentOptions.defaultHighlightingMode;
             if (store == null)
             {
                 return highlightingMode;
@@ -195,7 +198,7 @@ namespace IndentRainbow.Extension.Options
             else
             {
                 highlightingMode = (HighlightingMode)Enum.Parse(typeof(HighlightingMode),
-                    store.GetString(CollectionName,HighlightingModePropertyName));
+                    store.GetString(CollectionName, HighlightingModePropertyName));
             }
             return highlightingMode;
         }
@@ -207,7 +210,7 @@ namespace IndentRainbow.Extension.Options
         /// <returns>The detect error flag or if not found, the default detect error flag</returns>
         public static bool LoadDetectErrorsFlag(this WritableSettingsStore store)
         {
-            var detectErrorFlag = DefaultRainbowIndentOptions.defaultDetectErrorsFlag;
+            bool detectErrorFlag = DefaultRainbowIndentOptions.defaultDetectErrorsFlag;
             if (store == null)
             {
                 return detectErrorFlag;
@@ -215,7 +218,8 @@ namespace IndentRainbow.Extension.Options
             if (!store.PropertyExists(CollectionName, DetectErrorsPropertyName))
             {
                 store.SaveDetectErrorsFlag(detectErrorFlag);
-            } else
+            }
+            else
             {
                 detectErrorFlag = store.GetBoolean(CollectionName, DetectErrorsPropertyName);
             }
@@ -229,7 +233,7 @@ namespace IndentRainbow.Extension.Options
         /// <returns>The error color or if not found, the default error color</returns>
         public static string LoadErrorColor(this WritableSettingsStore store)
         {
-            var errorColor = DefaultRainbowIndentOptions.defaultErrorColor;
+            string errorColor = DefaultRainbowIndentOptions.defaultErrorColor;
             if (store == null)
             {
                 return errorColor;
@@ -237,7 +241,8 @@ namespace IndentRainbow.Extension.Options
             if (!store.PropertyExists(CollectionName, errorColorPropertyName))
             {
                 store.SaveErrorColor(errorColor);
-            } else
+            }
+            else
             {
                 errorColor = store.GetString(CollectionName, errorColorPropertyName);
             }

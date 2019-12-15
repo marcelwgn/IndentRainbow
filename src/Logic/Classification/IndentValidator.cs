@@ -12,12 +12,12 @@
             {
                 accumulator += " ";
             }
-            this.Indentation = accumulator;
+            Indentation = accumulator;
         }
 
         public int GetIndentBlockLength()
         {
-            return this.Indentation.Length;
+            return Indentation.Length;
         }
 
         public bool IsIncompleteIndent(string text)
@@ -36,7 +36,7 @@
             // Checking if first character is 
             if (cleaned[0] == ' ')
             {
-                return !this.IsValidIndent(text);
+                return !IsValidIndent(text);
             }
             return false;
         }
@@ -44,7 +44,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public bool IsValidIndent(string text)
         {
-            if (text.Equals(this.Indentation, System.StringComparison.InvariantCultureIgnoreCase)
+            if (text.Equals(Indentation, System.StringComparison.InvariantCultureIgnoreCase)
                 || text.Equals(TabString, System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;

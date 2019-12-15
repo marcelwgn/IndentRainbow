@@ -9,7 +9,7 @@ namespace IndentRainbow.Extension.Options
             private T item;
             public OptionsField(T value)
             {
-                this.item = value;
+                item = value;
             }
             public T Get()
             {

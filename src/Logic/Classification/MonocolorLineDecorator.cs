@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IndentRainbow.Logic.Colors;
+﻿using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using System;
 
 namespace IndentRainbow.Logic.Classification
 {
@@ -20,7 +16,7 @@ namespace IndentRainbow.Logic.Classification
             {
                 return;
             }
-            int tabSize = this.validator.GetIndentBlockLength();
+            int tabSize = validator.GetIndentBlockLength();
             if (start < 0 || start > text.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(start));
@@ -46,7 +42,7 @@ namespace IndentRainbow.Logic.Classification
             }
             if (validTabLength < 0 && detectErrors)
             {
-                this.drawer.DrawBackground(start, -validTabLength, this.colorGetter.GetErrorBrush());
+                drawer.DrawBackground(start, -validTabLength, colorGetter.GetErrorBrush());
                 return;
             }
             if (!detectErrors && validTabLength < 0)
@@ -54,11 +50,11 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (int charIndex = start; charIndex < start + validTabLength ; )
+            for (int charIndex = start; charIndex < start + validTabLength;)
             {
-                if(charIndex + tabSize >= text.Length )
+                if (charIndex + tabSize >= text.Length)
                 {
-                    if(text[charIndex] != '\t')
+                    if (text[charIndex] != '\t')
                     {
                         break;
                     }
@@ -66,23 +62,25 @@ namespace IndentRainbow.Logic.Classification
                     rainbowIndex++;
                     continue;
                 }
-                var cutout = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
-                if (this.validator.IsValidIndent(cutout))
+                string cutout = text.Substring(charIndex, tabSize);
+                string tabCutOut = text.Substring(charIndex, 1);
+                if (validator.IsValidIndent(cutout))
                 {
                     charIndex += tabSize;
                     rainbowIndex++;
-                } else if (this.validator.IsValidIndent(tabCutOut))
+                }
+                else if (validator.IsValidIndent(tabCutOut))
                 {
                     charIndex++;
                     rainbowIndex++;
-                } else
+                }
+                else
                 {
                     break;
                 }
             }
 
-            this.drawer.DrawBackground(start, validTabLength, this.colorGetter.GetColorByIndex(rainbowIndex));
+            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(rainbowIndex));
         }
     }
 }

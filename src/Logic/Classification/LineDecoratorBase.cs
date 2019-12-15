@@ -1,10 +1,5 @@
 ﻿using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IndentRainbow.Logic.Classification
 {
@@ -45,25 +40,25 @@ namespace IndentRainbow.Logic.Classification
         /// otherwise the valid indent length times -1</returns>
         protected int GetIndentLengthIfValid(string text, int start, int end)
         {
-            int tabSize = this.validator.GetIndentBlockLength();
+            int tabSize = validator.GetIndentBlockLength();
             int validTabLength = 0;
             int charIndex = start;
             for (; charIndex < end - tabSize + 1; charIndex += tabSize)
             {
-                var cutOut = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
-                if (this.validator.IsValidIndent(cutOut))
+                string cutOut = text.Substring(charIndex, tabSize);
+                string tabCutOut = text.Substring(charIndex, 1);
+                if (validator.IsValidIndent(cutOut))
                 {
                     validTabLength += tabSize;
                 }
-                else if (this.validator.IsValidIndent(tabCutOut))
+                else if (validator.IsValidIndent(tabCutOut))
                 {
                     charIndex -= (tabSize - 1);
                     validTabLength += 1;
                 }
                 else
                 {
-                    if (this.validator.IsIncompleteIndent(cutOut))
+                    if (validator.IsIncompleteIndent(cutOut))
                     {
                         int index = 0;
                         while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
@@ -79,14 +74,14 @@ namespace IndentRainbow.Logic.Classification
             if (end - charIndex < tabSize)
             {
                 //Checking if the last rest of the text is a valid indent
-                var cutOut = text.Substring(charIndex, end - charIndex);
+                string cutOut = text.Substring(charIndex, end - charIndex);
                 int index = 0;
                 while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
                 {
                     index++;
                     validTabLength++;
                 }
-                if (this.validator.IsIncompleteIndent(cutOut))
+                if (validator.IsIncompleteIndent(cutOut))
                 {
                     validTabLength *= -1;
                 }

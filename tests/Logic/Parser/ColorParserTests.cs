@@ -75,7 +75,7 @@ namespace IndentRainbow.LogicTests.Colors
         {
             Brush result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
             Brush solution = solutions[solutionIndex][0];
-            if(result is null && solution is null)
+            if (result is null && solution is null)
             {
                 return;
             }

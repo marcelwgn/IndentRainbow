@@ -22,8 +22,8 @@ namespace IndentRainbow.Logic.Colors
 
         public RainbowBrushGetter(Brush[] brushes, Brush errorColor)
         {
-            this.Brushes = brushes;
-            this.ErrorColor = errorColor;
+            Brushes = brushes;
+            ErrorColor = errorColor;
         }
 
         public Brush GetColorByIndex(int rainbowIndex)
@@ -32,12 +32,12 @@ namespace IndentRainbow.Logic.Colors
             {
                 throw new ArgumentOutOfRangeException(nameof(rainbowIndex));
             }
-            if (this.Brushes.Length == 0)
+            if (Brushes.Length == 0)
             {
                 return null;
             }
-            int index = rainbowIndex % this.Brushes.Length;
-            return this.Brushes[index];
+            int index = rainbowIndex % Brushes.Length;
+            return Brushes[index];
         }
 
         public Brush GetErrorBrush()

@@ -44,7 +44,7 @@ namespace IndentRainbow.Extension.Options
         [Category("Colors")]
         [DisplayName("Highlighting mode")]
         [Description("Determines wether to alternate between the colors in a single with every indent or use the color of the last indent level for the whole indentation block.")]
-        public HighlightingMode HighlightingMode { get; set; } 
+        public HighlightingMode HighlightingMode { get; set; }
 
         [Category("Error highlighting")]
         [DisplayName("Highlight wrong indentation")]
@@ -63,12 +63,12 @@ namespace IndentRainbow.Extension.Options
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             OptionsManager.LoadSettings();
-            this.IndentSize = OptionsManager.indentSize.Get();
-            this.Colors = OptionsManager.colors.Get();
-            this.OpacityMultiplier = OptionsManager.opacityMultiplier.Get();
-            this.HighglightErrors = OptionsManager.detectErrors.Get();
-            this.ErrorColor = OptionsManager.errorColor.Get();
-            this.HighlightingMode = OptionsManager.highlightingMode.Get();
+            IndentSize = OptionsManager.indentSize.Get();
+            Colors = OptionsManager.colors.Get();
+            OpacityMultiplier = OptionsManager.opacityMultiplier.Get();
+            HighglightErrors = OptionsManager.detectErrors.Get();
+            ErrorColor = OptionsManager.errorColor.Get();
+            HighlightingMode = OptionsManager.highlightingMode.Get();
         }
 
         /// <summary>
@@ -76,26 +76,26 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         public override void SaveSettingsToStorage()
         {
-            if(this.FileSpecificIndentSizes is null)
+            if (FileSpecificIndentSizes is null)
             {
-                this.FileSpecificIndentSizes = "";
+                FileSpecificIndentSizes = "";
             }
-            if(this.Colors is null)
+            if (Colors is null)
             {
-                this.Colors = "";
+                Colors = "";
             }
-            if(this.ErrorColor is null)
+            if (ErrorColor is null)
             {
-                this.ErrorColor = "";
+                ErrorColor = "";
             }
             ThreadHelper.ThrowIfNotOnUIThread();
-            OptionsManager.SaveSettings(this.IndentSize, 
-                this.FileSpecificIndentSizes,
-                this.Colors,
-                this.OpacityMultiplier,
-                this.HighlightingMode,
-                this.ErrorColor,
-                this.HighglightErrors);
+            OptionsManager.SaveSettings(IndentSize,
+                FileSpecificIndentSizes,
+                Colors,
+                OpacityMultiplier,
+                HighlightingMode,
+                ErrorColor,
+                HighglightErrors);
         }
     }
 }

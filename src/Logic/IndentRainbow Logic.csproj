@@ -42,7 +42,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classification\BaseLineDecorator.cs" />
+    <Compile Include="Classification\LineDecoratorBase.cs" />
     <Compile Include="Classification\IIndentValidator.cs" />
     <Compile Include="Classification\ILineDecorator.cs" />
     <Compile Include="Classification\IndentValidator.cs" />
