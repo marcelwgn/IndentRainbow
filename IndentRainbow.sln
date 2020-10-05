@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{45CC3ACD-02A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{177C96E2-4CC1-465D-AB50-D1CB86AD78EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndentRainbow Logic", "src\Logic\IndentRainbow Logic.csproj", "{0087E685-28A6-4D11-9E3F-7BD0B663B249}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndentRainbow.Logic", "src\IndentRainbow.Logic\IndentRainbow.Logic.csproj", "{0087E685-28A6-4D11-9E3F-7BD0B663B249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extension", "src\Extension\Extension.csproj", "{A9DD8786-1AD6-41E5-BB13-0D8B895DF859}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndentRainbow.Extension", "src\IndentRainbow.Extension\IndentRainbow.Extension.csproj", "{A9DD8786-1AD6-41E5-BB13-0D8B895DF859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndentRainbow Logic Tests", "tests\Logic\IndentRainbow Logic Tests.csproj", "{C1D66173-4AC6-4906-AE59-AE80BC367430}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndentRainbow.Logic.Tests", "tests\IndentRainbow.Logic.Tests\IndentRainbow.Logic.Tests.csproj", "{C1D66173-4AC6-4906-AE59-AE80BC367430}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A38C362B-4E2C-4B65-BB17-A91EDA748F28}"
 	ProjectSection(SolutionItems) = preProject
