@@ -6,8 +6,6 @@ namespace IndentRainbow.Logic.Tests.Parser
     [TestFixture]
     public class LanguageParserTests
     {
-
-
         [Test]
         [TestCase("cs:4;js,jsx:5;", "cs:4,js:5,jsx:5")]
         [TestCase("cs,js,jsx:5;css:4;html:2", "cs:5,js:5,jsx:5,css:4,html:2")]

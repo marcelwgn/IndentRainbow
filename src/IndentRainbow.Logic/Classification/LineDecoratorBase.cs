@@ -24,13 +24,13 @@ namespace IndentRainbow.Logic.Classification
         public abstract void DecorateLine(string text, int startIndex, int endIndex);
 
         /// <summary>
-        /// Calculates the lenght of the indentation block.
+        /// Calculates the length of the indentation block.
         /// Returns the value positive if indentation is valid, otherwise returns the value as negative number
         /// For example the text "    text" (4 spaces) would return 4 for indent length 4, 
         /// but the text "     text" (5 spaces) returns -5 for indent length 4.
         /// </summary>
         /// <remarks>
-        /// For perfomance reasons, instead of returning a Tuple containing a boolean and an integer, 
+        /// For performance reasons, instead of returning a Tuple containing a boolean and an integer, 
         /// the method returns just one integer.
         /// </remarks>
         /// <param name="text">Text containing the line to be analyzed</param>

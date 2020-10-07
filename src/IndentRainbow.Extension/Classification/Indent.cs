@@ -1,4 +1,3 @@
-using System;
 using IndentRainbow.Extension.Drawing;
 using IndentRainbow.Extension.Options;
 using IndentRainbow.Logic.Classification;
@@ -36,7 +35,7 @@ namespace IndentRainbow.Extension
         private readonly IRainbowBrushGetter colorGetter;
 
         /// <summary>
-        /// Validator used for checking wether a given string is a valid indentation
+        /// Validator used for checking whether a given string is a valid indentation
         /// </summary>
         private readonly IIndentValidator validator;
 
@@ -53,13 +52,9 @@ namespace IndentRainbow.Extension
 #pragma warning disable VSTHRD010
         public Indent(IWpfTextView view, ITextDocumentFactoryService textDocumentFactory)
         {
-            if (view == null)
+            if (view == null || textDocumentFactory == null)
             {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (textDocumentFactory == null)
-            {
-                throw new ArgumentNullException(nameof(textDocumentFactory));
+                return;
             }
             layer = view.GetAdornmentLayer("Indent");
 
