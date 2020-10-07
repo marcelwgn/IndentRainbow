@@ -56,7 +56,7 @@ namespace IndentRainbow.Extension.Options
         public static OptionsField<HighlightingMode> highlightingMode = new OptionsField<HighlightingMode>(DefaultRainbowIndentOptions.defaultHighlightingMode);
 
         /// <summary>
-        /// The detect error flag which determines wether errors will be highlighted
+        /// The detect error flag which determines whether errors will be highlighted
         /// </summary>
         public static OptionsField<bool> detectErrors = new OptionsField<bool>(DefaultRainbowIndentOptions.defaultDetectErrorsFlag);
 
@@ -108,7 +108,7 @@ namespace IndentRainbow.Extension.Options
         /// <summary>
         /// Saves the settings to the settings store
         /// </summary>
-        /// <param name="indentSize">The indent size specifiyng the number of spaces for indentation detection</param>
+        /// <param name="indentSize">The indent size specifying the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
         public static void SaveSettings(int indentSize, string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode, string errorColor, bool detectError)
         {

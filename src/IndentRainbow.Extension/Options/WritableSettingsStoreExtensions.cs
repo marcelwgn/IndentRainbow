@@ -80,7 +80,7 @@ namespace IndentRainbow.Extension.Options
         /// Saves the error color
         /// </summary>
         /// <param name="store">The writable settings store</param>
-        /// <param name="errorColor">The erro color to save</param>
+        /// <param name="errorColor">The error color to save</param>
         public static void SaveErrorColor(this WritableSettingsStore store, string errorColor)
         {
             store?.SetString(CollectionName, errorColorPropertyName, errorColor);
