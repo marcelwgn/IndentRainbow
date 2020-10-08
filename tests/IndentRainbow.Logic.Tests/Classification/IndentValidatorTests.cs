@@ -1,9 +1,9 @@
 using IndentRainbow.Logic.Classification;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IndentRainbow.Logic.Tests.Classification
 {
-    [TestFixture]
+    [TestClass]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
     public class IndentValidatorTests
     {
@@ -12,18 +12,18 @@ namespace IndentRainbow.Logic.Tests.Classification
         private const string FSI = "    ";
         private const string TABI = "\t";
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             validator = new IndentValidator(0);
         }
 
-        [Test]
-        [TestCase("a", 1)]
-        [TestCase("bb", 2)]
-        [TestCase("ccc", 3)]
-        [TestCase("", 0)]
-        [TestCase(TABI, 1)]
+        [DataTestMethod]
+        [DataRow("a", 1)]
+        [DataRow("bb", 2)]
+        [DataRow("ccc", 3)]
+        [DataRow("", 0)]
+        [DataRow(TABI, 1)]
         public void GetIndentBlockLengthTests_ExpectedBehaviors(string text, int length)
         {
             validator = new IndentValidator(text.Length);
@@ -33,15 +33,15 @@ namespace IndentRainbow.Logic.Tests.Classification
             Assert.AreEqual(length, result);
         }
 
-        [Test]
-        [TestCase(FSI, false)]
-        [TestCase(" d", true)]
-        [TestCase("d", false)]
-        [TestCase("   d", true)]
-        [TestCase("   ", false)]
-        [TestCase(TABI + TABI + "t", false)]
-        [TestCase(TABI + TABI + " t", true)]
-        [TestCase("te  ", false)]
+        [DataTestMethod]
+        [DataRow(FSI, false)]
+        [DataRow(" d", true)]
+        [DataRow("d", false)]
+        [DataRow("   d", true)]
+        [DataRow("   ", false)]
+        [DataRow(TABI + TABI + "t", false)]
+        [DataRow(TABI + TABI + " t", true)]
+        [DataRow("te  ", false)]
         public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
         {
             validator = new IndentValidator(FSI.Length);
@@ -51,11 +51,11 @@ namespace IndentRainbow.Logic.Tests.Classification
             Assert.AreEqual(isIncompleteIndent, result);
         }
 
-        [Test]
-        [TestCase(FSI, true)]
-        [TestCase(FSI + " ", false)]
-        [TestCase(FSI + "d", false)]
-        [TestCase("   d", false)]
+        [DataTestMethod]
+        [DataRow(FSI, true)]
+        [DataRow(FSI + " ", false)]
+        [DataRow(FSI + "d", false)]
+        [DataRow("   d", false)]
         public void IsValidIndentTests_ExpectedBehaviors(string text, bool isValidIndent)
         {
             validator = new IndentValidator(FSI.Length);

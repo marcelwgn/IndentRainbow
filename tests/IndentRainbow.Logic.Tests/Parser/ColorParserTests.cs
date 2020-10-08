@@ -1,11 +1,11 @@
 using System;
 using System.Windows.Media;
 using IndentRainbow.Logic.Parser;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IndentRainbow.Logic.Tests.Colors
 {
-    [TestFixture]
+    [TestClass]
     public class ColorParserTests
     {
         private static readonly Brush[][] solutions = new Brush[][]
@@ -43,14 +43,14 @@ namespace IndentRainbow.Logic.Tests.Colors
         };
 
 
-        [Test]
-        [TestCase("#FFFFFFFF", 1.0, 0)]
-        [TestCase("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 1)]
-        [TestCase("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 2)]
-        [TestCase("#40FFFF00,#4000FFFF,#40FF00FF", 0.5, 3)]
-        [TestCase("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
-        [TestCase(null, 0, 4)]
-        [TestCase("", 0, 4)]
+        [DataTestMethod]
+        [DataRow("#FFFFFFFF", 1.0, 0)]
+        [DataRow("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 1)]
+        [DataRow("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 2)]
+        [DataRow("#40FFFF00,#4000FFFF,#40FF00FF", 0.5, 3)]
+        [DataRow("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
+        [DataRow(null, 0, 4)]
+        [DataRow("", 0, 4)]
         public void ConvertStringToBrushArray_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             var result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier);
@@ -63,14 +63,14 @@ namespace IndentRainbow.Logic.Tests.Colors
             }
         }
 
-        [Test]
-        [TestCase("#FFFFFFFF", 1.0, 0)]
-        [TestCase("#40FFFF00", 1.0, 1)]
-        [TestCase("#409933FF", 1.0, 2)]
-        [TestCase("#40FFFF00", 0.5, 3)]
-        [TestCase("#60FFFF00", 1.0 / 3.0, 3)]
-        [TestCase(null, 0, 5)]
-        [TestCase("", 0, 5)]
+        [DataTestMethod]
+        [DataRow("#FFFFFFFF", 1.0, 0)]
+        [DataRow("#40FFFF00", 1.0, 1)]
+        [DataRow("#409933FF", 1.0, 2)]
+        [DataRow("#40FFFF00", 0.5, 3)]
+        [DataRow("#60FFFF00", 1.0 / 3.0, 3)]
+        [DataRow(null, 0, 5)]
+        [DataRow("", 0, 5)]
         public void ConvertStringToBrush_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
         {
             var result = ColorParser.ConvertStringToBrush(input, opacityMultiplier);
