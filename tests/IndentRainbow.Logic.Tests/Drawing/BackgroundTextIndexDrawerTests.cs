@@ -25,7 +25,7 @@ namespace IndentRainbowLogicTests.Drawing
 
 
         [Test]
-        [TestCase(0, 0, null)]
+        [DataRow(0, 0, null)]
         public void DrawBackground_StateUnderTest_ExpectedBehavior(int firstIndex, int length, Brush drawBrush)
         {
             this.drawer.DrawBackground(

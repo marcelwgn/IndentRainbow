@@ -1,11 +1,11 @@
 using System;
 using System.Windows.Media;
 using IndentRainbow.Logic.Colors;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IndentRainbow.Logic.Tests.Colors
 {
-    [TestFixture]
+    [TestClass]
     public class RainbowBrushGetterTests
     {
         private static readonly Brush[] brushes = new Brush[]
@@ -18,18 +18,18 @@ namespace IndentRainbow.Logic.Tests.Colors
         private RainbowBrushGetter brushGetter;
 
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             brushGetter = new RainbowBrushGetter(brushes, null);
         }
 
-        [Test]
-        [TestCase(0, 0)]
-        [TestCase(1, 1)]
-        [TestCase(2, 2)]
-        [TestCase(3, 0)]
-        [TestCase(4, 1)]
+        [DataTestMethod]
+        [DataRow(0, 0)]
+        [DataRow(1, 1)]
+        [DataRow(2, 2)]
+        [DataRow(3, 0)]
+        [DataRow(4, 1)]
         public void GetColorByIndex_ExpectedBehavior(int index, int internalTestIndex)
         {
             var result = brushGetter.GetColorByIndex(index);
@@ -37,29 +37,29 @@ namespace IndentRainbow.Logic.Tests.Colors
             Assert.AreEqual(brushes[internalTestIndex], result);
         }
 
-        [Test]
-        [TestCase(-1)]
-        [TestCase(-200)]
+        [DataTestMethod]
+        [DataRow(-1)]
+        [DataRow(-200)]
         public void GetColorByIndex_ErrorHandling(int index)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.ThrowsException<ArgumentOutOfRangeException>(
                 delegate
                 {
                     brushGetter.GetColorByIndex(index);
                 });
         }
 
-        [Test]
+        [DataTestMethod]
         public void GetColorByIndex_EmptyCollectionHandling()
         {
             brushGetter = new RainbowBrushGetter(Array.Empty<Brush>(), null);
             Assert.IsNull(brushGetter.GetColorByIndex(1));
         }
 
-        [Test]
+        [DataTestMethod]
         public void GetErrorBrush_ExpectedBehavior()
         {
-            Assert.NotNull(new RainbowBrushGetter().GetErrorBrush());
+            Assert.IsNotNull(new RainbowBrushGetter().GetErrorBrush());
         }
     }
 }

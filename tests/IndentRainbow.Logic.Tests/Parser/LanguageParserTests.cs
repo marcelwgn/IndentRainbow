@@ -1,18 +1,18 @@
 ﻿using IndentRainbow.Logic.Parser;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IndentRainbow.Logic.Tests.Parser
 {
-    [TestFixture]
+    [TestClass]
     public class LanguageParserTests
     {
-        [Test]
-        [TestCase("cs:4;js,jsx:5;", "cs:4,js:5,jsx:5")]
-        [TestCase("cs,js,jsx:5;css:4;html:2", "cs:5,js:5,jsx:5,css:4,html:2")]
-        [TestCase("cs:a;32:32", "32:32")]
-        [TestCase(",,,cs:3", "cs:3")]
+        [DataTestMethod]
+        [DataRow("cs:4;js,jsx:5;", "cs:4,js:5,jsx:5")]
+        [DataRow("cs,js,jsx:5;css:4;html:2", "cs:5,js:5,jsx:5,css:4,html:2")]
+        [DataRow("cs:a;32:32", "32:32")]
+        [DataRow(",,,cs:3", "cs:3")]
         //Checking that null does not kill the method
-        [TestCase(null, "")]
+        [DataRow(null, "")]
         public void CreateDictionaryFromString_ExpectedBehavior(string input, string queriesToCheck)
         {
             var dictionary = LanguageParser.CreateDictionaryFromString(input);
@@ -29,10 +29,10 @@ namespace IndentRainbow.Logic.Tests.Parser
             }
         }
 
-        [Test]
-        [TestCase("cs:4;js:5;jsx:6;")]
-        [TestCase("cs:5;")]
-        [TestCase("")]
+        [DataTestMethod]
+        [DataRow("cs:4;js:5;jsx:6;")]
+        [DataRow("cs:5;")]
+        [DataRow("")]
         public void ConvertDictionaryToString_ExpectedBehavior(string input)
         {
             var dictionary = LanguageParser.CreateDictionaryFromString(input);

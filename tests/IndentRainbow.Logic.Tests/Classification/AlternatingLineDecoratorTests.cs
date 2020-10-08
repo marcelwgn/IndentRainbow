@@ -4,12 +4,12 @@ using AutoMoq;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NUnit.Framework;
 
 namespace IndentRainbow.Logic.Tests.Classification
 {
-    [TestFixture]
+    [TestClass]
     public class AlternatingLineDecoratorTests
     {
         /// <summary>
@@ -25,7 +25,7 @@ namespace IndentRainbow.Logic.Tests.Classification
         private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
 
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             mocker = new AutoMoqer();
@@ -37,17 +37,17 @@ namespace IndentRainbow.Logic.Tests.Classification
             decorator = mocker.Resolve<AlternatingLineDecorator>();
         }
 
-        [Test]
-        [TestCase(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9, 13 })]
-        [TestCase(TABI + FSI + "123456789", 0, 14, new int[] { 0, 1, 5 })]
-        [TestCase(TABI + "123456789", 0, 10, new int[] { 0, 1 })]
-        [TestCase(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 1, 2, 3 })]
-        [TestCase(TABI + "1", 0, 2, new int[] { 0, 1 })]
-        [TestCase(TABI + TABI + TABI + "1", 0, 4, new int[] { 0, 1, 2, 3 })]
-        [TestCase(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 0, 8, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 })]
-        [TestCase(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
-        [TestCase("", 0, 0, new int[] { })]
-        [TestCase("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 14 })]
+        [DataTestMethod]
+        [DataRow(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 4, 8, 9, 13 })]
+        [DataRow(TABI + FSI + "123456789", 0, 14, new int[] { 0, 1, 5 })]
+        [DataRow(TABI + "123456789", 0, 10, new int[] { 0, 1 })]
+        [DataRow(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 1, 2, 3 })]
+        [DataRow(TABI + "1", 0, 2, new int[] { 0, 1 })]
+        [DataRow(TABI + TABI + TABI + "1", 0, 4, new int[] { 0, 1, 2, 3 })]
+        [DataRow(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 0, 8, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 })]
+        [DataRow(FSI + "text" + FSI, 0, 12, new int[] { 0 })]
+        [DataRow("", 0, 0, new int[] { })]
+        [DataRow("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 14 })]
         public void DecorateLineTests_IndexTesting_ExpectedBehavior(string text, int start, int end, int[] spans)
         {
             decorator.DecorateLine(text, start, end);
@@ -71,27 +71,32 @@ namespace IndentRainbow.Logic.Tests.Classification
             );
         }
 
-        [Test]
-        [TestCase(FSI, -1, 2, typeof(ArgumentOutOfRangeException))]
-        [TestCase(FSI, 2, 1, typeof(ArgumentException))]
-        [TestCase(FSI, 20, 22, typeof(ArgumentOutOfRangeException))]
-        [TestCase(FSI, 2, 20, typeof(ArgumentOutOfRangeException))]
-        [TestCase(FSI, 0, -2, typeof(ArgumentOutOfRangeException))]
-        public void DecorateLineTests_IndexTesting_ErrorHandling(string text, int start, int end, Type exceptionType)
+        [DataTestMethod]
+        [DataRow(FSI, -1, 2)]
+        [DataRow(FSI, 2, 1)]
+        [DataRow(FSI, 20, 22)]
+        [DataRow(FSI, 2, 20)]
+        [DataRow(FSI, 0, -2)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Not needed here")]
+        public void DecorateLineTests_IndexTesting_ErrorHandling(string text, int start, int end)
         {
-            Assert.Throws(exceptionType,
-                delegate
-                {
-                    decorator.DecorateLine(text, start, end);
-                });
+            try
+            {
+                decorator.DecorateLine(text, start, end);
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
         }
 
-        [Test]
-        [TestCase(FSI + FSI + FSI + FSI + FSI + FSI + FSI)]
-        [TestCase(FSI + "dsadsadsa")]
-        [TestCase(FSI + "  dsadsa")]
-        [TestCase(TABI + FSI + "  dsadsa")]
-        [TestCase(FSI + TABI + "  dsadsa")]
+        [DataTestMethod]
+        [DataRow(FSI + FSI + FSI + FSI + FSI + FSI + FSI)]
+        [DataRow(FSI + "dsadsadsa")]
+        [DataRow(FSI + "  dsadsa")]
+        [DataRow(TABI + FSI + "  dsadsa")]
+        [DataRow(FSI + TABI + "  dsadsa")]
         public void DecorateLineTests_ColorTesting_ExpectedBehavior(string text)
         {
             var sequence = new MockSequence();
@@ -122,11 +127,11 @@ namespace IndentRainbow.Logic.Tests.Classification
         }
 
 
-        [Test]
-        [TestCase(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 14 })]
-        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
-        [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
-        [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
+        [DataTestMethod]
+        [DataRow(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 14 })]
+        [DataRow(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
+        [DataRow(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
+        [DataRow("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
         public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int start, int end, int[] spans)
         {
             decorator.DecorateLine(text, start, end);
@@ -147,11 +152,11 @@ namespace IndentRainbow.Logic.Tests.Classification
             );
         }
 
-        [Test]
-        [TestCase(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 4 })]
-        [TestCase(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 1 })]
-        [TestCase(FSI + " text" + FSI, 0, 12, new int[] { 0, 4 })]
-        [TestCase("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 4 })]
+        [DataTestMethod]
+        [DataRow(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 4 })]
+        [DataRow(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 1 })]
+        [DataRow(FSI + " text" + FSI, 0, 12, new int[] { 0, 4 })]
+        [DataRow("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 4 })]
         public void DecorateLineTests_NoErrorDetection_ErrorBehaviors(string text, int start, int end, int[] spans)
         {
             decorator.detectErrors = false;
