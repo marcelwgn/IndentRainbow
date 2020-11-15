@@ -13,7 +13,7 @@ namespace IndentRainbow.Extension.Options
 
     public enum ColorMode
     {
-        [Description("Hard")]
+        [Description("Solid")]
         Hard = 0,
         [Description("Gradient")]
         Gradient = 1
