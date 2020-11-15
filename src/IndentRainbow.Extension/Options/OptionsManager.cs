@@ -136,6 +136,7 @@ namespace IndentRainbow.Extension.Options
             brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier, (int) colormode));
             OptionsManager.opacityMultiplier.Set(opacityMultiplier);
             OptionsManager.highlightingMode.Set(highlightingmode);
+            OptionsManager.colorMode.Set(colormode);
             OptionsManager.errorColor.Set(errorColor);
             detectErrors.Set(detectError);
             errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor, opacityMultiplier));
