@@ -45,6 +45,11 @@ namespace IndentRainbow.Extension.Options
         [Description("Determines whether to alternate between the colors in a single with every indent or use the color of the last indent level for the whole indentation block.")]
         public HighlightingMode HighlightingMode { get; set; }
 
+        [Category("Colors")]
+        [DisplayName("Color mode")]
+        [Description("Determines whether the colors change in a soft gradient or with a hard cut after every indent step.")]
+        public ColorMode ColorMode { get; set; }
+
         [Category("Error highlighting")]
         [DisplayName("Highlight wrong indentation")]
         [Description("Determines whether wrong/faulty indentation will be detected and highlighted or whether it should be treated as correct indentation")]
@@ -69,6 +74,7 @@ namespace IndentRainbow.Extension.Options
             HighglightErrors = OptionsManager.detectErrors.Get();
             ErrorColor = OptionsManager.errorColor.Get();
             HighlightingMode = OptionsManager.highlightingMode.Get();
+            ColorMode = OptionsManager.colorMode.Get();
         }
 
         /// <summary>
@@ -94,6 +100,7 @@ namespace IndentRainbow.Extension.Options
                 Colors,
                 OpacityMultiplier,
                 HighlightingMode,
+                ColorMode,
                 ErrorColor,
                 HighglightErrors);
         }

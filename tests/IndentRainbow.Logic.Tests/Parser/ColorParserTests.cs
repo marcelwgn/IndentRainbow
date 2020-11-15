@@ -44,16 +44,16 @@ namespace IndentRainbow.Logic.Tests.Colors
 
 
         [DataTestMethod]
-        [DataRow("#FFFFFFFF", 1.0, 0)]
-        [DataRow("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 1)]
-        [DataRow("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 2)]
-        [DataRow("#40FFFF00,#4000FFFF,#40FF00FF", 0.5, 3)]
-        [DataRow("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 3)]
-        [DataRow(null, 0, 4)]
-        [DataRow("", 0, 4)]
-        public void ConvertStringToBrushArray_ExpectedBehavior(string input, double opacityMultiplier, int solutionIndex)
+        [DataRow("#FFFFFFFF", 1.0, 0, 0)]
+        [DataRow("#40FFFF00,#4066FF33,#4000CCFF,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 0, 1)]
+        [DataRow("#40FFFF004066FF33,#F,#409933FF,#40FF00FF,#40FF0000,#40FFAA00", 1.0, 0, 2)]
+        [DataRow("#40FFFF00,#4000FFFF,#40FF00FF", 0.5, 0, 3)]
+        [DataRow("#60FFFF00,#6000FFFF,#60FF00FF", 1.0 / 3.0, 0, 3)]
+        [DataRow(null, 0, 0, 4)]
+        [DataRow("", 0, 0, 4)]
+        public void ConvertStringToBrushArray_ExpectedBehavior(string input, double opacityMultiplier, int colorMode, int solutionIndex)
         {
-            var result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier);
+            var result = ColorParser.ConvertStringToBrushArray(input, opacityMultiplier, colorMode);
             var solution = solutions[solutionIndex];
 
             Assert.AreEqual(solution.Length, result.Length);

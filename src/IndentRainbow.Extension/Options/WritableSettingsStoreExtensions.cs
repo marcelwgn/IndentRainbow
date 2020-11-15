@@ -12,6 +12,7 @@ namespace IndentRainbow.Extension.Options
         public const string FileExtensionSizesPropertyName = "FileExtensionSizes";
         public const string FolorsPropertyName = "Colors";
         public const string HighlightingModePropertyName = "HighlightingMode";
+        public const string ColorModePropertyName = "ColorMode";
         public const string OpacityMultiplierPropertyName = "OpacityMultiplier";
         public const string DetectErrorsPropertyName = "DetectErrors";
         public const string errorColorPropertyName = "ErrorColor";
@@ -64,6 +65,15 @@ namespace IndentRainbow.Extension.Options
         public static void SaveHighlightingMode(this WritableSettingsStore store, HighlightingMode highlightingMode)
         {
             store?.SetString(CollectionName, HighlightingModePropertyName, highlightingMode.ToString());
+        }
+
+        /// <summary>
+        /// Saves the colormode
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="colorMode">The highlightingmode to  save</param>
+        public static void SaveColorMode(this WritableSettingsStore store, ColorMode colorMode) {
+            store?.SetString(CollectionName, ColorModePropertyName, colorMode.ToString());
         }
 
         /// <summary>
@@ -180,10 +190,10 @@ namespace IndentRainbow.Extension.Options
         }
 
         /// <summary>
-        /// Loads the opacity multiplier
+        /// Loads the highlighting mode
         /// </summary>
         /// <param name="store">The writable settings store</param>
-        /// <returns>The opacity multiplier or if not found, the default opacity multiplier</returns>
+        /// <returns>The highlighting mode or if not found, the default highlighting mode</returns>
         public static HighlightingMode LoadHighlightingMode(this WritableSettingsStore store)
         {
             var highlightingMode = DefaultRainbowIndentOptions.defaultHighlightingMode;
@@ -201,6 +211,25 @@ namespace IndentRainbow.Extension.Options
                     store.GetString(CollectionName, HighlightingModePropertyName));
             }
             return highlightingMode;
+        }
+
+        /// <summary>
+        /// Loads the color mode
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The color mode or if not found, the default color mode</returns>
+        public static ColorMode LoadColorMode(this WritableSettingsStore store) {
+            var colorMode = DefaultRainbowIndentOptions.defaultColorMode;
+            if (store == null) {
+                return colorMode;
+            }
+            if (!store.PropertyExists(CollectionName, ColorModePropertyName)) {
+                store.SaveColorMode(colorMode);
+            } else {
+                colorMode = (ColorMode)Enum.Parse(typeof(ColorMode),
+                    store.GetString(CollectionName, ColorModePropertyName));
+            }
+            return colorMode;
         }
 
         /// <summary>
@@ -225,6 +254,7 @@ namespace IndentRainbow.Extension.Options
             }
             return detectErrorFlag;
         }
+
 
         /// <summary>
         /// Loads the error color

@@ -43,7 +43,7 @@ namespace IndentRainbow.Extension.Options
         /// Saved value of the brushes array. The value is saved as static field for better performance
         /// </summary>
         public static OptionsField<Brush[]> brushes = new OptionsField<Brush[]>(
-            ColorParser.ConvertStringToBrushArray(DefaultRainbowIndentOptions.defaultColors, DefaultRainbowIndentOptions.defaultOpacityMultiplier));
+            ColorParser.ConvertStringToBrushArray(DefaultRainbowIndentOptions.defaultColors, DefaultRainbowIndentOptions.defaultOpacityMultiplier, (int) DefaultRainbowIndentOptions.defaultColorMode));
 
         /// <summary>
         /// The opacity multiplier which is applied to all colors
@@ -54,6 +54,11 @@ namespace IndentRainbow.Extension.Options
         /// The highlighting mode that should be used for drawing
         /// </summary>
         public static OptionsField<HighlightingMode> highlightingMode = new OptionsField<HighlightingMode>(DefaultRainbowIndentOptions.defaultHighlightingMode);
+
+        /// <summary>
+        /// The color mode that should be used for drawing
+        /// </summary>
+        public static OptionsField<ColorMode> colorMode = new OptionsField<ColorMode>(DefaultRainbowIndentOptions.defaultColorMode);
 
         /// <summary>
         /// The detect error flag which determines whether errors will be highlighted
@@ -94,12 +99,13 @@ namespace IndentRainbow.Extension.Options
                 colors.Set(settingsStore.LoadColors());
                 opacityMultiplier.Set(settingsStore.LoadOpacityMultiplier());
                 highlightingMode.Set(settingsStore.LoadHighlightingMode());
+                colorMode.Set(settingsStore.LoadColorMode());
                 errorColor.Set(settingsStore.LoadErrorColor());
                 detectErrors.Set(settingsStore.LoadDetectErrorsFlag());
                 fileExtensionsString.Set(settingsStore.LoadFileExtensionsIndentSizes());
                 //This fields have to be initialized after the other fields since they depend on them
                 loadedFromStorage = true;
-                brushes.Set(ColorParser.ConvertStringToBrushArray(colors.Get(), opacityMultiplier.Get()));
+                brushes.Set(ColorParser.ConvertStringToBrushArray(colors.Get(), opacityMultiplier.Get(), (int) colorMode.Get()));
                 errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor.Get(), opacityMultiplier.Get()));
                 fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString.Get()));
             }
@@ -110,7 +116,7 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="indentSize">The indent size specifying the number of spaces for indentation detection</param>
         /// <param name="colors">The colors as string</param>
-        public static void SaveSettings(int indentSize, string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode, string errorColor, bool detectError)
+        public static void SaveSettings(int indentSize, string fileExtensionsString, string colors, double opacityMultiplier, HighlightingMode highlightingmode, ColorMode colormode, string errorColor, bool detectError)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var settingsStore = GetWritableSettingsStore();
@@ -119,6 +125,7 @@ namespace IndentRainbow.Extension.Options
             settingsStore.SaveColors(colors);
             settingsStore.SaveOpacityMultiplier(opacityMultiplier);
             settingsStore.SaveHighlightingMode(highlightingmode);
+            settingsStore.SaveColorMode(colormode);
             settingsStore.SaveDetectErrorsFlag(detectError);
             settingsStore.SaveErrorColor(errorColor);
 
@@ -126,7 +133,7 @@ namespace IndentRainbow.Extension.Options
             OptionsManager.fileExtensionsString.Set(fileExtensionsString);
             fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString));
             OptionsManager.colors.Set(colors);
-            brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier));
+            brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier, (int) colormode));
             OptionsManager.opacityMultiplier.Set(opacityMultiplier);
             OptionsManager.highlightingMode.Set(highlightingmode);
             OptionsManager.errorColor.Set(errorColor);
