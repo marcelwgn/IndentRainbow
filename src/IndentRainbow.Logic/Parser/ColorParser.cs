@@ -39,9 +39,13 @@ namespace IndentRainbow.Logic.Parser
                 if (colorMode == 1)
                 {
                     if (i + 1 < colorCount)
+                    {
                         brush = new LinearGradientBrush(c[i], c[i + 1], 0.0);
+                    }
                     else
-                    brush = new LinearGradientBrush(c[i], c[0], 0.0);
+                    {
+                        brush = new LinearGradientBrush(c[i], c[0], 0.0);
+                    }
                 }
                 else
                 {
@@ -52,9 +56,13 @@ namespace IndentRainbow.Logic.Parser
                 var color = c[i];
                 color.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
                 if (colorMode == 1)
+                {
                     brush.Opacity = color.A;
+                }
                 else
+                {
                     ((SolidColorBrush)brush).Color = color;
+                }
 
                 brushes.Add(brush);
             }

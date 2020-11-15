@@ -72,7 +72,8 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="store">The writable settings store</param>
         /// <param name="colorMode">The highlightingmode to  save</param>
-        public static void SaveColorMode(this WritableSettingsStore store, ColorMode colorMode) {
+        public static void SaveColorMode(this WritableSettingsStore store, ColorMode colorMode)
+        {
             store?.SetString(CollectionName, ColorModePropertyName, colorMode.ToString());
         }
 
@@ -218,14 +219,20 @@ namespace IndentRainbow.Extension.Options
         /// </summary>
         /// <param name="store">The writable settings store</param>
         /// <returns>The color mode or if not found, the default color mode</returns>
-        public static ColorMode LoadColorMode(this WritableSettingsStore store) {
+        public static ColorMode LoadColorMode(this WritableSettingsStore store)
+        {
             var colorMode = DefaultRainbowIndentOptions.defaultColorMode;
-            if (store == null) {
+            if (store == null)
+            {
                 return colorMode;
             }
-            if (!store.PropertyExists(CollectionName, ColorModePropertyName)) {
+
+            if (!store.PropertyExists(CollectionName, ColorModePropertyName))
+            {
                 store.SaveColorMode(colorMode);
-            } else {
+            }
+            else
+            {
                 colorMode = (ColorMode)Enum.Parse(typeof(ColorMode),
                     store.GetString(CollectionName, ColorModePropertyName));
             }
@@ -254,7 +261,6 @@ namespace IndentRainbow.Extension.Options
             }
             return detectErrorFlag;
         }
-
 
         /// <summary>
         /// Loads the error color
