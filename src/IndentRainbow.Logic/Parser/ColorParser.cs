@@ -12,7 +12,7 @@ namespace IndentRainbow.Logic.Parser
         /// </summary>
         /// <param name="colors"></param>
         /// <returns></returns>
-        public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier)
+        public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier, int colorMode)
         {
             if (string.IsNullOrEmpty(colors))
             {
@@ -22,20 +22,50 @@ namespace IndentRainbow.Logic.Parser
             var colorCount = splitColors.Length;
             var brushes = new List<Brush>();
 
+            List<Color> c = new List<Color>();
+
             for (var i = 0; i < colorCount; i++)
             {
                 try
                 {
-                    var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(splitColors[i]));
-                    double alphaOfBrush = (brush.Color.A);
-                    var color = brush.Color;
-                    color.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
-                    brush.Color = color;
-                    brushes.Add(brush);
+                    c.Add((Color)ColorConverter.ConvertFromString(splitColors[i]));
                 }
                 catch (FormatException) { }
             }
 
+            for (var i = 0; i < c.Count; i++)
+            {
+                Brush brush;
+                if (colorMode == 1)
+                {
+                    if (i + 1 < colorCount)
+                    {
+                        brush = new LinearGradientBrush(c[i], c[i + 1], 0.0);
+                    }
+                    else
+                    {
+                        brush = new LinearGradientBrush(c[i], c[0], 0.0);
+                    }
+                }
+                else
+                {
+                    brush = new SolidColorBrush(c[i]);
+                }
+
+                double alphaOfBrush = c[i].A;
+                var color = c[i];
+                color.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
+                if (colorMode == 1)
+                {
+                    brush.Opacity = color.A;
+                }
+                else
+                {
+                    ((SolidColorBrush)brush).Color = color;
+                }
+
+                brushes.Add(brush);
+            }
             return brushes.ToArray();
         }
 
