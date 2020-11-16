@@ -22,48 +22,37 @@ namespace IndentRainbow.Logic.Parser
             var colorCount = splitColors.Length;
             var brushes = new List<Brush>();
 
-            List<Color> c = new List<Color>();
+            List<Color> colorList = new List<Color>();
 
             for (var i = 0; i < colorCount; i++)
             {
                 try
                 {
-                    c.Add((Color)ColorConverter.ConvertFromString(splitColors[i]));
+                    var color = (Color)ColorConverter.ConvertFromString(splitColors[i]);
+                    color.A = (byte)Math.Floor(color.A * opacityMultiplier);
+                    colorList.Add(color);
                 }
                 catch (FormatException) { }
             }
 
-            for (var i = 0; i < c.Count; i++)
+            for (var i = 0; i < colorList.Count; i++)
             {
                 Brush brush;
                 if (colorMode == 1)
                 {
                     if (i + 1 < colorCount)
                     {
-                        brush = new LinearGradientBrush(c[i], c[i + 1], 0.0);
+                        brush = new LinearGradientBrush(colorList[i], colorList[i + 1], 0.0);
                     }
                     else
                     {
-                        brush = new LinearGradientBrush(c[i], c[0], 0.0);
+                        brush = new LinearGradientBrush(colorList[i], colorList[0], 0.0);
                     }
                 }
                 else
                 {
-                    brush = new SolidColorBrush(c[i]);
+                    brush = new SolidColorBrush(colorList[i]);
                 }
-
-                double alphaOfBrush = c[i].A;
-                var color = c[i];
-                color.A = (byte)Math.Floor(alphaOfBrush * opacityMultiplier);
-                if (colorMode == 1)
-                {
-                    brush.Opacity = color.A;
-                }
-                else
-                {
-                    ((SolidColorBrush)brush).Color = color;
-                }
-
                 brushes.Add(brush);
             }
             return brushes.ToArray();
