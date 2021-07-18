@@ -3,9 +3,11 @@ using IndentRainbow.Extension.Options;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
+using Microsoft.VisualStudio.TextManager.Interop;
 
 namespace IndentRainbow.Extension
 {
@@ -68,10 +70,9 @@ namespace IndentRainbow.Extension
             );
 
 
-            bool result = textDocumentFactory.TryGetTextDocument(this.view.TextBuffer, out ITextDocument textDocument);
-            if (result)
+            string filePath = GetPath(view);
+            if(filePath != null)
             {
-                string filePath = textDocument.FilePath;
                 var filePathSplit = filePath.Split('.');
                 var extension = filePathSplit[filePathSplit.Length - 1];
                 if (OptionsManager.fileExtensionsDictionary.Get().ContainsKey(extension))
@@ -127,6 +128,18 @@ namespace IndentRainbow.Extension
 
             string text = line.Snapshot.GetText();
             decorator.DecorateLine(text, start, end);
+        }
+
+        private static string GetPath(IWpfTextView textView)
+        {
+            textView.TextBuffer.Properties.TryGetProperty(typeof(IVsTextBuffer), out IVsTextBuffer bufferAdapter);
+
+            if (!(bufferAdapter is IPersistFileFormat persistFileFormat))
+            {
+                return null;
+            }
+            persistFileFormat.GetCurFile(out string filePath, out _);
+            return filePath;
         }
     }
 }
