@@ -25,10 +25,18 @@ namespace IndentRainbow.Extension.Drawing
         public void DrawBackground(int firstIndex, int length, Brush drawBrush)
         {
             var span = new SnapshotSpan(view.TextSnapshot, Span.FromBounds(firstIndex, firstIndex + length));
-            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span);
+            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span, false, new Thickness(0, 0, 0, view.LineHeight - view.TextViewLines.WpfTextViewLines[0].TextHeight));
             if (geometry != null)
             {
-                var drawing = new GeometryDrawing(drawBrush, null, geometry);
+                var newRect = new Rect()
+                {
+                    X = geometry.Bounds.X,
+                    Y = geometry.Bounds.Y,
+                    Width = geometry.Bounds.Width,
+                    Height = view.LineHeight
+                };
+                var copiedGeometry = new RectangleGeometry(newRect);
+                var drawing = new GeometryDrawing(drawBrush, null, copiedGeometry);
                 drawing.Freeze();
 
                 var drawingImage = new DrawingImage(drawing);
