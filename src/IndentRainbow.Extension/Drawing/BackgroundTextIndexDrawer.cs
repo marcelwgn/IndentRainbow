@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.Text;
@@ -28,7 +29,15 @@ namespace IndentRainbow.Extension.Drawing
             Geometry geometry = view.TextViewLines.GetMarkerGeometry(span);
             if (geometry != null)
             {
-                var drawing = new GeometryDrawing(drawBrush, null, geometry);
+                var newRect = new Rect()
+                {
+                    X = geometry.Bounds.X,
+                    Y = geometry.Bounds.Y,
+                    Width = geometry.Bounds.Width,
+                    Height = view.LineHeight
+                };
+                var copiedGeometry = new RectangleGeometry(newRect);
+                var drawing = new GeometryDrawing(drawBrush, null, copiedGeometry);
                 drawing.Freeze();
 
                 var drawingImage = new DrawingImage(drawing);
