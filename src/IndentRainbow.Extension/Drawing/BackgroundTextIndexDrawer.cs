@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.Text;
@@ -25,7 +26,7 @@ namespace IndentRainbow.Extension.Drawing
         public void DrawBackground(int firstIndex, int length, Brush drawBrush)
         {
             var span = new SnapshotSpan(view.TextSnapshot, Span.FromBounds(firstIndex, firstIndex + length));
-            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span, false, new Thickness(0, 0, 0, view.LineHeight - view.TextViewLines.WpfTextViewLines[0].TextHeight));
+            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span);
             if (geometry != null)
             {
                 var newRect = new Rect()
