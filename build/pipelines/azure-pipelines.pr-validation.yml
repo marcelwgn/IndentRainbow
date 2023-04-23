@@ -31,5 +31,5 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)\artifacts\$(buildConfiguration)\IndentRainbow.Extension\IndentRainbow.vsix'
+    targetPath: '$(Build.SourcesDirectory)\artifacts\$(buildConfiguration)\IndentRainbow.Extension\IndentRainbow.vsix'
     publishLocation: 'pipeline'
