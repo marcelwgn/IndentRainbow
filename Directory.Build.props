@@ -13,7 +13,7 @@
   <!-- Packages needed in every project -->
   <ItemGroup>
     <!-- Code analyzer -->
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.2">
     </PackageReference>
   </ItemGroup>
 </Project>
