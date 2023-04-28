@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.VisualStudio.Settings;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension.Options
 {

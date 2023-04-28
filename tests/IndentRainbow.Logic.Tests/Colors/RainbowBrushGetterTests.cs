@@ -21,7 +21,7 @@ namespace IndentRainbow.Logic.Tests.Colors
         [TestInitialize]
         public void Setup()
         {
-            brushGetter = new RainbowBrushGetter(brushes, null);
+            brushGetter = new RainbowBrushGetter(brushes, brushes[0]);
         }
 
         [DataTestMethod]
@@ -59,7 +59,7 @@ namespace IndentRainbow.Logic.Tests.Colors
         [DataTestMethod]
         public void GetErrorBrush_ExpectedBehavior()
         {
-            Assert.IsNotNull(new RainbowBrushGetter().GetErrorBrush());
+            Assert.IsNotNull(brushGetter.GetErrorBrush());
         }
     }
 }

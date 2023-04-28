@@ -42,7 +42,7 @@ namespace IndentRainbow.Logic.Classification
             }
             if (validTabLength < 0 && detectErrors)
             {
-                drawer.DrawBackground(start, -validTabLength, colorGetter.GetErrorBrush());
+                drawer.DrawBackground(start, -validTabLength, colorGetter.ErrorBrush);
                 return;
             }
             if (!detectErrors && validTabLength < 0)

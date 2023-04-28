@@ -4,6 +4,7 @@ using IndentRainbow.Logic.Parser;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Settings;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension.Options
 {
@@ -105,7 +106,7 @@ namespace IndentRainbow.Extension.Options
                 fileExtensionsString.Set(settingsStore.LoadFileExtensionsIndentSizes());
                 //This fields have to be initialized after the other fields since they depend on them
                 loadedFromStorage = true;
-                brushes.Set(ColorParser.ConvertStringToBrushArray(colors.Get(), opacityMultiplier.Get(), (int) colorMode.Get()));
+                brushes.Set(ColorParser.ConvertStringToBrushArray(colors.Get(), opacityMultiplier.Get(), colorMode.Get()));
                 errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor.Get(), opacityMultiplier.Get()));
                 fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString.Get()));
             }
@@ -133,7 +134,7 @@ namespace IndentRainbow.Extension.Options
             OptionsManager.fileExtensionsString.Set(fileExtensionsString);
             fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString));
             OptionsManager.colors.Set(colors);
-            brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier, (int) colormode));
+            brushes.Set(ColorParser.ConvertStringToBrushArray(colors, opacityMultiplier, colormode));
             OptionsManager.opacityMultiplier.Set(opacityMultiplier);
             OptionsManager.highlightingMode.Set(highlightingmode);
             OptionsManager.colorMode.Set(colormode);

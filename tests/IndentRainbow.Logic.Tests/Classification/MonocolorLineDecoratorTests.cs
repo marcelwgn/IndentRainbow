@@ -22,8 +22,9 @@ namespace IndentRainbow.Logic.Tests.Classification
 		private readonly Mock<IBackgroundTextIndexDrawer> backgroundTextIndexDrawerMock = new Mock<IBackgroundTextIndexDrawer>();
 		private IBackgroundTextIndexDrawer backgroundTextIndexDrawer => backgroundTextIndexDrawerMock.Object;
 		private readonly IndentValidator validator = new IndentValidator(4);
-		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
-
+		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new SolidColorBrush[] {
+				new SolidColorBrush()
+			}, new SolidColorBrush());
 
 		[TestInitialize]
 		public void Setup()
@@ -129,24 +130,28 @@ namespace IndentRainbow.Logic.Tests.Classification
 		[DataRow(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
 		[DataRow(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
 		[DataRow("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
+		[DataRow("test", 0, 4, null)]
 		public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int start, int end, int[] spans)
 		{
 			decorator.DecorateLine(text, start, end);
 
-			backgroundTextIndexDrawerMock.Verify(
-				p => p.DrawBackground(
-					spans[0], spans[1],
-					It.IsAny<Brush>()),
-				Times.Once()
-			);
-			backgroundTextIndexDrawerMock.Verify(
-				p => p.DrawBackground(
-						It.IsNotIn(spans),
-						It.IsNotIn(4),
-						It.IsAny<Brush>()
-					),
-				Times.Never()
-			);
+			if(spans != null)
+			{
+				backgroundTextIndexDrawerMock.Verify(
+					p => p.DrawBackground(
+						spans[0], spans[1],
+						It.IsAny<Brush>()),
+					Times.Once()
+				);
+				backgroundTextIndexDrawerMock.Verify(
+					p => p.DrawBackground(
+							It.IsNotIn(spans),
+							It.IsNotIn(4),
+							It.IsAny<Brush>()
+						),
+					Times.Never()
+				);
+			}
 		}
 
 		[DataTestMethod]

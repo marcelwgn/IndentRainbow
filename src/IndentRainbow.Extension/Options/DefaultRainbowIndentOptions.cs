@@ -1,22 +1,14 @@
 ﻿using System.ComponentModel;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension.Options
 {
-
     public enum HighlightingMode
     {
         [Description("Alternating colors")]
         Alternating = 0,
         [Description("One color")]
         Monocolor = 1
-    }
-
-    public enum ColorMode
-    {
-        [Description("Solid")]
-        Solid = 0,
-        [Description("Gradient")]
-        Gradient = 1
     }
 
     internal static class DefaultRainbowIndentOptions

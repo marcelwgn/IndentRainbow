@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.VisualStudio.Shell;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension.Options
 {
