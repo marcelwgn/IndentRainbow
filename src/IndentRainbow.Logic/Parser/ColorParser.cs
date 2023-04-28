@@ -21,11 +21,11 @@ namespace IndentRainbow.Logic.Parser
 		/// </summary>
 		/// <param name="colors"></param>
 		/// <returns></returns>
-		public static Brush[] ConvertStringToBrushArray(string colors, double opacityMultiplier, ColorMode colorMode)
+		public static Color[] ConvertStringToColorArray(string colors, double opacityMultiplier)
 		{
 			if (string.IsNullOrEmpty(colors))
 			{
-				return Array.Empty<Brush>();
+				return Array.Empty<Color>();
 			}
 			var splitColors = colors.Split(',');
 			var colorCount = splitColors.Length;
@@ -43,28 +43,7 @@ namespace IndentRainbow.Logic.Parser
 				}
 				catch (FormatException) { }
 			}
-
-			for (var i = 0; i < colorList.Count; i++)
-			{
-				Brush brush;
-				if (colorMode == ColorMode.Gradient)
-				{
-					if (i + 1 < colorList.Count)
-					{
-						brush = new LinearGradientBrush(colorList[i], colorList[i + 1], 0.0);
-					}
-					else
-					{
-						brush = new LinearGradientBrush(colorList[i], colorList[0], 0.0);
-					}
-				}
-				else
-				{
-					brush = new SolidColorBrush(colorList[i]);
-				}
-				brushes.Add(brush);
-			}
-			return brushes.ToArray();
+			return colorList.ToArray();
 		}
 
 		public static Brush ConvertStringToBrush(string color, double opacityMultiplier)

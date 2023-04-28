@@ -5,6 +5,7 @@ using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Logic.Tests.Classification
 {
@@ -22,9 +23,9 @@ namespace IndentRainbow.Logic.Tests.Classification
 		private readonly Mock<IBackgroundTextIndexDrawer> backgroundTextIndexDrawerMock = new Mock<IBackgroundTextIndexDrawer>();
 		private IBackgroundTextIndexDrawer backgroundTextIndexDrawer => backgroundTextIndexDrawerMock.Object;
 		private readonly IndentValidator validator = new IndentValidator(4);
-		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new SolidColorBrush[] {
-				new SolidColorBrush()
-			}, new SolidColorBrush());
+		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new Color[] {
+				Color.FromRgb(0, 0, 0)
+			}, new SolidColorBrush(), ColorMode.Solid);
 
 
 		[TestInitialize]
@@ -115,7 +116,7 @@ namespace IndentRainbow.Logic.Tests.Classification
 					p => p.DrawBackground(
 						It.IsAny<int>(),
 						It.IsAny<int>(),
-						rainbowgetter.GetColorByIndex(i)
+						rainbowgetter.GetColorByIndex(i, 0)
 					)
 				);
 			}

@@ -69,7 +69,7 @@ namespace IndentRainbow.Extension.Options
             ThreadHelper.ThrowIfNotOnUIThread();
             OptionsManager.LoadSettings();
             IndentSize = OptionsManager.indentSize.Get();
-            Colors = OptionsManager.colors.Get();
+            Colors = OptionsManager.hexCodes.Get();
             FileSpecificIndentSizes = OptionsManager.fileExtensionsString.Get();
             OpacityMultiplier = OptionsManager.opacityMultiplier.Get();
             HighglightErrors = OptionsManager.detectErrors.Get();

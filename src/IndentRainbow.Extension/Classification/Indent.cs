@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using Microsoft.VisualStudio.TextManager.Interop;
+using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension
 {
@@ -64,7 +65,7 @@ namespace IndentRainbow.Extension
             this.view.LayoutChanged += OnLayoutChanged;
             drawer = new BackgroundTextIndexDrawer(layer, this.view);
 
-            colorGetter = new RainbowBrushGetter(OptionsManager.brushes.Get(), OptionsManager.errorBrush.Get());
+            colorGetter = new RainbowBrushGetter(OptionsManager.colors.Get(), OptionsManager.errorBrush.Get(), OptionsManager.colorMode.Get());
             validator = new IndentValidator(
                 OptionsManager.indentSize.Get()
             );
