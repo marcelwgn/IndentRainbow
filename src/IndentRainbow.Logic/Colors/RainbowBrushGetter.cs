@@ -6,24 +6,15 @@ namespace IndentRainbow.Logic.Colors
     public class RainbowBrushGetter : IRainbowBrushGetter
     {
 
-        private readonly Brush[] Brushes = new Brush[] {
-            new SolidColorBrush(Color.FromArgb(0x40, 255, 255, 0)),
-            new SolidColorBrush(Color.FromArgb(0x40, 102, 255, 51)),
-            new SolidColorBrush(Color.FromArgb(0x40, 0, 204, 255)),
-            new SolidColorBrush(Color.FromArgb(0x40, 153, 51, 255)),
-            new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 255)),
-            new SolidColorBrush(Color.FromArgb(0x40, 255, 0, 0)),
-            new SolidColorBrush(Color.FromArgb(0x40, 255, 170, 0))
-        };
+        private readonly Brush[] brushes;
 
-        private readonly Brush ErrorColor = new SolidColorBrush(Color.FromArgb(0x40, 168, 0, 0));
-
-        public RainbowBrushGetter() { }
+        private Brush errorBrush;
+        public Brush ErrorBrush => errorBrush;
 
         public RainbowBrushGetter(Brush[] brushes, Brush errorColor)
         {
-            Brushes = brushes;
-            ErrorColor = errorColor;
+            this.brushes = brushes;
+            this.errorBrush = errorColor;
         }
 
         public Brush GetColorByIndex(int rainbowIndex)
@@ -32,17 +23,17 @@ namespace IndentRainbow.Logic.Colors
             {
                 throw new ArgumentOutOfRangeException(nameof(rainbowIndex));
             }
-            if (Brushes.Length == 0)
+            if (brushes.Length == 0)
             {
                 return null;
             }
-            var index = rainbowIndex % Brushes.Length;
-            return Brushes[index];
+            var index = rainbowIndex % brushes.Length;
+            return brushes[index];
         }
 
         public Brush GetErrorBrush()
         {
-            return ErrorColor;
+            return ErrorBrush;
         }
     }
 }

@@ -22,7 +22,9 @@ namespace IndentRainbow.Logic.Tests.Classification
 		private readonly Mock<IBackgroundTextIndexDrawer> backgroundTextIndexDrawerMock = new Mock<IBackgroundTextIndexDrawer>();
 		private IBackgroundTextIndexDrawer backgroundTextIndexDrawer => backgroundTextIndexDrawerMock.Object;
 		private readonly IndentValidator validator = new IndentValidator(4);
-		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter();
+		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new SolidColorBrush[] {
+				new SolidColorBrush()
+			}, new SolidColorBrush());
 
 
 		[TestInitialize]

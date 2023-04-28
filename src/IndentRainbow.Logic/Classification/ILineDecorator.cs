@@ -2,8 +2,6 @@
 {
     public interface ILineDecorator
     {
-
         void DecorateLine(string text, int startIndex, int endIndex);
-
     }
 }
