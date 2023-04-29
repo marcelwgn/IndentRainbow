@@ -33,7 +33,6 @@ namespace IndentRainbow.Logic.Classification
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
             }
 
-            var rainbowIndex = -1;
             var validTabLength = GetIndentLengthIfValid(text, start, end);
 
             if (validTabLength == 0)
@@ -50,37 +49,8 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-            for (var charIndex = start; charIndex < start + validTabLength;)
-            {
-                if (charIndex + tabSize >= text.Length)
-                {
-                    if (text[charIndex] != '\t')
-                    {
-                        break;
-                    }
-                    charIndex++;
-                    rainbowIndex++;
-                    continue;
-                }
-                var cutout = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
-                if (validator.IsValidIndent(cutout))
-                {
-                    charIndex += tabSize;
-                    rainbowIndex++;
-                }
-                else if (validator.IsValidIndent(tabCutOut))
-                {
-                    charIndex++;
-                    rainbowIndex++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(rainbowIndex));
+			var indentationCount = validator.GetIndentLevelCount(text, start, validTabLength);
+            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(indentationCount - 1, -1));
         }
     }
 }

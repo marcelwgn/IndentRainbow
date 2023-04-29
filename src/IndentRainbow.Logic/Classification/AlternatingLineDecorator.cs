@@ -54,6 +54,7 @@ namespace IndentRainbow.Logic.Classification
 				validTabLength = -validTabLength;
 			}
 
+			var colorColumns = validator.GetIndentLevelCount(text, start, validTabLength);
 			for (var charIndex = start; charIndex < start + validTabLength;)
 			{
 				if (charIndex + tabSize >= text.Length)
@@ -62,7 +63,7 @@ namespace IndentRainbow.Logic.Classification
 					{
 						return;
 					}
-					drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, 0));
+					drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
 					charIndex++;
 					rainbowIndex++;
 					continue;
@@ -71,13 +72,13 @@ namespace IndentRainbow.Logic.Classification
 				var tabCutOut = text.Substring(charIndex, 1);
 				if (validator.IsValidIndent(cutout))
 				{
-					drawer.DrawBackground(charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex, 0));
+					drawer.DrawBackground(charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
 					charIndex += tabSize;
 					rainbowIndex++;
 				}
 				else if (validator.IsValidIndent(tabCutOut))
 				{
-					drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, 0));
+					drawer.DrawBackground(charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
 					charIndex++;
 					rainbowIndex++;
 				}
