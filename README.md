@@ -5,6 +5,7 @@
 
 ### Visual Studio extension for colorization of indent levels.
 You can download the latest version of this extension on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=chingucoding.IndentRainbow).
+Screenshots of the extension can be found in <a></a>[this folder](./docs) or on the extension page linked above.
 
 ### Summary
 The aim of this extension is to make it easier to differentiate different levels of indentation in your source code. 
