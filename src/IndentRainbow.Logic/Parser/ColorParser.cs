@@ -29,10 +29,9 @@ namespace IndentRainbow.Logic.Parser
 			}
 			var splitColors = colors.Split(',');
 			var colorCount = splitColors.Length;
-			var brushes = new List<Brush>();
 
 			List<Color> colorList = new List<Color>();
-
+			
 			for (var i = 0; i < colorCount; i++)
 			{
 				try
