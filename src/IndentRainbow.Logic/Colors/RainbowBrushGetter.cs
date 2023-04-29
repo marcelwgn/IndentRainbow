@@ -8,7 +8,7 @@ namespace IndentRainbow.Logic.Colors
 	public class RainbowBrushGetter : IRainbowBrushGetter
 	{
 		public Brush ErrorBrush => errorBrush;
-		private Brush errorBrush;
+		private readonly Brush errorBrush;
 
 		private Brush[] brushes;
 		private LinearGradientBrush[] fadeOutBrushes;
@@ -108,12 +108,14 @@ namespace IndentRainbow.Logic.Colors
 			return brushes[index];
 		}
 
-		private LinearGradientBrush CreateThreeStepBrush(Color firstColor, Color secondColor, Color thirdColor)
+		private static LinearGradientBrush CreateThreeStepBrush(Color firstColor, Color secondColor, Color thirdColor)
 		{
-			var brush = new LinearGradientBrush();
-			// This is to set the angle correctly
-			brush.StartPoint = new System.Windows.Point(0, 0);
-			brush.EndPoint = new System.Windows.Point(1, 0);
+			var brush = new LinearGradientBrush
+			{
+				// This is to set the angle correctly
+				StartPoint = new System.Windows.Point(0, 0),
+				EndPoint = new System.Windows.Point(1, 0)
+			};
 			brush.GradientStops.Add(new GradientStop(firstColor, 0));
 			brush.GradientStops.Add(new GradientStop(secondColor, 0.5));
 			brush.GradientStops.Add(new GradientStop(thirdColor, 1));

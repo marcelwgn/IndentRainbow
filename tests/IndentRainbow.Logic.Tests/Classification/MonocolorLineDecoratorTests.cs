@@ -21,7 +21,7 @@ namespace IndentRainbow.Logic.Tests.Classification
 
 		private MonocolorLineDecorator decorator;
 		private readonly Mock<IBackgroundTextIndexDrawer> backgroundTextIndexDrawerMock = new Mock<IBackgroundTextIndexDrawer>();
-		private IBackgroundTextIndexDrawer backgroundTextIndexDrawer => backgroundTextIndexDrawerMock.Object;
+		private IBackgroundTextIndexDrawer BackgroundTextIndexDrawer => backgroundTextIndexDrawerMock.Object;
 		private readonly IndentValidator validator = new IndentValidator(4);
 		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new Color[] {
 				Color.FromRgb(0,0,0)
@@ -30,7 +30,7 @@ namespace IndentRainbow.Logic.Tests.Classification
 		[TestInitialize]
 		public void Setup()
 		{
-			decorator = new MonocolorLineDecorator(backgroundTextIndexDrawer, rainbowgetter, validator);
+			decorator = new MonocolorLineDecorator(BackgroundTextIndexDrawer, rainbowgetter, validator);
 		}
 
 		[DataTestMethod]

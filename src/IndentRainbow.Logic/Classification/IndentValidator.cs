@@ -41,6 +41,10 @@
 		{
 			var tabCount = 0;
 			var spaceCount = 0;
+			if(text == null)
+			{
+				return 0;
+			}
 			for (int i = start; i < start + length; i++)
 			{
 				if (text[i] == '\t')

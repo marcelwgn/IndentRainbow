@@ -24,8 +24,6 @@ namespace IndentRainbow.Logic.Tests.Colors
 			new SolidColorBrush(colors[2])
 		};
 
-		private static readonly Color[] emptyColors = Array.Empty<Color>();
-
 		private RainbowBrushGetter solidBrushGetterNormal;
 		private RainbowBrushGetter solidBrushGetterFading;
 		private RainbowBrushGetter gradientBrushGetterNormal;

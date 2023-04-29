@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IndentRainbow.Logic.Tests.Classification
 {
 	[TestClass]
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
 	public class IndentValidatorTests
 	{
 

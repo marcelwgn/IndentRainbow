@@ -16,7 +16,6 @@ namespace IndentRainbow.Logic.Classification
             {
                 return;
             }
-            var tabSize = validator.GetIndentBlockLength();
             if (start < 0 || start > text.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(start));
