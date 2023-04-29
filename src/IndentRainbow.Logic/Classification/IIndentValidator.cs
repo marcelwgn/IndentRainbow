@@ -17,10 +17,19 @@
         int GetIndentBlockLength();
 
         /// <summary>
-        /// 
+        /// Returns how many indentation levels are present in the substring presented
         /// </summary>
-        /// <param name="text">The text to be analyzed</param>
-        /// <returns>Returns true, when the given string is an incomplete/incorrect indent, otherwise false</returns>
-        bool IsIncompleteIndent(string text);
+        /// <param name="text">The text that will be parsed</param>
+        /// <param name="start">The start position of the indentation</param>
+        /// <param name="length">The length of the indentation block</param>
+        /// <returns></returns>
+		int GetIndentLevelCount(string text, int start, int length);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="text">The text to be analyzed</param>
+		/// <returns>Returns true, when the given string is an incomplete/incorrect indent, otherwise false</returns>
+		bool IsIncompleteIndent(string text);
     }
 }

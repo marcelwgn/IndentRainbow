@@ -19,6 +19,7 @@ namespace IndentRainbow.Extension.Options
         public const double defaultOpacityMultiplier = 1.0;
         public const HighlightingMode defaultHighlightingMode = HighlightingMode.Alternating;
         public const ColorMode defaultColorMode = ColorMode.Solid;
+        public const bool defaultFadeColors = false;
 
         // Constants for errors
         public const string defaultErrorColor = "#40a80000";

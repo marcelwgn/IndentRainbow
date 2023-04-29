@@ -12,7 +12,7 @@ namespace IndentRainbow.Logic.Parser
 			[Description("Solid")]
 			Solid = 0,
 			[Description("Gradient")]
-			Gradient = 1
+			Gradient = 1,
 		}
 
 		/// <summary>

@@ -17,13 +17,15 @@ namespace IndentRainbow.Extension.Options
         public const string OpacityMultiplierPropertyName = "OpacityMultiplier";
         public const string DetectErrorsPropertyName = "DetectErrors";
         public const string errorColorPropertyName = "ErrorColor";
+        public const string FadeColorsPropertyName = "FadeColors";
 
-        /// <summary>
-        /// Saves the given indentsize to the settings store using a specific collection and property name
-        /// </summary>
-        /// <param name="store">The writable settings store</param>
-        /// <param name="indentSize">The indent size to save</param>
-        public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
+
+		/// <summary>
+		/// Saves the given indentsize to the settings store using a specific collection and property name
+		/// </summary>
+		/// <param name="store">The writable settings store</param>
+		/// <param name="indentSize">The indent size to save</param>
+		public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
         {
             store?.SetInt32(CollectionName, IndentSizePropertyName, indentSize);
         }
@@ -76,6 +78,16 @@ namespace IndentRainbow.Extension.Options
         public static void SaveColorMode(this WritableSettingsStore store, ColorMode colorMode)
         {
             store?.SetString(CollectionName, ColorModePropertyName, colorMode.ToString());
+        }
+
+        /// <summary>
+        /// Saves the fade colors flag
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="fadeColors">The fade colors flag to save</param>
+        public static void SaveFadeColors(this WritableSettingsStore store, bool fadeColors)
+        {
+            store.SetBoolean(CollectionName, FadeColorsPropertyName, fadeColors);
         }
 
         /// <summary>
@@ -234,18 +246,46 @@ namespace IndentRainbow.Extension.Options
             }
             else
             {
-                colorMode = (ColorMode)Enum.Parse(typeof(ColorMode),
-                    store.GetString(CollectionName, ColorModePropertyName));
+                try
+                {
+                    colorMode = (ColorMode)Enum.Parse(typeof(ColorMode),
+                        store.GetString(CollectionName, ColorModePropertyName));
+                } catch(Exception e)
+                {
+
+                }
             }
             return colorMode;
         }
 
-        /// <summary>
-        /// Loads the detect errors flag
-        /// </summary>
-        /// <param name="store">The writable settings store</param>
-        /// <returns>The detect error flag or if not found, the default detect error flag</returns>
-        public static bool LoadDetectErrorsFlag(this WritableSettingsStore store)
+		/// <summary>
+		/// Loads the fade colors flag
+		/// </summary>
+		/// <param name="store">The writable settings store</param>
+		/// <returns>The fade colors flag or if not found, the default detect error flag</returns>
+		public static bool LoadFadeColors(this WritableSettingsStore store)
+		{
+			var fadeColorsFlag = DefaultRainbowIndentOptions.defaultFadeColors;
+			if (store == null)
+			{
+				return fadeColorsFlag;
+			}
+			if (!store.PropertyExists(CollectionName, FadeColorsPropertyName))
+			{
+				store.SaveFadeColors(fadeColorsFlag);
+			}
+			else
+			{
+				fadeColorsFlag = store.GetBoolean(CollectionName, FadeColorsPropertyName);
+			}
+			return fadeColorsFlag;
+		}
+		/// <summary>
+		/// Loads the detect errors flag
+		/// </summary>
+		/// <param name="store">The writable settings store</param>
+		/// <returns>The detect error flag or if not found, the default detect error flag</returns>
+		public static bool LoadDetectErrorsFlag(this WritableSettingsStore store)
         {
             var detectErrorFlag = DefaultRainbowIndentOptions.defaultDetectErrorsFlag;
             if (store == null)

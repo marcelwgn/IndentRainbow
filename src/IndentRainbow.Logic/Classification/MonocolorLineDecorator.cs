@@ -80,7 +80,7 @@ namespace IndentRainbow.Logic.Classification
                 }
             }
 
-            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(rainbowIndex));
+            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(rainbowIndex, -1));
         }
     }
 }

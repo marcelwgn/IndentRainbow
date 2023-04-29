@@ -65,7 +65,7 @@ namespace IndentRainbow.Extension
             this.view.LayoutChanged += OnLayoutChanged;
             drawer = new BackgroundTextIndexDrawer(layer, this.view);
 
-            colorGetter = new RainbowBrushGetter(OptionsManager.colors.Get(), OptionsManager.errorBrush.Get(), OptionsManager.colorMode.Get());
+            colorGetter = new RainbowBrushGetter(OptionsManager.colors.Get(), OptionsManager.errorBrush.Get(), OptionsManager.colorMode.Get(), OptionsManager.fadeColors.Get());
             validator = new IndentValidator(
                 OptionsManager.indentSize.Get()
             );
@@ -81,15 +81,8 @@ namespace IndentRainbow.Extension
                     validator = new IndentValidator(OptionsManager.fileExtensionsDictionary.Get()[extension]);
                 }
             }
+            var highlightingMode = OptionsManager.highlightingMode.Get();
 
-            if (OptionsManager.highlightingMode.Get() == HighlightingMode.Alternating)
-            {
-                decorator = new AlternatingLineDecorator(
-                    drawer, colorGetter, validator)
-                {
-                    detectErrors = OptionsManager.detectErrors.Get()
-                };
-            }
             if (OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
             {
                 decorator = new MonocolorLineDecorator(
@@ -98,7 +91,14 @@ namespace IndentRainbow.Extension
                     detectErrors = OptionsManager.detectErrors.Get()
                 };
             }
-
+            else
+            {
+                decorator = new AlternatingLineDecorator(
+                    drawer, colorGetter, validator)
+                {
+                    detectErrors = OptionsManager.detectErrors.Get()
+                };
+            }
         }
 
         /// <summary>

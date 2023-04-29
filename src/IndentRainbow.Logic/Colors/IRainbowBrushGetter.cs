@@ -12,7 +12,7 @@ namespace IndentRainbow.Logic.Colors
 		/// <param name="rainbowIndex">The index of the color (starting at 0)</param>
 		/// <param name="numberOfColorsInRainbow">The number of colors the rainbow the color will be used for contains</param>
 		/// <returns>The Brush that sits at the index specified</returns>
-		Brush GetColorByIndex(int rainbowIndex, int numberOfColorsInRainbow = 0);
+		Brush GetColorByIndex(int rainbowIndex, int numberOfColorsInRainbow);
 
 		/// <summary>
 		/// This method is a getter for the color used for wrong/faulty indentation

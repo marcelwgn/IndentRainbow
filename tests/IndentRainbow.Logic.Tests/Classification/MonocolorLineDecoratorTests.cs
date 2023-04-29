@@ -25,7 +25,7 @@ namespace IndentRainbow.Logic.Tests.Classification
 		private readonly IndentValidator validator = new IndentValidator(4);
 		private readonly RainbowBrushGetter rainbowgetter = new RainbowBrushGetter(new Color[] {
 				Color.FromRgb(0,0,0)
-			}, new SolidColorBrush(), ColorMode.Solid);
+			}, new SolidColorBrush(), ColorMode.Solid, false);
 
 		[TestInitialize]
 		public void Setup()
