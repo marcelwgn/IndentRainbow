@@ -10,13 +10,6 @@ namespace IndentRainbow.Logic.Classification
 		{
 		}
 
-		/// <summary>
-		/// Process the given string and draws the relevant highlighting at the right position, 
-		/// if the <see cref="IIndentValidator"/> validates the positions
-		/// </summary>
-		/// <param name="text">The string of the text</param>
-		/// <param name="start">The starting position of the line</param>
-		/// <param name="end">The ending position of the line</param>
 		public override void DecorateLine(string text, int drawingStartIndex)
 		{
 			if (string.IsNullOrEmpty(text))
