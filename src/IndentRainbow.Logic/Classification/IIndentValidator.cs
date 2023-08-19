@@ -23,7 +23,7 @@
         /// <param name="start">The start position of the indentation</param>
         /// <param name="length">The length of the indentation block</param>
         /// <returns></returns>
-		int GetIndentLevelCount(string text, int start, int length);
+		int GetIndentLevelCount(string text, int length);
 
 		/// <summary>
 		/// 

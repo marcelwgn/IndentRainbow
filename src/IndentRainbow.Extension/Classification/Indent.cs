@@ -125,10 +125,10 @@ namespace IndentRainbow.Extension
         private void CreateVisuals(ITextViewLine line)
         {
             int start = line.Start;
-            int end = line.End;
+            int length = line.End - start;
 
-            string text = line.Snapshot.GetText();
-            decorator.DecorateLine(text, start, end);
+            string text = line.Snapshot.GetText(start, length);
+            decorator.DecorateLine(text, start);
         }
 
         private static string GetPath(IWpfTextView textView)

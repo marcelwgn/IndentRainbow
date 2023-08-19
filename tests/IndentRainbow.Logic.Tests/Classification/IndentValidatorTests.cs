@@ -33,17 +33,17 @@ namespace IndentRainbow.Logic.Tests.Classification
 		}
 
 		[DataTestMethod]
-		[DataRow("text", 0, 0, 0)]
-		[DataRow(FSI + "text", 0, 4, 1)]
-		[DataRow(FSI + FSI + FSI + "text", 0, 4, 1)]
-		[DataRow(FSI + FSI + FSI + "text", 0, 12, 3)]
-		[DataRow(FSI + TABI + FSI + "text", 0, 9, 3)]
-		[DataRow(TABI + TABI + TABI + "text", 0, 3, 3)]
-		[DataRow(FSI + TABI + FSI + "text", 4, 9, 2)]
-		[DataRow(TABI + TABI + TABI + "text", 1, 3, 2)]
-		public void GetIndentLevelCount(string text, int start, int length, int expectedValue)
+		[DataRow("text", 0, 0)]
+		[DataRow(FSI + "text", 4, 1)]
+		[DataRow(FSI + FSI + FSI + "text", 4, 1)]
+		[DataRow(FSI + FSI + FSI + "text", 12, 3)]
+		[DataRow(FSI + TABI + FSI + "text", 9, 3)]
+		[DataRow(TABI + TABI + TABI + "text", 3, 3)]
+		[DataRow(TABI + FSI + "text", 9, 2)]
+		[DataRow(TABI + TABI + "text", 3, 2)]
+		public void GetIndentLevelCount(string text, int length, int expectedValue)
 		{
-			Assert.AreEqual(expectedValue, validator.GetIndentLevelCount(text, start, length));
+			Assert.AreEqual(expectedValue, validator.GetIndentLevelCount(text, length));
 		}
 
 		[DataTestMethod]

@@ -10,29 +10,13 @@ namespace IndentRainbow.Logic.Classification
         {
         }
 
-        public override void DecorateLine(string text, int start, int end)
+        public override void DecorateLine(string text, int drawStartIndex)
         {
             if (string.IsNullOrEmpty(text))
             {
                 return;
             }
-            if (start < 0 || start > text.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(start));
-            }
-            if (end < 0 || end > text.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(end));
-            }
-            if (start > end)
-            {
-                // English is fine for exceptions
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-                throw new ArgumentException("Start index must be lower than end index");
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
-            }
-
-            var validTabLength = GetIndentLengthIfValid(text, start, end);
+            var validTabLength = GetIndentLengthIfValid(text);
 
             if (validTabLength == 0)
             {
@@ -40,7 +24,7 @@ namespace IndentRainbow.Logic.Classification
             }
             if (validTabLength < 0 && detectErrors)
             {
-                drawer.DrawBackground(start, -validTabLength, colorGetter.ErrorBrush);
+                drawer.DrawBackground(drawStartIndex, -validTabLength, colorGetter.ErrorBrush);
                 return;
             }
             if (!detectErrors && validTabLength < 0)
@@ -48,8 +32,8 @@ namespace IndentRainbow.Logic.Classification
                 validTabLength = -validTabLength;
             }
 
-			var indentationCount = validator.GetIndentLevelCount(text, start, validTabLength);
-            drawer.DrawBackground(start, validTabLength, colorGetter.GetColorByIndex(indentationCount - 1, -1));
+			var indentationCount = validator.GetIndentLevelCount(text, validTabLength);
+            drawer.DrawBackground(drawStartIndex, validTabLength, colorGetter.GetColorByIndex(indentationCount - 1, -1));
         }
     }
 }

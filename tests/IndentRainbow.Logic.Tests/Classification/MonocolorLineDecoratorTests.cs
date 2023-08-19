@@ -34,59 +34,41 @@ namespace IndentRainbow.Logic.Tests.Classification
 		}
 
 		[DataTestMethod]
-		[DataRow(FSI + FSI + TABI + FSI + "t", 0, 13, new int[] { 0, 13 }, 3)]
-		[DataRow(TABI + FSI + "123456789", 0, 14, new int[] { 0, 5 }, 1)]
-		[DataRow(TABI + "123456789", 0, 10, new int[] { 0, 1 }, 0)]
-		[DataRow(TABI + TABI + TABI + "123456789", 0, 10, new int[] { 0, 3 }, 2)]
-		[DataRow(TABI + "1", 0, 2, new int[] { 0, 1 }, 0)]
-		[DataRow(TABI + TABI + TABI + "1", 0, 4, new int[] { 0, 3 }, 2)]
-		[DataRow(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 0, 8, new int[] { 0, 7 }, 6)]
-		[DataRow(FSI + "text" + FSI, 0, 12, new int[] { 0 }, 0)]
-		[DataRow("", 0, 0, new int[] { }, -1)]
-		[DataRow("1234567890" + FSI + FSI + "12345", 10, 23, new int[] { 10, 18 }, 1)]
-		public void DecorateLineTests_IndexTesting_ExpectedBehavior(string text, int start, int end, int[] spans, int colorIndex)
+		[DataRow(FSI + FSI + TABI + FSI + "t", 13, 3)]
+		[DataRow(TABI + FSI + "123456789", 5, 1)]
+		[DataRow(TABI + "123456789", 1, 0)]
+		[DataRow(TABI + TABI + TABI + "123456789", 3, 2)]
+		[DataRow(TABI + "1", 1, 0)]
+		[DataRow(TABI + TABI + TABI + "1", 3, 2)]
+		[DataRow(TABI + TABI + TABI + TABI + TABI + TABI + TABI + "1", 7, 6)]
+		[DataRow(FSI + "text" + FSI, 4, 0)]
+		[DataRow("", null, -1)]
+		[DataRow(FSI + FSI + "12345", 8, 1)]
+		public void DecorateLineTests_IndexTesting_ExpectedBehavior(string text, int? possibleLength, int colorIndex)
 		{
-			decorator.DecorateLine(text, start, end);
+			var randomDrawIndexCutoff = new Random().Next(2 << 16);
+			decorator.DecorateLine(text, randomDrawIndexCutoff);
 
-			if (spans.Length > 1)
+			if (possibleLength != null)
 			{
-				var correctLength = spans[1] - spans[0];
-
 				backgroundTextIndexDrawerMock.Verify(
 					p => p.DrawBackground(
-						spans[0], It.IsIn(correctLength),
+						randomDrawIndexCutoff,
+						It.IsIn(possibleLength.Value),
 						rainbowgetter.GetColorByIndex(colorIndex, 0)),
 					Times.Once()
 				);
 			}
-
-			backgroundTextIndexDrawerMock.Verify(
-				p => p.DrawBackground(
-						It.IsNotIn(spans),
-						It.IsNotIn(4),
-						It.IsAny<Brush>()
-					),
-				Times.Never()
-			);
-		}
-
-		[DataTestMethod]
-		[DataRow(FSI, -1, 2)]
-		[DataRow(FSI, 2, 1)]
-		[DataRow(FSI, 20, 22)]
-		[DataRow(FSI, 2, 20)]
-		[DataRow(FSI, 0, -2)]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Not needed here")]
-		public void DecorateLineTests_IndexTesting_ErrorHandling(string text, int start, int end)
-		{
-			try
+			else
 			{
-				decorator.DecorateLine(text, start, end);
-				Assert.Fail();
-			}
-			catch (Exception)
-			{
-				Assert.IsTrue(true);
+				backgroundTextIndexDrawerMock.Verify(
+					p => p.DrawBackground(
+							It.IsAny<int>(),
+							It.IsAny<int>(),
+							It.IsAny<Brush>()
+						),
+					Times.Never()
+				);
 			}
 		}
 
@@ -111,7 +93,7 @@ namespace IndentRainbow.Logic.Tests.Classification
 				);
 			}
 
-			decorator.DecorateLine(text, 0, text.Length);
+			decorator.DecorateLine(text, 0);
 
 			for (var i = 0; i < itCount; i++)
 			{
@@ -127,26 +109,28 @@ namespace IndentRainbow.Logic.Tests.Classification
 
 
 		[DataTestMethod]
-		[DataRow(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 14 })]
-		[DataRow(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
-		[DataRow(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
-		[DataRow("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
-		[DataRow("test", 0, 4, null)]
-		public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int start, int end, int[] spans)
+		[DataRow(FSI + FSI + TABI + FSI + " t", 14)]
+		[DataRow(TABI + FSI + " 123456789", 6)]
+		[DataRow(FSI + " text" + FSI, 5)]
+		[DataRow(FSI + FSI + " 12345", 9)]
+		[DataRow("test", null)]
+		public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int? endPosition)
 		{
-			decorator.DecorateLine(text, start, end);
+			var randomDrawIndexCutoff = new Random().Next(2 << 16);
+			decorator.DecorateLine(text, randomDrawIndexCutoff);
 
-			if (spans != null)
+			if (endPosition != null)
 			{
 				backgroundTextIndexDrawerMock.Verify(
 					p => p.DrawBackground(
-						spans[0], spans[1],
+						randomDrawIndexCutoff,
+						endPosition.Value,
 						It.IsAny<Brush>()),
 					Times.Once()
 				);
 				backgroundTextIndexDrawerMock.Verify(
 					p => p.DrawBackground(
-							It.IsNotIn(spans),
+							It.IsNotIn(new int[] { randomDrawIndexCutoff, endPosition.Value }),
 							It.IsNotIn(4),
 							It.IsAny<Brush>()
 						),
@@ -156,18 +140,20 @@ namespace IndentRainbow.Logic.Tests.Classification
 		}
 
 		[DataTestMethod]
-		[DataRow(FSI + FSI + TABI + FSI + " t", 0, 15, new int[] { 0, 14 })]
-		[DataRow(TABI + FSI + " 123456789", 0, 14, new int[] { 0, 6 })]
-		[DataRow(FSI + " text" + FSI, 0, 12, new int[] { 0, 5 })]
-		[DataRow("1234567890" + FSI + FSI + " 12345", 10, 23, new int[] { 10, 9 })]
-		public void DecorateLineTests_NoErrorDetection_ErrorBehaviors(string text, int start, int end, int[] spans)
+		[DataRow(FSI + FSI + TABI + FSI + " t", 14)]
+		[DataRow(TABI + FSI + " 123456789", 6)]
+		[DataRow(FSI + " text" + FSI, 5)]
+		[DataRow(FSI + FSI + " 12345", 9)]
+		public void DecorateLineTests_NoErrorDetection_ErrorBehaviors(string text, int endOffset)
 		{
 			decorator.detectErrors = false;
-			decorator.DecorateLine(text, start, end);
+			var randomDrawIndexCutoff = new Random().Next(2 << 16);
+			decorator.DecorateLine(text, randomDrawIndexCutoff);
 
 			backgroundTextIndexDrawerMock.Verify(
 				p => p.DrawBackground(
-					spans[0], spans[1],
+					randomDrawIndexCutoff,
+					endOffset,
 					It.IsAny<Brush>()),
 				Times.Once()
 			);

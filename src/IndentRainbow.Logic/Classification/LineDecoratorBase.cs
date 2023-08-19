@@ -3,7 +3,7 @@ using IndentRainbow.Logic.Drawing;
 
 namespace IndentRainbow.Logic.Classification
 {
-    public abstract class LineDecoratorBase : ILineDecorator
+	public abstract class LineDecoratorBase : ILineDecorator
     {
 
         internal readonly IBackgroundTextIndexDrawer drawer;
@@ -21,29 +21,29 @@ namespace IndentRainbow.Logic.Classification
             this.validator = validator;
         }
 
-        public abstract void DecorateLine(string text, int startIndex, int endIndex);
+        public abstract void DecorateLine(string text, int drawStartIndex);
 
-        /// <summary>
-        /// Calculates the length of the indentation block.
-        /// Returns the value positive if indentation is valid, otherwise returns the value as negative number
-        /// For example the text "    text" (4 spaces) would return 4 for indent length 4, 
-        /// but the text "     text" (5 spaces) returns -5 for indent length 4.
-        /// </summary>
-        /// <remarks>
-        /// For performance reasons, instead of returning a Tuple containing a boolean and an integer, 
-        /// the method returns just one integer.
-        /// </remarks>
-        /// <param name="text">Text containing the line to be analyzed</param>
-        /// <param name="start">Start of the line</param>
-        /// <param name="end">End of the line</param>
-        /// <returns>The length of the valid indent block if the indentation is valid, 
-        /// otherwise the valid indent length times -1</returns>
-        protected int GetIndentLengthIfValid(string text, int start, int end)
+		/// <summary>
+		/// Calculates the length of the indentation block.
+		/// Returns the value positive if indentation is valid, otherwise returns the value as negative number
+		/// For example the text "    text" (4 spaces) would return 4 for indent length 4, 
+		/// but the text "     text" (5 spaces) returns -5 for indent length 4.
+		/// </summary>
+		/// <remarks>
+		/// For performance reasons, instead of returning a Tuple containing a boolean and an integer, 
+		/// the method returns just one integer.
+		/// </remarks>
+		/// <param name="text">Text containing the line to be analyzed</param>
+		/// <param name="start">Start of the line</param>
+		/// <param name="end">End of the line</param>
+		/// <returns>The length of the valid indent block if the indentation is valid, 
+		/// otherwise the valid indent length times -1</returns>
+		protected int GetIndentLengthIfValid(string text)
         {
             var tabSize = validator.GetIndentBlockLength();
             var validTabLength = 0;
-            var charIndex = start;
-            for (; charIndex < end - tabSize + 1; charIndex += tabSize)
+            var charIndex = 0;
+            for (; charIndex < text.Length - tabSize + 1; charIndex += tabSize)
             {
                 var cutOut = text.Substring(charIndex, tabSize);
                 var tabCutOut = text.Substring(charIndex, 1);
@@ -71,10 +71,10 @@ namespace IndentRainbow.Logic.Classification
                     break;
                 }
             }
-            if (end - charIndex < tabSize)
+            if (text.Length - charIndex < tabSize)
             {
                 //Checking if the last rest of the text is a valid indent
-                var cutOut = text.Substring(charIndex, end - charIndex);
+                var cutOut = text.Substring(charIndex, text.Length - charIndex);
                 var index = 0;
                 while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
                 {
