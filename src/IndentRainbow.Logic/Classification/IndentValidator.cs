@@ -37,7 +37,7 @@
 			return !IsValidIndent(text);
 		}
 
-		public int GetIndentLevelCount(string text, int start, int length)
+		public int GetIndentLevelCount(string text, int length)
 		{
 			var tabCount = 0;
 			var spaceCount = 0;
@@ -45,7 +45,7 @@
 			{
 				return 0;
 			}
-			for (int i = start; i < start + length; i++)
+			for (int i = 0; i < length; i++)
 			{
 				if (text[i] == '\t')
 				{
