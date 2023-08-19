@@ -111,8 +111,8 @@ namespace IndentRainbow.Extension.Options
 				fileExtensionsString.Set(settingsStore.LoadFileExtensionsIndentSizes());
 				//This fields have to be initialized after the other fields since they depend on them
 				loadedFromStorage = true;
-				colors.Set(ColorParser.ConvertStringToColorArray(hexCodes.Get(), opacityMultiplier.Get()));
-				errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor.Get(), opacityMultiplier.Get()));
+				colors.Set(ConvertStringToColorArray(hexCodes.Get(), opacityMultiplier.Get()));
+				errorBrush.Set(ConvertStringToBrush(errorColor.Get(), opacityMultiplier.Get()));
 				fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString.Get()));
 			}
 		}
@@ -120,33 +120,34 @@ namespace IndentRainbow.Extension.Options
 		/// <summary>
 		/// Saves the settings to the settings store
 		/// </summary>
-		/// <param name="indentSize">The indent size specifying the number of spaces for indentation detection</param>
+		/// <param name="newIndentSize">The indent size specifying the number of spaces for indentation detection</param>
 		/// <param name="colors">The colors as string</param>
-		public static void SaveSettings(int indentSize, string fileExtensionsString, string hexCodes, double opacityMultiplier, HighlightingMode highlightingmode, ColorMode colormode, bool fadeColors, string errorColor, bool detectError)
+		public static void SaveSettings(int newIndentSize, string newFileExtensionsString, string newHexCodes, double newOpacityMultiplier, HighlightingMode newHighlightingMode, ColorMode newColorMode, bool newFadeColors, string newErrorColor, bool newDetectError)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 			var settingsStore = GetWritableSettingsStore();
-			settingsStore.SaveIndentSize(indentSize);
-			settingsStore.SaveFileExtensionsIndentSizes(fileExtensionsString);
-			settingsStore.SaveColors(hexCodes);
-			settingsStore.SaveOpacityMultiplier(opacityMultiplier);
-			settingsStore.SaveHighlightingMode(highlightingmode);
-			settingsStore.SaveColorMode(colormode);
-			settingsStore.SaveDetectErrorsFlag(detectError);
-			settingsStore.SaveErrorColor(errorColor);
-			settingsStore.SaveFadeColors(fadeColors);
+			settingsStore.SaveIndentSize(newIndentSize);
+			settingsStore.SaveFileExtensionsIndentSizes(newFileExtensionsString);
+			settingsStore.SaveColors(newHexCodes);
+			settingsStore.SaveOpacityMultiplier(newOpacityMultiplier);
+			settingsStore.SaveHighlightingMode(newHighlightingMode);
+			settingsStore.SaveColorMode(newColorMode);
+			settingsStore.SaveDetectErrorsFlag(newDetectError);
+			settingsStore.SaveErrorColor(newErrorColor);
+			settingsStore.SaveFadeColors(newFadeColors);
 
-			OptionsManager.indentSize.Set(indentSize);
-			OptionsManager.fileExtensionsString.Set(fileExtensionsString);
-			fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(fileExtensionsString));
-			OptionsManager.hexCodes.Set(hexCodes);
-			colors.Set(ColorParser.ConvertStringToColorArray(hexCodes, opacityMultiplier));
-			OptionsManager.opacityMultiplier.Set(opacityMultiplier);
-			OptionsManager.highlightingMode.Set(highlightingmode);
-			OptionsManager.colorMode.Set(colormode);
-			OptionsManager.errorColor.Set(errorColor);
-			detectErrors.Set(detectError);
-			errorBrush.Set(ColorParser.ConvertStringToBrush(errorColor, opacityMultiplier));
+			indentSize.Set(newIndentSize);
+			fileExtensionsString.Set(newFileExtensionsString);
+			fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(newFileExtensionsString));
+			hexCodes.Set(newHexCodes);
+			colors.Set(ConvertStringToColorArray(newHexCodes, newOpacityMultiplier));
+			opacityMultiplier.Set(newOpacityMultiplier);
+			fadeColors.Set(newFadeColors);
+			highlightingMode.Set(newHighlightingMode);
+			colorMode.Set(newColorMode);
+			errorColor.Set(newErrorColor);
+			detectErrors.Set(newDetectError);
+			errorBrush.Set(ConvertStringToBrush(newErrorColor, newOpacityMultiplier));
 		}
 	}
 }
