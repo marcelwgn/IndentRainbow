@@ -53,7 +53,7 @@ namespace IndentRainbow.Extension
         /// <param name="view">Text view to create the adornment for</param>
         //Ignoring warning since this adornment is always on UI thread
 #pragma warning disable VSTHRD010
-        public Indent(IWpfTextView view, ITextDocumentFactoryService textDocumentFactory)
+        public Indent(IWpfTextView view)
         {
             if (view == null)
             {

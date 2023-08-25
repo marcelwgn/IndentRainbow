@@ -29,12 +29,6 @@ namespace IndentRainbow.Extension
 
 #pragma warning restore 649, 169
 
-        /// <summary>
-        /// The text document factory that will be used to determine the file name of the text editor, the indent extension is currently processing
-        /// </summary>
-        [Import]
-        public ITextDocumentFactoryService TextDocumentFactory { get; set; }
-
         #region IWpfTextViewCreationListener
 
         /// <summary>
@@ -47,7 +41,7 @@ namespace IndentRainbow.Extension
             // The adornment will listen to any event that changes the layout (text changes, scrolling, etc)
             // When we created the adornment,we don't need a reference anymore, since everything necessary is done when the object is created
 #pragma warning disable CA1806 // Do not ignore method results
-            new Indent(textView, TextDocumentFactory);
+            new Indent(textView);
 #pragma warning restore CA1806 // Do not ignore method results
         }
 
