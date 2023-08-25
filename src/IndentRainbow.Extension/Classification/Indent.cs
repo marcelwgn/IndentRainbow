@@ -55,7 +55,7 @@ namespace IndentRainbow.Extension
 #pragma warning disable VSTHRD010
         public Indent(IWpfTextView view, ITextDocumentFactoryService textDocumentFactory)
         {
-            if (view == null || textDocumentFactory == null)
+            if (view == null)
             {
                 return;
             }

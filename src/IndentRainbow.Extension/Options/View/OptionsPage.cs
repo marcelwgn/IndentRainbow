@@ -1,9 +1,13 @@
+using System;
 using System.ComponentModel;
+using System.Windows.Forms;
+using IndentRainbow.Extension.Options.View;
 using Microsoft.VisualStudio.Shell;
 using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension.Options
 {
+
 
 	/// <summary>
 	/// This is the options page for the IndentRainbow extension.
@@ -13,9 +17,18 @@ namespace IndentRainbow.Extension.Options
 	/// </summary>
 	// This page gets instantiated by Visual Studio so it is used!
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes
-	internal class OptionsPage : DialogPage
+	public class OptionsPage : DialogPage
 #pragma warning restore CA1812 // Avoid uninstantiated internal classes
 	{
+		protected override IWin32Window Window
+		{
+			get
+			{
+				var page = new OptionsForm(this);
+				return page;
+			}
+		}
+
 		[Category("Indentation")]
 		[DisplayName("Indent size")]
 		[Description("The amount of spaces used for indentation")]
@@ -26,7 +39,7 @@ namespace IndentRainbow.Extension.Options
 		[Description("The amount of spaces used based on the file extensions. " +
 			"File extensions should be specified in the format " +
 			"'file-extensions':'indent-size';'next-file-extension':'next-indent-size';" +
-			"For example: 'cs:4;js:2'")]
+			"For example: 'cs:4;js:2'. Changing requires document reload or VS restart.")]
 		public string FileSpecificIndentSizes { get; set; }
 
 
