@@ -69,13 +69,19 @@
     <Compile Include="Drawing\BackgroundTextIndexDrawer.cs" />
     <Compile Include="Classification\IndentTextViewCreationListener.cs" />
     <Compile Include="IndentRainbowPackage.cs" />
-    <Compile Include="Options\DefaultRainbowIndentOptions.cs" />
-    <Compile Include="Options\OptionsField.cs" />
-    <Compile Include="Options\OptionsManager.cs" />
-    <Compile Include="Options\OptionsPage.cs">
+    <Compile Include="Options\Model\DefaultRainbowIndentOptions.cs" />
+    <Compile Include="Options\Model\OptionsField.cs" />
+    <Compile Include="Options\Model\OptionsManager.cs" />
+    <Compile Include="Options\View\OptionsForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Options\View\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\View\OptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Options\WritableSettingsStoreExtensions.cs" />
+    <Compile Include="Options\Model\WritableSettingsStoreExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classification\Indent.cs" />
   </ItemGroup>
@@ -91,6 +97,10 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +116,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Options\View\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
