@@ -29,3 +29,7 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testAssemblyVer2: |
+      **\*Tests.dll
+      **\bin\**\*tests.dll
