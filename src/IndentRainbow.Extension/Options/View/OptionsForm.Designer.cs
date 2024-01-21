@@ -69,7 +69,7 @@
 			this.linkLabel1.TabIndex = 3;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "For bugs and feature requests, please open an issue on GitHub: https://github.com" +
-    "/chingucoding/IndentRainbow";
+    "/marcelwgn/IndentRainbow";
 			this.linkLabel1.UseCompatibleTextRendering = true;
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 

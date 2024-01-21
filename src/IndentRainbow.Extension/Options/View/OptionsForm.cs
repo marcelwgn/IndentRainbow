@@ -23,7 +23,7 @@ namespace IndentRainbow.Extension.Options.View
 #pragma warning disable CA1031 // Do not catch general exception types
 			try
 			{
-				System.Diagnostics.Process.Start("https://github.com/chingucoding/IndentRainbow");
+				System.Diagnostics.Process.Start("https://github.com/marcelwgn/IndentRainbow");
 			}
 			catch (Exception) { }
 #pragma warning restore CA1031 // Do not catch general exception types
