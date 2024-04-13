@@ -19,7 +19,7 @@ This project has the following structure:
 * tests
     * IndentRainbow.Logic.Tests <- Unit tests for the core logic.
 
-To build the project, you will need to install the Visual Studio 2017 and "Visual Studio extension development" features. Note that VS 2017 is needed to be able to compile the extension for Visual Studio versions before 2019. 
+To build the project, you will need to install the Visual Studio 2022 and "Visual Studio extension development" features.
 
 ### Inspiration
 This project was inspired by this project/extension for VS Code:
