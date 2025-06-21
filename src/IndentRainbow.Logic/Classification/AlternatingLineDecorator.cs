@@ -10,7 +10,7 @@ namespace IndentRainbow.Logic.Classification
 		{
 		}
 
-		public override void DecorateLine(string text, int drawingStartIndex)
+		public override void DecorateLine(string text, int drawingStartIndexText, int drawingStartIndexLine)
 		{
 			if (string.IsNullOrEmpty(text))
 			{
@@ -23,7 +23,7 @@ namespace IndentRainbow.Logic.Classification
 
 			if (validTabLength < 0 && detectErrors)
 			{
-				drawer.DrawBackground(drawingStartIndex, -validTabLength, colorGetter.ErrorBrush);
+				drawer.DrawBackground(drawingStartIndexText, -validTabLength, colorGetter.ErrorBrush, drawingStartIndexLine);
 				return;
 			}
 			if (!detectErrors && validTabLength < 0)
@@ -40,7 +40,7 @@ namespace IndentRainbow.Logic.Classification
 					{
 						return;
 					}
-					drawer.DrawBackground(drawingStartIndex + charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
+					drawer.DrawBackground(drawingStartIndexText + charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns), drawingStartIndexLine);
 					charIndex++;
 					rainbowIndex++;
 					continue;
@@ -49,13 +49,13 @@ namespace IndentRainbow.Logic.Classification
 				var tabCutOut = text.Substring(charIndex, 1);
 				if (validator.IsValidIndent(cutout))
 				{
-					drawer.DrawBackground(drawingStartIndex + charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
+					drawer.DrawBackground(drawingStartIndexText + charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex, colorColumns), drawingStartIndexLine);
 					charIndex += tabSize;
 					rainbowIndex++;
 				}
 				else if (validator.IsValidIndent(tabCutOut))
 				{
-					drawer.DrawBackground(drawingStartIndex + charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));
+					drawer.DrawBackground(drawingStartIndexText + charIndex, 1, colorGetter.GetColorByIndex(rainbowIndex, colorColumns), drawingStartIndexLine);
 					charIndex++;
 					rainbowIndex++;
 				}

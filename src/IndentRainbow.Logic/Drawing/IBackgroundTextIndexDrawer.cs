@@ -13,6 +13,6 @@ namespace IndentRainbow.Logic.Drawing
         /// <param name="length">The length of the background box to draw,
         /// specified in characters</param>
         /// <param name="drawBrush">The Brush to use for drawing</param>
-        void DrawBackground(int firstIndex, int length, Brush drawBrush);
+        void DrawBackground(int firstIndex, int length, Brush drawBrush, int indexTextLine);
     }
 }

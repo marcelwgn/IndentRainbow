@@ -8,6 +8,6 @@
 		/// </summary>
 		/// <param name="text">The string of the text</param>
 		/// <param name="drawingStartIndex">The starting position of the line relative to the total document (used for rendering)</param>
-		void DecorateLine(string text, int drawStartIndex);
+		void DecorateLine(string text, int drawStartIndex, int startIndexLine);
     }
 }

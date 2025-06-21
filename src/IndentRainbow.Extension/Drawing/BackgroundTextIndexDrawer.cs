@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using IndentRainbow.Logic.Drawing;
@@ -23,17 +24,21 @@ namespace IndentRainbow.Extension.Drawing
             brush.Freeze();
         }
 
-        public void DrawBackground(int firstIndex, int length, Brush drawBrush)
+        public void DrawBackground(int firstIndex, int length, Brush drawBrush, int indexTextLine)
         {
             var span = new SnapshotSpan(view.TextSnapshot, Span.FromBounds(firstIndex, firstIndex + length));
-            Geometry geometry = view.TextViewLines.GetMarkerGeometry(span);
-            if (geometry != null)
+            Geometry geometryText = view.TextViewLines.GetMarkerGeometry(span);
+
+            var textLineOwning = view.TextViewLines[indexTextLine];
+            var spanOwning = new SnapshotSpan(view.TextSnapshot, textLineOwning.Start, 0);
+
+            if (geometryText != null)
             {
                 var newRect = new Rect()
                 {
-                    X = geometry.Bounds.X,
-                    Y = geometry.Bounds.Y,
-                    Width = geometry.Bounds.Width,
+                    X = geometryText.Bounds.X,
+                    Y = geometryText.Bounds.Y,
+                    Width = geometryText.Bounds.Width,
                     Height = view.LineHeight
                 };
                 var copiedGeometry = new RectangleGeometry(newRect);
@@ -48,10 +53,10 @@ namespace IndentRainbow.Extension.Drawing
                     Source = drawingImage,
                 };
 
-                // Align the image with the top of the bounds of the text geometry
-                Canvas.SetLeft(image, geometry.Bounds.Left);
-                Canvas.SetTop(image, geometry.Bounds.Top);
-                layer.AddAdornment(AdornmentPositioningBehavior.TextRelative, span, null, image, null);
+                // Align the image with the top of the bounds of the text geometryText
+                Canvas.SetLeft(image, geometryText.Bounds.Left);
+                Canvas.SetTop(image, textLineOwning.Top);
+                layer.AddAdornment(AdornmentPositioningBehavior.TextRelative, spanOwning, null, image, null);
             }
 
         }

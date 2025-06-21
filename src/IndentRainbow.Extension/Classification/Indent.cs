@@ -72,7 +72,7 @@ namespace IndentRainbow.Extension
 
 
             string filePath = GetPath(view);
-            if(filePath != null)
+            if (filePath != null)
             {
                 var filePathSplit = filePath.Split('.');
                 var extension = filePathSplit[filePathSplit.Length - 1];
@@ -128,7 +128,31 @@ namespace IndentRainbow.Extension
             int length = line.End - start;
 
             string text = line.Snapshot.GetText(start, length);
-            decorator.DecorateLine(text, start);
+            var indexTextLine = view.TextViewLines.IndexOf(line);
+
+            if (text.Length != 0)
+            {
+                decorator.DecorateLine(text, start, indexTextLine);
+            }
+            else
+            {
+                string textLastNonEmpty = null;
+                int startText = start;
+                for (int i = indexTextLine; i >= 0; i--)
+                {
+                    var linePrevious = view.TextViewLines[i];
+                    if (linePrevious.Length > 0)
+                    {
+                        startText = linePrevious.Start;
+                        textLastNonEmpty = linePrevious.Snapshot.GetText(linePrevious.Start, linePrevious.Length);
+                        break;
+                    }
+                }
+                if(textLastNonEmpty != null)
+                {
+                    decorator.DecorateLine(textLastNonEmpty, startText, indexTextLine);
+                }
+            }
         }
 
         private static string GetPath(IWpfTextView textView)

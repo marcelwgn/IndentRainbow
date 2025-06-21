@@ -10,7 +10,7 @@ namespace IndentRainbow.Logic.Classification
         {
         }
 
-        public override void DecorateLine(string text, int drawStartIndex)
+        public override void DecorateLine(string text, int drawStartIndex, int startIndexLine)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -24,7 +24,7 @@ namespace IndentRainbow.Logic.Classification
             }
             if (validTabLength < 0 && detectErrors)
             {
-                drawer.DrawBackground(drawStartIndex, -validTabLength, colorGetter.ErrorBrush);
+                drawer.DrawBackground(drawStartIndex, -validTabLength, colorGetter.ErrorBrush, startIndexLine);
                 return;
             }
             if (!detectErrors && validTabLength < 0)
@@ -33,7 +33,7 @@ namespace IndentRainbow.Logic.Classification
             }
 
 			var indentationCount = validator.GetIndentLevelCount(text, validTabLength);
-            drawer.DrawBackground(drawStartIndex, validTabLength, colorGetter.GetColorByIndex(indentationCount - 1, -1));
+            drawer.DrawBackground(drawStartIndex, validTabLength, colorGetter.GetColorByIndex(indentationCount - 1, -1), startIndexLine);
         }
     }
 }
