@@ -71,6 +71,7 @@
     <Compile Include="Classification\IndentTextViewCreationListener.cs" />
     <Compile Include="IndentRainbowPackage.cs" />
     <Compile Include="Options\Model\DefaultRainbowIndentOptions.cs" />
+    <Compile Include="Options\Model\IndentationCalculator.cs" />
     <Compile Include="Options\Model\OptionsField.cs" />
     <Compile Include="Options\Model\OptionsManager.cs" />
     <Compile Include="Options\View\OptionsForm.cs">

@@ -29,7 +29,12 @@ namespace IndentRainbow.Extension.Options
 			}
 		}
 
-		[Category("Indentation")]
+        [Category("Indentation")]
+        [DisplayName("Indentation sizing mode")]
+        [Description("Specifies how the indentation should be determined. Auto uses uses the indentation size determined by Visual Studio; Manual uses the settings of the extension.")]
+        public IndentationSizeMode SizingMode { get; set; }
+
+        [Category("Indentation")]
 		[DisplayName("Indent size")]
 		[Description("The amount of spaces used for indentation")]
 		public int IndentSize { get; set; }
@@ -115,7 +120,9 @@ namespace IndentRainbow.Extension.Options
 				ErrorColor = "";
 			}
 			ThreadHelper.ThrowIfNotOnUIThread();
-			OptionsManager.SaveSettings(IndentSize,
+			OptionsManager.SaveSettings(
+                SizingMode,
+				IndentSize,
 				FileSpecificIndentSizes,
 				Colors,
 				OpacityMultiplier,

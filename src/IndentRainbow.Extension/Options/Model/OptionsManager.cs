@@ -30,10 +30,15 @@ namespace IndentRainbow.Extension.Options
 			return settingsStore;
 		}
 
-		/// <summary>
-		/// Saved value of the indent size. The value is saved as static field for better performance
-		/// </summary>
-		public static OptionsField<int> indentSize = new OptionsField<int>(DefaultRainbowIndentOptions.defaultIndentSize);
+        /// <summary>
+        /// Saved value of the indentation detection mode. The value is saved as static field for better performance
+        /// </summary>
+        public static OptionsField<IndentationSizeMode> indentationSizeMode = new OptionsField<IndentationSizeMode>(DefaultRainbowIndentOptions.defaultIndentationSizeMode);
+
+        /// <summary>
+        /// Saved value of the indent size. The value is saved as static field for better performance
+        /// </summary>
+        public static OptionsField<int> indentSize = new OptionsField<int>(DefaultRainbowIndentOptions.defaultIndentSize);
 
 		/// <summary>
 		/// Saved value of the colors string. The value is saved as static field for better performance
@@ -100,6 +105,7 @@ namespace IndentRainbow.Extension.Options
 			if (!loadedFromStorage)
 			{
 				var settingsStore = GetWritableSettingsStore();
+				indentationSizeMode.Set(settingsStore.LoadIndentationSizeMode());
 				indentSize.Set(settingsStore.LoadIndentSize());
 				hexCodes.Set(settingsStore.LoadColors());
 				opacityMultiplier.Set(settingsStore.LoadOpacityMultiplier());
@@ -122,11 +128,12 @@ namespace IndentRainbow.Extension.Options
 		/// </summary>
 		/// <param name="newIndentSize">The indent size specifying the number of spaces for indentation detection</param>
 		/// <param name="colors">The colors as string</param>
-		public static void SaveSettings(int newIndentSize, string newFileExtensionsString, string newHexCodes, double newOpacityMultiplier, HighlightingMode newHighlightingMode, ColorMode newColorMode, bool newFadeColors, string newErrorColor, bool newDetectError)
+		public static void SaveSettings(IndentationSizeMode newIndentSizeMode, int newIndentSize, string newFileExtensionsString, string newHexCodes, double newOpacityMultiplier, HighlightingMode newHighlightingMode, ColorMode newColorMode, bool newFadeColors, string newErrorColor, bool newDetectError)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 			var settingsStore = GetWritableSettingsStore();
-			settingsStore.SaveIndentSize(newIndentSize);
+			settingsStore.SaveIndentationSizeMode(newIndentSizeMode);
+            settingsStore.SaveIndentSize(newIndentSize);
 			settingsStore.SaveFileExtensionsIndentSizes(newFileExtensionsString);
 			settingsStore.SaveColors(newHexCodes);
 			settingsStore.SaveOpacityMultiplier(newOpacityMultiplier);
@@ -136,6 +143,7 @@ namespace IndentRainbow.Extension.Options
 			settingsStore.SaveErrorColor(newErrorColor);
 			settingsStore.SaveFadeColors(newFadeColors);
 
+			indentationSizeMode.Set(newIndentSizeMode);
 			indentSize.Set(newIndentSize);
 			fileExtensionsString.Set(newFileExtensionsString);
 			fileExtensionsDictionary.Set(LanguageParser.CreateDictionaryFromString(newFileExtensionsString));

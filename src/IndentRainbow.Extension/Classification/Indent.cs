@@ -1,14 +1,13 @@
 using IndentRainbow.Extension.Drawing;
 using IndentRainbow.Extension.Options;
+using IndentRainbow.Extension.Options.Model;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using Microsoft.VisualStudio.TextManager.Interop;
-using static IndentRainbow.Logic.Parser.ColorParser;
 
 namespace IndentRainbow.Extension
 {
@@ -38,17 +37,11 @@ namespace IndentRainbow.Extension
         private readonly IRainbowBrushGetter colorGetter;
 
         /// <summary>
-        /// Validator used for checking whether a given string is a valid indentation
-        /// </summary>
-        private IIndentValidator validator;
-
-        /// <summary>
         /// Decorator used for decorating a line
         /// </summary>
         private readonly ILineDecorator decorator;
 
-
-        private readonly IIndentationManagerService indentationManagerService;
+        private readonly IndentationCalculator indentationCalculator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Indent"/> class.
@@ -56,40 +49,27 @@ namespace IndentRainbow.Extension
         /// <param name="view">Text view to create the adornment for</param>
         //Ignoring warning since this adornment is always on UI thread
 #pragma warning disable VSTHRD010
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Not necessary")]
         public Indent(IWpfTextView view, IIndentationManagerService indentationManagerService)
         {
             if (view == null)
             {
                 return;
             }
-            layer = view.GetAdornmentLayer("Indent");
-            this.indentationManagerService = indentationManagerService;
-
+            this.layer = view.GetAdornmentLayer("Indent");
             this.view = view;
             this.view.LayoutChanged += OnLayoutChanged;
-            drawer = new BackgroundTextIndexDrawer(layer, this.view);
+            drawer = new BackgroundTextIndexDrawer(this.layer, this.view);
+
+            this.indentationCalculator = new IndentationCalculator(OptionsManager.indentationSizeMode.Get(), indentationManagerService, GetPath(view), this.view.TextBuffer);
 
             colorGetter = new RainbowBrushGetter(OptionsManager.colors.Get(), OptionsManager.errorBrush.Get(), OptionsManager.colorMode.Get(), OptionsManager.fadeColors.Get());
-            validator = new IndentValidator(
-                OptionsManager.indentSize.Get()
-            );
 
-            string filePath = GetPath(view);
-            if (filePath != null)
-            {
-                var filePathSplit = filePath.Split('.');
-                var extension = filePathSplit[filePathSplit.Length - 1];
-                if (OptionsManager.fileExtensionsDictionary.Get().ContainsKey(extension))
-                {
-                    validator = new IndentValidator(OptionsManager.fileExtensionsDictionary.Get()[extension]);
-                }
-            }
             var highlightingMode = OptionsManager.highlightingMode.Get();
-
             if (OptionsManager.highlightingMode.Get() == HighlightingMode.Monocolor)
             {
                 decorator = new MonocolorLineDecorator(
-                    drawer, colorGetter, validator)
+                    drawer, colorGetter, indentationCalculator.indentValidator)
                 {
                     detectErrors = OptionsManager.detectErrors.Get()
                 };
@@ -97,7 +77,7 @@ namespace IndentRainbow.Extension
             else
             {
                 decorator = new AlternatingLineDecorator(
-                    drawer, colorGetter, validator)
+                    drawer, colorGetter, indentationCalculator.indentValidator)
                 {
                     detectErrors = OptionsManager.detectErrors.Get()
                 };
@@ -115,8 +95,7 @@ namespace IndentRainbow.Extension
         /// <param name="e">The event arguments.</param>
         internal void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
         {
-            var indentSize = indentationManagerService.GetIndentSize(this.view.TextBuffer, true);
-            validator.SetIndentation(indentSize);
+            indentationCalculator.ReloadIndentationSize(this.view.TextBuffer);
             foreach (ITextViewLine line in e.NewOrReformattedLines)
             {
                 CreateVisuals(line);
