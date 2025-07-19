@@ -7,8 +7,8 @@ namespace IndentRainbow.Extension.Options
 {
 	public static class WritableSettingsStoreExtensions
 	{
-
-		public const string CollectionName = "IndentRainbow";
+        public const string CollectionName = "IndentRainbow";
+		public const string IndentSizeModePropertyName = "IndentationSizeMode";
 		public const string IndentSizePropertyName = "IndentSize";
 		public const string FileExtensionSizesPropertyName = "FileExtensionSizes";
 		public const string FolorsPropertyName = "Colors";
@@ -20,12 +20,17 @@ namespace IndentRainbow.Extension.Options
 		public const string FadeColorsPropertyName = "FadeColors";
 
 
-		/// <summary>
-		/// Saves the given indentsize to the settings store using a specific collection and property name
-		/// </summary>
-		/// <param name="store">The writable settings store</param>
-		/// <param name="indentSize">The indent size to save</param>
-		public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
+		public static void SaveIndentationSizeMode(this WritableSettingsStore store, IndentationSizeMode mode)
+		{
+			store?.SetString(CollectionName, IndentSizeModePropertyName, mode.ToString());
+        }
+
+        /// <summary>
+        /// Saves the given indentsize to the settings store using a specific collection and property name
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <param name="indentSize">The indent size to save</param>
+        public static void SaveIndentSize(this WritableSettingsStore store, int indentSize)
 		{
 			store?.SetInt32(CollectionName, IndentSizePropertyName, indentSize);
 		}
@@ -110,12 +115,30 @@ namespace IndentRainbow.Extension.Options
 			store?.SetString(CollectionName, errorColorPropertyName, errorColor);
 		}
 
-		/// <summary>
-		/// Loads the indent size from the settings store.
-		/// </summary>
-		/// <param name="store">The writable settings store</param>
-		/// <returns>The indent size saved or if not found, the default indent size</returns>
-		public static int LoadIndentSize(this WritableSettingsStore store)
+		public static IndentationSizeMode LoadIndentationSizeMode(this WritableSettingsStore store)
+		{
+			if (store == null)
+			{
+				return DefaultRainbowIndentOptions.defaultIndentationSizeMode;
+			}
+			if (!store.PropertyExists(CollectionName, IndentSizeModePropertyName))
+			{
+				store.SaveIndentationSizeMode(DefaultRainbowIndentOptions.defaultIndentationSizeMode);
+				return DefaultRainbowIndentOptions.defaultIndentationSizeMode;
+			}
+			else
+			{
+				return (IndentationSizeMode)Enum.Parse(typeof(IndentationSizeMode),
+					store.GetString(CollectionName, IndentSizeModePropertyName));
+			}
+        }
+
+        /// <summary>
+        /// Loads the indent size from the settings store.
+        /// </summary>
+        /// <param name="store">The writable settings store</param>
+        /// <returns>The indent size saved or if not found, the default indent size</returns>
+        public static int LoadIndentSize(this WritableSettingsStore store)
 		{
 			if (store == null)
 			{

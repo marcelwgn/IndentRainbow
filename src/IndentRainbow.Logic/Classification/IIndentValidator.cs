@@ -17,6 +17,12 @@
         int GetIndentBlockLength();
 
         /// <summary>
+        /// Sets the indentation size of this IndentValidator
+        /// </summary>
+        /// <param name="indentSize">The new size of the indentation</param>
+        void SetIndentation(int  indentSize);
+
+        /// <summary>
         /// Returns how many indentation levels are present in the substring presented
         /// </summary>
         /// <param name="text">The text that will be parsed</param>

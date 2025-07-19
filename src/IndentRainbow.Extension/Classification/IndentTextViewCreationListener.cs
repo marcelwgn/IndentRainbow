@@ -27,6 +27,10 @@ namespace IndentRainbow.Extension
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Visual Studio")]
         private readonly AdornmentLayerDefinition editorAdornmentLayer;
 
+
+        [Import]
+        private readonly IIndentationManagerService indentationManagerService;
+
 #pragma warning restore 649, 169
 
         #region IWpfTextViewCreationListener
@@ -41,7 +45,7 @@ namespace IndentRainbow.Extension
             // The adornment will listen to any event that changes the layout (text changes, scrolling, etc)
             // When we created the adornment,we don't need a reference anymore, since everything necessary is done when the object is created
 #pragma warning disable CA1806 // Do not ignore method results
-            new Indent(textView);
+            new Indent(textView, indentationManagerService);
 #pragma warning restore CA1806 // Do not ignore method results
         }
 
