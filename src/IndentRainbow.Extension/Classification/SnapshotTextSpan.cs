@@ -1,4 +1,5 @@
-﻿using IndentRainbow.Logic.Text;
+﻿using System;
+using IndentRainbow.Logic.Text;
 using Microsoft.VisualStudio.Text;
 
 namespace IndentRainbow.Extension
@@ -15,7 +16,15 @@ namespace IndentRainbow.Extension
             Length = length;
         }
 
-        public char this[int index] => snapshot[start + index];
+        public char this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Length)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                return snapshot[start + index];
+            }
+        }
 
         public int Length { get; }
     }

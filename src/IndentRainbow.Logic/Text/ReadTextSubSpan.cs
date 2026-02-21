@@ -1,4 +1,6 @@
-﻿namespace IndentRainbow.Logic.Text
+﻿using System;
+
+namespace IndentRainbow.Logic.Text
 {
     internal readonly struct ReadTextSubSpan : ITextSpan
     {
@@ -12,7 +14,15 @@
             Length = length;
         }
 
-        public char this[int index] => source[offset + index];
+        public char this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Length)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                return source[offset + index];
+            }
+        }
 
         public int Length { get; }
     }
