@@ -1,4 +1,6 @@
-﻿namespace IndentRainbow.Logic.Classification
+﻿using IndentRainbow.Logic.Text;
+
+namespace IndentRainbow.Logic.Classification
 {
     public class IndentValidator : IIndentValidator
     {
@@ -25,16 +27,39 @@
             return indentation.Length;
         }
 
-        public bool IsIncompleteIndent(string text)
+        public bool IsIncompleteIndent(ITextSpan text)
         {
-            var cleaned = text?.Replace("\t", "");
+            if (text == null)
+            {
+                return false;
+            }
+
+            // Find first non-tab character and count non-tab/non-space characters
+            int firstNonTabIndex = -1;
+            int nonTabNonSpaceCount = 0;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] != '\t')
+                {
+                    if (firstNonTabIndex == -1)
+                    {
+                        firstNonTabIndex = i;
+                    }
+                    if (text[i] != ' ')
+                    {
+                        nonTabNonSpaceCount++;
+                    }
+                }
+            }
+
             //String only consists of tabs, is valid thus return false;
-            if (cleaned.Length == 0 || cleaned[0] != ' ')
+            if (firstNonTabIndex == -1 || text[firstNonTabIndex] != ' ')
             {
                 return false;
             }
             //String only consists tabs and spaces, is valid thus return false
-            if (cleaned.Replace(" ", "").Length == 0)
+            if (nonTabNonSpaceCount == 0)
             {
                 return false;
             }
@@ -42,7 +67,7 @@
             return !IsValidIndent(text);
         }
 
-        public int GetIndentLevelCount(string text, int length)
+        public int GetIndentLevelCount(ITextSpan text, int length)
         {
             var tabCount = 0;
             var spaceCount = 0;
@@ -65,11 +90,28 @@
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        public bool IsValidIndent(string text)
+        public bool IsValidIndent(ITextSpan text)
         {
-            if (text.Equals(indentation, System.StringComparison.InvariantCultureIgnoreCase)
-                || text.Equals(tabString, System.StringComparison.InvariantCultureIgnoreCase))
+            if (text.Length == indentation.Length)
             {
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (text[i] != indentation[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if (text.Length == tabString.Length)
+            {
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (text[i] != tabString[i])
+                    {
+                        return false;
+                    }
+                }
                 return true;
             }
             return false;

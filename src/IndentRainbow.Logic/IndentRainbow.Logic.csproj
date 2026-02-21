@@ -53,6 +53,9 @@
     <Compile Include="Parser\ColorParser.cs" />
     <Compile Include="Drawing\IBackgroundTextIndexDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Text\ITextSpan.cs" />
+    <Compile Include="Text\ReadTextSubSpan.cs" />
+    <Compile Include="Text\StringTextSpan.cs" />
     <Compile Include="Colors\IRainbowBrushGetter.cs" />
     <Compile Include="Colors\RainbowBrushGetter.cs" />
   </ItemGroup>

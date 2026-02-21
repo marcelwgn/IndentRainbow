@@ -1,6 +1,7 @@
 ﻿using System;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using IndentRainbow.Logic.Text;
 
 namespace IndentRainbow.Logic.Classification
 {
@@ -10,9 +11,9 @@ namespace IndentRainbow.Logic.Classification
         {
         }
 
-        public override void DecorateLine(string text, int drawStartIndex)
+        public override void DecorateLine(ITextSpan text, int drawStartIndex)
         {
-            if (string.IsNullOrEmpty(text))
+            if (text == null || text.Length == 0)
             {
                 return;
             }

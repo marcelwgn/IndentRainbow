@@ -1,4 +1,6 @@
-﻿namespace IndentRainbow.Logic.Classification
+﻿using IndentRainbow.Logic.Text;
+
+namespace IndentRainbow.Logic.Classification
 {
     public interface IIndentValidator
     {
@@ -8,7 +10,7 @@
         /// </summary>
         /// <param name="text">The indent to prove</param>
         /// <returns>Returns true if the string is a valid indent, false if not</returns>
-        bool IsValidIndent(string text);
+        bool IsValidIndent(ITextSpan text);
 
         /// <summary>
         /// Gets the length of the current indent block e.g. 4 for 4 space indentation
@@ -29,13 +31,13 @@
         /// <param name="start">The start position of the indentation</param>
         /// <param name="length">The length of the indentation block</param>
         /// <returns></returns>
-		int GetIndentLevelCount(string text, int length);
+		int GetIndentLevelCount(ITextSpan text, int length);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="text">The text to be analyzed</param>
 		/// <returns>Returns true, when the given string is an incomplete/incorrect indent, otherwise false</returns>
-		bool IsIncompleteIndent(string text);
+		bool IsIncompleteIndent(ITextSpan text);
     }
 }

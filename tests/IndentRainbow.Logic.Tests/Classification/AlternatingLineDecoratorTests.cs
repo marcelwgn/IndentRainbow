@@ -3,6 +3,7 @@ using System.Windows.Media;
 using IndentRainbow.Logic.Classification;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using IndentRainbow.Logic.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using static IndentRainbow.Logic.Parser.ColorParser;
@@ -48,7 +49,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		public void DecorateLineTests_IndexTesting_ExpectedBehavior(string text, int[] spans)
 		{
 			var randomDrawIndexCutoff = new Random().Next(2 << 16);
-			decorator.DecorateLine(text, randomDrawIndexCutoff);
+			StringTextSpan span = text;
+			decorator.DecorateLine(span, randomDrawIndexCutoff);
 
 			if(spans.Length > 0)
 			{
@@ -96,7 +98,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 				);
 			}
 
-			decorator.DecorateLine(text, 0);
+			StringTextSpan span = text;
+			decorator.DecorateLine(span, 0);
 
 			for (var i = 0; i < text.Length / FSI.Length; i++)
 			{
@@ -119,7 +122,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		public void DecorateLineTests_IndexTesting_ErrorBehaviors(string text, int endOffset)
 		{
 			var randomDrawIndexCutoff = new Random().Next(2 << 16);
-			decorator.DecorateLine(text, randomDrawIndexCutoff);
+			StringTextSpan span = text;
+			decorator.DecorateLine(span, randomDrawIndexCutoff);
 
 			backgroundTextIndexDrawerMock.Verify(
 				p => p.DrawBackground(
@@ -147,7 +151,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		{
 			decorator.detectErrors = false;
 			var randomDrawIndexCutoff = new Random().Next(2 << 16);
-			decorator.DecorateLine(text, randomDrawIndexCutoff);
+			StringTextSpan span = text;
+			decorator.DecorateLine(span, randomDrawIndexCutoff);
 
 			backgroundTextIndexDrawerMock.Verify(
 				p => p.DrawBackground(
