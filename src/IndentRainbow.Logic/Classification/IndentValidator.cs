@@ -6,7 +6,6 @@ namespace IndentRainbow.Logic.Classification
     {
 
         private string indentation = "    ";
-        private const string tabString = "\t";
         public IndentValidator(int indentSize)
         {
             SetIndentation(indentSize);

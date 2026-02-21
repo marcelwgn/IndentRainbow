@@ -1,0 +1,9 @@
+1>E:\IndentRainbow\src\IndentRainbow.Logic\Classification\LineDecoratorBase.cs(47,32,47,36): warning CA1062: In externally visible method 'int LineDecoratorBase.GetIndentLengthIfValid(ITextSpan text)', validate parameter 'text' is non-null before using it. If appropriate, throw an ArgumentNullException when the argument is null or add a Code Contract precondition asserting non-null argument. (https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods)
+1>E:\IndentRainbow\src\IndentRainbow.Logic\Classification\IndentValidator.cs(9,30,9,39): warning CA1823: Unused field 'tabString'. (https://docs.microsoft.com/visualstudio/code-quality/ca1823-avoid-unused-private-fields)
+1>  IndentRainbow.Logic -> E:\IndentRainbow\artifacts\Debug\IndentRainbow.Logic\IndentRainbow.Logic.dll
+2>------ Rebuild All started: Project: IndentRainbow.Extension, Configuration: Debug Any CPU ------
+3>------ Rebuild All started: Project: IndentRainbow.Logic.Tests, Configuration: Debug Any CPU ------
+2>  IndentRainbow.Extension -> E:\IndentRainbow\artifacts\Debug\IndentRainbow.Extension\IndentRainbow.dll
+2>  IndentRainbow.Extension -> E:\IndentRainbow\artifacts\Debug\IndentRainbow.Extension\IndentRainbow.vsix
+3>E:\IndentRainbow\tests\IndentRainbow.Logic.Tests\Parser\ColorParserTests.cs(53,121,53,130): warning CA1801: Parameter colorMode of method ConvertStringBrushArray_ExpectedBehavior_SolidColorMode is never used. Remove the parameter or use it in the method body. (https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters)
+3>  IndentRainbow.Logic.Tests -> E:\IndentRainbow\artifacts\Debug\IndentRainbow.Logic.Tests\IndentRainbow.Logic.Tests.dll
