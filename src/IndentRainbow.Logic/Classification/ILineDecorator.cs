@@ -10,6 +10,6 @@ namespace IndentRainbow.Logic.Classification
 		/// </summary>
 		/// <param name="text">The string of the text</param>
 		/// <param name="drawingStartIndex">The starting position of the line relative to the total document (used for rendering)</param>
-		void DecorateLine(ITextSpan text, int drawStartIndex);
+        void DecorateLine(ITextSpan text, int drawStartIndex);
     }
 }

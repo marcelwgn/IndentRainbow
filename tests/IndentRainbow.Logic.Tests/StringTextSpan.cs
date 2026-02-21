@@ -1,6 +1,8 @@
-﻿namespace IndentRainbow.Logic.Text
+﻿using IndentRainbow.Logic.Text;
+
+namespace IndentRainbow.Logic.Tests
 {
-    public readonly struct StringTextSpan : ITextSpan
+    internal readonly struct StringTextSpan : ITextSpan
     {
         private readonly string text;
 

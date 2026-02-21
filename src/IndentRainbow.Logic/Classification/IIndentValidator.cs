@@ -22,22 +22,21 @@ namespace IndentRainbow.Logic.Classification
         /// Sets the indentation size of this IndentValidator
         /// </summary>
         /// <param name="indentSize">The new size of the indentation</param>
-        void SetIndentation(int  indentSize);
+        void SetIndentation(int indentSize);
 
         /// <summary>
         /// Returns how many indentation levels are present in the substring presented
         /// </summary>
         /// <param name="text">The text that will be parsed</param>
-        /// <param name="start">The start position of the indentation</param>
         /// <param name="length">The length of the indentation block</param>
         /// <returns></returns>
-		int GetIndentLevelCount(ITextSpan text, int length);
+        int GetIndentLevelCount(ITextSpan text, int length);
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="text">The text to be analyzed</param>
-		/// <returns>Returns true, when the given string is an incomplete/incorrect indent, otherwise false</returns>
-		bool IsIncompleteIndent(ITextSpan text);
+        /// <summary>
+        /// Checks whether the given text is an incomplete or incorrect indent
+        /// </summary>
+        /// <param name="text">The text to be analyzed</param>
+        /// <returns>Returns true, when the given string is an incomplete/incorrect indent, otherwise false</returns>
+        bool IsIncompleteIndent(ITextSpan text);
     }
 }

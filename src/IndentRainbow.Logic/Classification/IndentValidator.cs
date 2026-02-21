@@ -14,12 +14,7 @@ namespace IndentRainbow.Logic.Classification
 
         public void SetIndentation(int indentSize)
         {
-            var accumulator = "";
-            for (var i = 0; i < indentSize; i++)
-            {
-                accumulator += " ";
-            }
-            indentation = accumulator;
+            indentation = new string(' ', indentSize);
         }
 
         public int GetIndentBlockLength()
