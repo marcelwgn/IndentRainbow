@@ -57,6 +57,10 @@ namespace IndentRainbow.Logic.Tests.Classification
 		[DataRow(TABI + TABI + "t", false)]
 		[DataRow(TABI + TABI + " t", true)]
 		[DataRow("te  ", false)]
+		[DataRow(TABI, false)]
+		[DataRow(TABI + "  d", true)]
+		[DataRow(FSI + "d", true)]
+		[DataRow(TABI + " " + TABI + "d", true)]
 		public void IsIncompleteIndentTests_ExpectedBehaviors(string text, bool isIncompleteIndent)
 		{
 			validator = new IndentValidator(FSI.Length);
