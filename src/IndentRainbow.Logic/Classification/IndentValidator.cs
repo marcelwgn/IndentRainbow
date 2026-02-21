@@ -98,15 +98,8 @@ namespace IndentRainbow.Logic.Classification
                 }
                 return true;
             }
-            if (text.Length == tabString.Length)
+            if (text.Length == 1 && text[0] == '\t')
             {
-                for (int i = 0; i < text.Length; i++)
-                {
-                    if (text[i] != tabString[i])
-                    {
-                        return false;
-                    }
-                }
                 return true;
             }
             return false;
