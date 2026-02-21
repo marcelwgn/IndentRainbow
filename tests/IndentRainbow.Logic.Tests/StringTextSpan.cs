@@ -13,7 +13,7 @@ namespace IndentRainbow.Logic.Tests
 
         public char this[int index] => text[index];
 
-        public int Length => text?.Length ?? 0;
+        public int Length => text.Length;
 
         public static implicit operator StringTextSpan(string text) => new StringTextSpan(text);
     }
