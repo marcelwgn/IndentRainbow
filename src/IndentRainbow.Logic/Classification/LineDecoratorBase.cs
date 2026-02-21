@@ -1,5 +1,6 @@
 ﻿using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using IndentRainbow.Logic.Text;
 
 namespace IndentRainbow.Logic.Classification
 {
@@ -21,7 +22,7 @@ namespace IndentRainbow.Logic.Classification
             this.validator = validator;
         }
 
-        public abstract void DecorateLine(string text, int drawStartIndex);
+        public abstract void DecorateLine(ITextSpan text, int drawStartIndex);
 
 		/// <summary>
 		/// Calculates the length of the indentation block.
@@ -38,15 +39,15 @@ namespace IndentRainbow.Logic.Classification
 		/// <param name="end">End of the line</param>
 		/// <returns>The length of the valid indent block if the indentation is valid, 
 		/// otherwise the valid indent length times -1</returns>
-		protected int GetIndentLengthIfValid(string text)
+		protected int GetIndentLengthIfValid(ITextSpan text)
         {
             var tabSize = validator.GetIndentBlockLength();
             var validTabLength = 0;
             var charIndex = 0;
             for (; charIndex < text.Length - tabSize + 1; charIndex += tabSize)
             {
-                var cutOut = text.Substring(charIndex, tabSize);
-                var tabCutOut = text.Substring(charIndex, 1);
+                var cutOut = new ReadTextSubSpan(text, charIndex, tabSize);
+                var tabCutOut = new ReadTextSubSpan(text, charIndex, 1);
                 if (validator.IsValidIndent(cutOut))
                 {
                     validTabLength += tabSize;
@@ -74,7 +75,7 @@ namespace IndentRainbow.Logic.Classification
             if (text.Length - charIndex < tabSize)
             {
                 //Checking if the last rest of the text is a valid indent
-                var cutOut = text.Substring(charIndex, text.Length - charIndex);
+                var cutOut = new ReadTextSubSpan(text, charIndex, text.Length - charIndex);
                 var index = 0;
                 while (index < cutOut.Length && (cutOut[index] == ' ' || cutOut[index] == '\t'))
                 {

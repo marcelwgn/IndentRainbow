@@ -1,6 +1,7 @@
 ﻿using System;
 using IndentRainbow.Logic.Colors;
 using IndentRainbow.Logic.Drawing;
+using IndentRainbow.Logic.Text;
 
 namespace IndentRainbow.Logic.Classification
 {
@@ -10,9 +11,9 @@ namespace IndentRainbow.Logic.Classification
 		{
 		}
 
-		public override void DecorateLine(string text, int drawingStartIndex)
+		public override void DecorateLine(ITextSpan text, int drawingStartIndex)
 		{
-			if (string.IsNullOrEmpty(text))
+			if (text == null || text.Length == 0)
 			{
 				return;
 			}
@@ -45,8 +46,8 @@ namespace IndentRainbow.Logic.Classification
 					rainbowIndex++;
 					continue;
 				}
-				var cutout = text.Substring(charIndex, tabSize);
-				var tabCutOut = text.Substring(charIndex, 1);
+				var cutout = new ReadTextSubSpan(text, charIndex, tabSize);
+				var tabCutOut = new ReadTextSubSpan(text, charIndex, 1);
 				if (validator.IsValidIndent(cutout))
 				{
 					drawer.DrawBackground(drawingStartIndex + charIndex, tabSize, colorGetter.GetColorByIndex(rainbowIndex, colorColumns));

@@ -1,4 +1,5 @@
 using IndentRainbow.Logic.Classification;
+using IndentRainbow.Logic.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IndentRainbow.Logic.Tests.Classification
@@ -43,7 +44,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		[DataRow(TABI + TABI + "text", 3, 2)]
 		public void GetIndentLevelCount(string text, int length, int expectedValue)
 		{
-			Assert.AreEqual(expectedValue, validator.GetIndentLevelCount(text, length));
+			StringTextSpan span = text;
+			Assert.AreEqual(expectedValue, validator.GetIndentLevelCount(span, length));
 		}
 
 		[DataTestMethod]
@@ -63,7 +65,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		{
 			validator = new IndentValidator(FSI.Length);
 
-			var result = validator.IsIncompleteIndent(text);
+			StringTextSpan span = text;
+			var result = validator.IsIncompleteIndent(span);
 
 			Assert.AreEqual(isIncompleteIndent, result);
 		}
@@ -77,7 +80,8 @@ namespace IndentRainbow.Logic.Tests.Classification
 		{
 			validator = new IndentValidator(FSI.Length);
 
-			var result = validator.IsValidIndent(text);
+			StringTextSpan span = text;
+			var result = validator.IsValidIndent(span);
 
 			Assert.AreEqual(isValidIndent, result);
 		}
