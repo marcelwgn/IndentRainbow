@@ -34,7 +34,7 @@ namespace IndentRainbow.Logic.Classification
             for (int i = 0; i < text.Length; i++)
             {
                 char c = text[i];
-                if (c != ' ')
+                if (c != ' ' &&  c != '\t')
                 {
                     firstNonSpaceIndex = i;
                     break;
