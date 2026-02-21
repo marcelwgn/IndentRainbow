@@ -1,5 +1,4 @@
 using IndentRainbow.Extension.Drawing;
-using IndentRainbow.Logic.Text;
 using IndentRainbow.Extension.Options;
 using IndentRainbow.Extension.Options.Model;
 using IndentRainbow.Logic.Classification;
@@ -112,8 +111,7 @@ namespace IndentRainbow.Extension
             int start = line.Start;
             int length = line.End - start;
 
-            string text = line.Snapshot.GetText(start, length);
-            decorator.DecorateLine(new StringTextSpan(text), start);
+            decorator.DecorateLine(new SnapshotTextSpan(line.Snapshot, start, length), start);
         }
 
         private static string GetPath(IWpfTextView textView)
