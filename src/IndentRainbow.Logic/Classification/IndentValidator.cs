@@ -29,35 +29,23 @@ namespace IndentRainbow.Logic.Classification
                 return false;
             }
 
-            // Find first non-tab character and count non-tab/non-space characters
-            int firstNonTabIndex = -1;
-            int nonTabNonSpaceCount = 0;
-
+            bool isTabOnly = true; // Determine if whitespaces are only tabs, if so, we don't want to mark them as incomplete indents
+            int firstNonSpaceIndex = -1;
             for (int i = 0; i < text.Length; i++)
             {
-                if (text[i] != '\t')
+                char c = text[i];
+                if (c != ' ')
                 {
-                    if (firstNonTabIndex == -1)
-                    {
-                        firstNonTabIndex = i;
-                    }
-                    if (text[i] != ' ')
-                    {
-                        nonTabNonSpaceCount++;
-                    }
+                    firstNonSpaceIndex = i;
+                    break;
                 }
+
+                isTabOnly &= (c == '\t');
             }
 
-            //String only consists of tabs, is valid thus return false;
-            if (firstNonTabIndex == -1 || text[firstNonTabIndex] != ' ')
-            {
+            if (isTabOnly || firstNonSpaceIndex == -1)
                 return false;
-            }
-            //String only consists tabs and spaces, is valid thus return false
-            if (nonTabNonSpaceCount == 0)
-            {
-                return false;
-            }
+
             // Checking if the rest is a valid indent 
             return !IsValidIndent(text);
         }
