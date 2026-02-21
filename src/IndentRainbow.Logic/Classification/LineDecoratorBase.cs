@@ -41,6 +41,10 @@ namespace IndentRainbow.Logic.Classification
 		/// otherwise the valid indent length times -1</returns>
 		protected int GetIndentLengthIfValid(ITextSpan text)
         {
+            if (text == null)
+            {
+                return 0;
+            }
             var tabSize = validator.GetIndentBlockLength();
             var validTabLength = 0;
             var charIndex = 0;
